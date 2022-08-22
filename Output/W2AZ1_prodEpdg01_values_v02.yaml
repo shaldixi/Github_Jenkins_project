@@ -1,0 +1,177 @@
+service:
+  loamA:
+    console:
+      nodePort: 32500
+      port: 2000
+      targetPort: 2000
+  loamB:
+    console:
+      nodePort: 32500
+      port: 2000
+      targetPort: 2000
+  lmg:
+    console:
+      nodePort: 32500
+      port: 2000
+      targetPort: 2000
+  llb:
+    console:
+      nodePort: 32500
+      port: 2000
+      targetPort: 2000
+snmp:
+  engineId: 0000197f0010025500530161
+mda:
+  llb: 2
+  lmg: 1
+multus:
+  loam:
+    ip:
+      loamA: 10.222.73.242
+      loamB: 10.222.73.243
+      active: 10.222.73.240
+      standby: 10.222.73.241
+    netMask: 24
+    subnet: 10.222.73.0
+    gw: 10.222.73.254
+    hostInterface: eth1
+    cniVersion: 0.3.1
+  lmg:
+    numDevices: 1
+    resourceName:
+    - intel.com/intel_sriov_netdevice_1
+    envName:
+    - PCIDEVICE_INTEL_COM_INTEL_SRIOV_NETDEVICE_1
+  llb:
+    numDevices: 9
+    resourceName:
+    - intel.com/intel_sriov_netdevice_1
+    - intel.com/intel_sriov_netdevice_2
+    - intel.com/intel_sriov_netdevice_3
+    - intel.com/intel_sriov_netdevice_4
+    - intel.com/intel_sriov_netdevice_5
+    - intel.com/intel_sriov_netdevice_6
+    - intel.com/intel_sriov_netdevice_7
+    - intel.com/intel_sriov_netdevice_8
+    - intel.com/intel_sriov_netdevice_9
+    envName:
+    - PCIDEVICE_INTEL_COM_INTEL_SRIOV_NETDEVICE_1
+    - PCIDEVICE_INTEL_COM_INTEL_SRIOV_NETDEVICE_2
+    - PCIDEVICE_INTEL_COM_INTEL_SRIOV_NETDEVICE_3
+    - PCIDEVICE_INTEL_COM_INTEL_SRIOV_NETDEVICE_4
+    - PCIDEVICE_INTEL_COM_INTEL_SRIOV_NETDEVICE_5
+    - PCIDEVICE_INTEL_COM_INTEL_SRIOV_NETDEVICE_6
+    - PCIDEVICE_INTEL_COM_INTEL_SRIOV_NETDEVICE_7
+    - PCIDEVICE_INTEL_COM_INTEL_SRIOV_NETDEVICE_8
+    - PCIDEVICE_INTEL_COM_INTEL_SRIOV_NETDEVICE_9
+  groFlag: 0
+  dsf:
+    enable: 1
+    numDsfDevices: 1
+  xdp:
+    enable: 0
+  dpdk:
+    enable: 1
+    dpdkRxDesc: 1024
+    dpdkTxDesc: 1024
+k8DualStack: 1
+ipv6Sysctl: 1
+lmgScale:
+  minReplicas: 2
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 90
+llbScale:
+  minReplicas: 2
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 90
+resources:
+  loam:
+    cpu: 16
+    memory: 24Gi
+  lmg:
+    cpu: 30
+    memory: 64Gi
+    hugepages1Gi: 2Gi
+    multus:
+    - resourceName: intel.com/intel_sriov_netdevice_1
+      numDevices: 1
+  llb:
+    cpu: 16
+    memory: 24Gi
+    hugepages1Gi: 2Gi
+    multus:
+    - resourceName: intel.com/intel_sriov_netdevice_1
+      numDevices: 1
+    - resourceName: intel.com/intel_sriov_netdevice_2
+      numDevices: 1
+    - resourceName: intel.com/intel_sriov_netdevice_3
+      numDevices: 1
+    - resourceName: intel.com/intel_sriov_netdevice_4
+      numDevices: 1
+    - resourceName: intel.com/intel_sriov_netdevice_5
+      numDevices: 1
+    - resourceName: intel.com/intel_sriov_netdevice_6
+      numDevices: 1
+    - resourceName: intel.com/intel_sriov_netdevice_7
+      numDevices: 1
+    - resourceName: intel.com/intel_sriov_netdevice_8
+      numDevices: 1
+    - resourceName: intel.com/intel_sriov_netdevice_9
+      numDevices: 1
+  nasc:
+    cpu: 2
+    memory: 1Gi
+  logging:
+    cpu: 10m
+    memory: 100Mi
+  aws:
+    cpu: 100m
+    memory: 500Mi
+storage:
+  pvCreation: 0
+  parentPath: /mnt/glusterfs/
+  pvLogsName: logs-volume-epd
+  pvStorageClass: efs-sc-epd01
+  pvLogsClaimName: logs-volume-claim
+  pvSize: 32Gi
+  cfSize: 32Gi
+  cfAInfo:
+  - pvcName: cf1-a-volume-claim
+  - pvcName: cf2-a-volume-claim
+  cfBInfo:
+  - pvcName: cf1-b-volume-claim
+  - pvcName: cf2-b-volume-claim
+bootString:
+  ht: 3
+  fswo: 300
+  dsfInfo:
+  - dsfString: 10.222.74.0;26;0.0.0.0;1000;48
+  lmg:
+    cpcores: 6
+    cfp: 1
+  llb:
+    cpcores: 4
+    cfp: 1
+loamB:
+  enable: 1
+podsecuritypolicy:
+  create: true
+aws:
+  enable: true
+  sidecarEnable: false
+  region: us-west-2
+  interval: 30
+nodeSelector:
+  loamA:
+  - key: cnf
+    value: epd01
+  loamB:
+  - key: cnf
+    value: epd01
+  lmg:
+  - key: cnf
+    value: epd01
+  llb:
+  - key: cnf
+    value: epd01
+fabMtu: 9000
