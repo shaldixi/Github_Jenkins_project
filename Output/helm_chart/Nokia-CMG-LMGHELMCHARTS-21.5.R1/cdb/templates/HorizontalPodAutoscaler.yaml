@@ -1,0 +1,14 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: redis-hpa
+spec:
+  maxReplicas: {{ .Values.redisScale.replicas }}
+  minReplicas: {{ .Values.redisScale.replicas }}
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: redis-statefulset
+  targetCPUUtilizationPercentage: {{ .Values.redisScale.targetCPUUtilizationPercentage }}
+
+---

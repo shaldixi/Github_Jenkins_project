@@ -1,0 +1,238 @@
+{{- $rtScheduling_enable := (.Values.rtScheduling.enable | int) }}
+{{- $loamBDict := (default dict .Values.loamB) }}
+{{- $loamBEnable := ($loamBDict.enable | int) }}
+{{- $multusDict := (default dict .Values.multus) }}
+{{- $xdpDict := (default dict $multusDict.xdp) }}
+{{- $dpdkDict := (default dict $multusDict.dpdk) }}
+{{- $dsfDict := (default dict $multusDict.dsf) }}
+{{- $vaultDict := (default dict .Values.vault) }}
+{{- $vaultEnable := ($vaultDict.enable | int) }}
+{{- $numDsfDevices := ($dsfDict.numDsfDevices | int) }}
+{{- $fabMtu := (default 9000 .Values.fabMtu | int) }}
+{{- $mdaDict := (default dict .Values.mda) }}
+{{- $lmgMda := (default 3 $mdaDict.lmg | int) }}
+{{- $llbMda := (default 1 $mdaDict.llb | int) }}
+{{- $k8DualStack := (default false .Values.k8DualStack) }}
+{{- $loamMgmtDict := (default dict $multusDict.loam) }}
+{{- $loamMgmtIpDict := (default dict $loamMgmtDict.ip) }}
+{{- $lmgMultusDict := (default dict $multusDict.lmg) }}
+{{- $llbMultusDict := (default dict $multusDict.llb) }}
+{{- $llbScaleDict := (default dict .Values.llbScale) }}
+{{- $baseSlotNumDict := (default dict .Values.baseSlotNum) }}
+{{- $baseSlotNumLmg := (default 1 $baseSlotNumDict.lmg | toString) }}
+{{- $baseSlotNumLlb := (default 17 $baseSlotNumDict.llb | toString) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: loam-a
+data:
+  loam.cfg: |
+    slotNum=21
+    k8Mode=1
+    symFile=./cpm.sym
+    fabMtu={{ $fabMtu }}
+    logFile=/logs/loam.log
+    logDir=/logs/
+    cliConfigFile=/conf/mg.cfg
+    enableTracing=1
+    disableTraceLimit=1
+    svcMode=0
+    l3Fab0=20018;;{{ if eq $loamBEnable 1 }}loam-b.{{ .Release.Namespace }}.svc{{ end }}
+    enableCli=1
+    telnetServerPort={{ .Values.service.loamA.console.targetPort }}
+    enableRtSched={{ $rtScheduling_enable }}
+{{- if eq $rtScheduling_enable 1 }}
+    cgroupRtRuntime=/hostCgroupCpu;950000;450000
+{{- end }}
+    cfDirs=/vol/cflash1;/vol/cflash2;/mgfsroot
+{{- if $loamMgmtDict }}
+    netDevices=net1;
+{{- else if eq $loamBEnable 1 }}
+    execOnBecomeActive=/bin/toActive.py
+{{- end }}
+    bootString=TIMOS: chassis=VSR card=cpm-v{{ if .Values.bootString.ht }} ht={{ .Values.bootString.ht }}{{ end }}{{ if .Values.bootString.fswo }} fswo={{ .Values.bootString.fswo }}{{ end }}{{ if $loamMgmtDict }} address={{ $loamMgmtIpDict.active }}/{{ $loamMgmtDict.netMask }}@active{{ if eq $loamBEnable 1 }} address={{ $loamMgmtIpDict.standby }}/{{ $loamMgmtDict.netMask }}@standby{{ end }}{{ end }} slot=A
+    licenseFile=/license/license.txt
+{{- if $k8DualStack }}
+    k8DualStack=1
+{{- end }}
+{{- if eq $vaultEnable 1 }}
+    vault-name={{ $vaultDict.name }}
+    vault-port={{ $vaultDict.port }}
+    vault-base-path={{ $vaultDict.basePath }}
+    vault-authorized-admin-key-rpath={{ $vaultDict.adminKeyRpath }}
+{{- if $vaultDict.tlsCaCert }}
+    vault-tls-trust-ca=/vault/ssl/ca.pem
+{{- end }}
+{{- end }}
+
+---
+{{- if eq $loamBEnable 1 }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: loam-b
+data:
+  loam.cfg: |
+    slotNum=22
+    k8Mode=1
+    symFile=./cpm.sym
+    fabMtu={{ $fabMtu }}
+    logFile=/logs/loam.log
+    logDir=/logs/
+    cliConfigFile=/conf/mg.cfg
+    enableTracing=1
+    disableTraceLimit=1
+    svcMode=0
+    l3Fab0=20018;loam-a.{{ .Release.Namespace }}.svc;
+    enableCli=1
+    telnetServerPort={{ .Values.service.loamB.console.targetPort }}
+    enableRtSched={{ $rtScheduling_enable }}
+{{- if eq $rtScheduling_enable 1 }}
+    cgroupRtRuntime=/hostCgroupCpu;950000;450000
+{{- end }}
+    cfDirs=/vol/cflash1;/vol/cflash2;/mgfsroot
+{{- if $loamMgmtDict }}
+    netDevices=net1;
+{{- else }}
+    execOnBecomeActive=/bin/toActive.py
+{{- end }}
+    bootString=TIMOS: chassis=VSR card=cpm-v{{ if .Values.bootString.ht }} ht={{ .Values.bootString.ht }}{{ end }}{{ if .Values.bootString.fswo }} fswo={{ .Values.bootString.fswo }}{{ end }}{{ if $loamMgmtDict }} address={{ $loamMgmtIpDict.active }}/{{ $loamMgmtDict.netMask }}@active address={{ $loamMgmtIpDict.standby }}/{{ $loamMgmtDict.netMask }}@standby{{ end }} slot=B
+    licenseFile=/license/license.txt
+{{- if $k8DualStack }}
+    k8DualStack=1
+{{- end }}
+{{- if eq $vaultEnable 1 }}
+    vault-name={{ $vaultDict.name }}
+    vault-port={{ $vaultDict.port }}
+    vault-base-path={{ $vaultDict.basePath }}
+    vault-authorized-admin-key-rpath={{ $vaultDict.adminKeyRpath }}
+{{- if $vaultDict.tlsCaCert }}
+    vault-tls-trust-ca=/vault/ssl/ca.pem
+{{- end }}
+{{- end }}
+
+---
+{{- end }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lmg
+data:
+  lmg.cfg: |
+    k8Mode=1
+    symFile=./iom.sym
+    fabMtu={{ $fabMtu }}
+    logFile=/logs/lmg.log
+    logDir=/logs/
+    enableTracing=1
+    disableTraceLimit=1
+    svcMode=0
+    l3Fab0=20018;loam-a.{{ .Release.Namespace }}.svc;{{ if eq $loamBEnable 1 }}loam-b.{{ .Release.Namespace }}.svc{{ end }}
+    mgMode=1
+{{- $numDevices := (default 0 $lmgMultusDict.numDevices | int) }}
+{{- if ge $numDevices 1 }}
+{{- if $xdpDict.enable }}
+    xdpMode=1
+{{- end }}
+{{- if $dpdkDict.enable }}
+    dpdk=1{{ range $lmgMultusDict.envName }};{{ . }}{{ end }}
+{{- if $dpdkDict.dpdkRxDesc }}
+    dpdkRxDesc={{ $dpdkDict.dpdkRxDesc }}
+{{- end }}
+{{- if $dpdkDict.dpdkTxDesc }}
+    dpdkTxDesc={{ $dpdkDict.dpdkTxDesc }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- if $dpdkDict.configVlan }}
+    dpdkConfigVlan=1
+{{- end }}
+{{- $numDevices := ternary (sub $numDevices $numDsfDevices | int ) ($numDevices | int) (eq ($dsfDict.enable | int) 1) -}}
+{{- if ge $numDevices 1 }}
+{{- if not $dpdkDict.enable }}
+    netDevices={{- range $i, $end := until $numDevices -}}net{{ add 1 $numDsfDevices $i }};{{- end }}
+{{- end }}
+{{- end }}
+    telnetServerPort={{ .Values.service.lmg.console.targetPort }}
+    enableRtSched={{ $rtScheduling_enable }}
+{{- if eq $rtScheduling_enable 1 }}
+    cgroupRtRuntime=/hostCgroupCpu;950000;450000
+{{- end }}
+    useAllAvailCores=1
+{{- if $dsfDict.enable }}
+{{- if not $dpdkDict.enable }}
+    netSfDevices={{- range $i, $j := .Values.bootString.dsfInfo }}net{{ add1 $i }}{{ if $j.vlan }}/{{ $j.vlan }}{{ end }};{{ end }}
+{{- else }}
+    netSfDevices={{- range $i, $j := .Values.bootString.dsfInfo }}dpdkDsfPort{{ $i }}{{ if $j.vlan }}/{{ $j.vlan }}{{ end }};{{ end }}
+{{- end }}
+{{- end }}
+    bootString=TIMOS: chassis=VSR card=iom-v-mg mda/1=isa-mg-v mda/2=isa-ms-v mda/3=m20-v{{ if gt $lmgMda 3 }} mda/4=isa-ms-v{{ end }}{{ if .Values.bootString.ht }} ht={{ .Values.bootString.ht }}{{ end }}{{ if .Values.bootString.fswo }} fswo={{ .Values.bootString.fswo }}{{ end }}{{ if .Values.bootString.lmg }}{{ if .Values.bootString.lmg.cpcores }} cpcores={{ .Values.bootString.lmg.cpcores }}{{ end }}{{ if .Values.bootString.lmg.cfp }} cfp={{ .Values.bootString.lmg.cfp }}{{ end }}{{ end }}{{ if $dsfDict.enable }}{{- range $i, $j := .Values.bootString.dsfInfo }} l3dsfab/{{ add1 $i }}={{ $j.dsfString }}{{ end }}{{ end }}
+    baseSlotNum={{ $baseSlotNumLmg }}
+{{- if $k8DualStack }}
+    k8DualStack=1
+{{- end }}
+
+---
+{{- $llbMinReplicas := (default 0 $llbScaleDict.minReplicas | int) }}
+{{- if ge $llbMinReplicas 1 }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: llb
+data:
+  llb.cfg: |
+    k8Mode=1
+    symFile=./iom.sym
+    fabMtu={{ $fabMtu }}
+    logFile=/logs/llb.log
+    logDir=/logs/
+    enableTracing=1
+    disableTraceLimit=1
+    svcMode=0
+    l3Fab0=20018;loam-a.{{ .Release.Namespace }}.svc;{{ if eq $loamBEnable 1 }}loam-b.{{ .Release.Namespace }}.svc{{ end }}
+    mgMode=0
+{{- $numDevices := (default 0 $llbMultusDict.numDevices | int) }}
+{{- if ge $numDevices 1 }}
+{{- if $xdpDict.enable }}
+    xdpMode=1
+{{- end }}
+{{- if $dpdkDict.enable }}
+    dpdk=1{{ range $llbMultusDict.envName }};{{ . }}{{ end }}
+{{- if $dpdkDict.dpdkRxDesc }}
+    dpdkRxDesc={{ $dpdkDict.dpdkRxDesc }}
+{{- end }}
+{{- if $dpdkDict.dpdkTxDesc }}
+    dpdkTxDesc={{ $dpdkDict.dpdkTxDesc }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- if $dpdkDict.configVlan }}
+    dpdkConfigVlan=1
+{{- end }}
+{{- $numDevices := ternary (sub $numDevices $numDsfDevices | int ) ($numDevices | int) (eq ($dsfDict.enable | int) 1) -}}
+{{- if ge $numDevices 1 }}
+{{- if not $dpdkDict.enable }}
+    netDevices={{- range $i, $end := until $numDevices -}}net{{ add 1 $numDsfDevices $i }};{{- end }}
+{{- end }}
+{{- end }}
+    telnetServerPort={{ .Values.service.llb.console.targetPort }}
+    enableRtSched={{ $rtScheduling_enable }}
+{{- if eq $rtScheduling_enable 1 }}
+    cgroupRtRuntime=/hostCgroupCpu;950000;450000
+{{- end }}
+    useAllAvailCores=1
+{{- if $dsfDict.enable }}
+{{- if not $dpdkDict.enable }}
+    netSfDevices={{- range $i, $j := .Values.bootString.dsfInfo }}net{{ add1 $i }}{{ if $j.vlan }}/{{ $j.vlan }}{{ end }};{{ end }}
+{{- else }}
+    netSfDevices={{- range $i, $j := .Values.bootString.dsfInfo }}dpdkDsfPort{{ $i }}{{ if $j.vlan }}/{{ $j.vlan }}{{ end }};{{ end }}
+{{- end }}
+{{- end }}
+    bootString=TIMOS: chassis=VSR card=iom-v mda/1=m20-v{{ if gt $llbMda 1 }} mda/2=isa-ms-v{{ end }}{{ if gt $llbMda 2 }} mda/3=isa-ms-v{{ end }}{{ if gt $llbMda 3 }} mda/4=isa-ms-v{{ end }}{{ if .Values.bootString.ht }} ht={{ .Values.bootString.ht }}{{ end }}{{ if .Values.bootString.fswo }} fswo={{ .Values.bootString.fswo }}{{ end }}{{ if .Values.bootString.llb }}{{ if .Values.bootString.llb.cpcores }} cpcores={{ .Values.bootString.llb.cpcores }}{{ end }}{{ if .Values.bootString.llb.cfp }} cfp={{ .Values.bootString.llb.cfp }}{{ end }}{{ end }}{{ if $dsfDict.enable }}{{- range $i, $j := .Values.bootString.dsfInfo }} l3dsfab/{{ add1 $i }}={{ $j.dsfString }}{{ end }}{{ end }}
+    baseSlotNum={{ $baseSlotNumLlb }}
+{{- if $k8DualStack }}
+    k8DualStack=1
+{{- end }}
+
+---
+{{- end }}

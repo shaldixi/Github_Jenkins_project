@@ -1,0 +1,21 @@
+service:
+  loamA:
+    console:
+      nodePort: 31000
+      port: 2000
+      targetPort: 2000
+  loamB:
+    console:
+      nodePort: 31000
+      port: 2000
+      targetPort: 2000
+  lmg:
+    console:
+      nodePort: 31000
+      port: 2000
+      targetPort: 2000
+  llb:
+    console:
+      nodePort: 31000
+      port: 2000
+      targetPort: 2000
