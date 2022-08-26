@@ -20,7 +20,7 @@ def merge(dict1, dict2):
     return dict3
 
 
-def process(ciqsheetpath):
+def process(ciqsheetpath, folderpath):
     wb = load_workbook(ciqsheetpath)
     sheetnames = wb.get_sheet_names()
     prov_sheet = wb["Provisioning_TBT"]
@@ -45,7 +45,7 @@ def process(ciqsheetpath):
                 sheetname = sheetnametemp
                 eligible_sheet_names.append(sheetname)
                 alias = alias_sheets[sheetname]
-                values_yaml = cwd + "/output/"+alias+".yaml"
+                values_yaml = cwd + "/Output/helm_chart/" + folderpath + alias+".yaml"
                 if not os.path.exists(values_yaml):
                     open(values_yaml, 'w').close()
                 sheet = wb[sheetname]
