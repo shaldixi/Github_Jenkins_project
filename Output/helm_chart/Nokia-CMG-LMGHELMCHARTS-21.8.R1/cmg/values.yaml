@@ -1,0 +1,32 @@
+image:
+  repository: master1vm.novalocal:5000
+  name: lmg
+  tag: test1
+  pullPolicy: IfNotPresent
+logging:
+  enable: 0
+  imageRepository: master1vm.novalocal:5000
+  imageName: logging
+  imageTag: test1
+  imagePullPolicy: IfNotPresent
+rtScheduling:
+  enable: 0
+  cgroupHostPath: /sys/fs/cgroup/cpu,cpuacct/
+# Openshift relevant section
+openshift:
+  enable: false
+# The below keys will set the enforcement levels of Anti-affinity rules. Default value is Soft. Setting loam, lmg & llb anti-affinity ensures that the respective pods don't reside on the same node.
+# Similarly, setting loamLmg anti affinity would ensure that the MG pods dont coexist with the OAM pods. Only set loamLmg pod anti affinity if there are enough resources.
+antiAffinity:
+  loam: hard
+  lmg: hard
+  llb: hard
+  loamLmg: hard
+vault:
+  enable: 0
+  name: 10.100.11.9
+  port: 8200
+  basePath: secret/ssh-pub
+  adminKeyRpath: cmg
+#Place a valid CA cert for TLS connection with Vault server
+  tlsCaCert: ""
