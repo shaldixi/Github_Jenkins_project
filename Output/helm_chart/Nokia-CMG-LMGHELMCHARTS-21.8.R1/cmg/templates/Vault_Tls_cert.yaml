@@ -1,0 +1,11 @@
+{{- $vaultDict := (default dict .Values.vault) }}
+{{- $vaultEnable := ($vaultDict.enable | int) }}
+{{- if and (eq $vaultEnable 1) ($vaultDict.tlsCaCert)  }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vault-tls-secret
+type: Opaque
+data:
+  ca.pem: {{ $vaultDict.tlsCaCert }}
+{{- end }}

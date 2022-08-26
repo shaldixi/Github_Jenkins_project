@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: license
+data:
+  license.txt: |
+{{ .Files.Get "license.txt" | indent 4 }}
+
+---
