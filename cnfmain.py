@@ -1,13 +1,19 @@
+import json
 import os
 import zipfile
 from utils import valuesyamlgen
 import shutil
 
 cwd = os.getcwd()
-node_type = "CMG"
-version = "21.8"
-release = "R1"
 ciqsheetpath = 'Input/excel_input.xlsx'
+json_path = "Input/input.json"
+with open(json_path, 'r') as f:
+    data = json.loads(f.read())
+    print(data)
+
+node_type = data["Node_Type"]
+version = data["Version"]
+release = data["Release"]
 
 
 def generateHelmChart():
