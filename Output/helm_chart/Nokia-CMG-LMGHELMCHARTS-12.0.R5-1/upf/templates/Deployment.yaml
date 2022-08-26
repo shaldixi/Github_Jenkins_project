@@ -1,0 +1,367 @@
+{{- $loamBEnable := (.Values.loamB.enable | int) }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loam-a-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: loam-a
+  template:
+    metadata:
+      labels:
+        name: loam-a
+        version: v1
+{{- if .Values.uuid }}
+        uuid: {{ .Values.uuid }}
+{{- end }}
+    spec:
+      volumes:
+      - name: shared-data
+        persistentVolumeClaim:
+          claimName: {{ .Values.storage.pvLogsClaimName }}
+{{- range .Values.storage.cfAInfo }}
+      - name: {{ .pvName }}
+        persistentVolumeClaim:
+          claimName: {{ .pvcName }}
+{{- end }}
+{{- if .Values.nasc.enable }}
+      - name: config-sidecar
+        configMap:
+         name: stats-sidecar-loam
+{{- end }}
+{{- $rtScheduling_enable := (.Values.rtScheduling.enable | int) }}
+{{- if eq $rtScheduling_enable 1 }}
+      - name: host-cgroup-cpu
+        hostPath:
+          path: {{ .Values.rtScheduling.cgroupHostPath }}
+{{- end }}
+      - name: config-volume1
+        configMap:
+         name: loam-a
+      - name: config-volume2
+        configMap:
+         name: dut-a-cfg
+      - name: mgfsroot
+{{- if eq $loamBEnable 1 }}
+      - name: config-volume3
+        configMap:
+          name: to-active
+{{- end }}
+{{- if .Values.logging.enable }}
+      - name: config-volume4
+        configMap:
+          name: logging
+{{- end }}
+      - name: config-volume5
+        configMap:
+          name: license
+{{- if .Values.podsecuritypolicy.create }}
+      securityContext:
+        sysctls:
+        - name: net.ipv4.conf.all.rp_filter
+          value: "0"
+        - name: net.ipv4.conf.default.rp_filter
+          value: "0"
+{{- end }}
+      containers:
+      - name: loam-a
+        image: {{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        volumeMounts:
+        - name: shared-data
+          mountPath: /logs/
+{{- if eq $rtScheduling_enable 1 }}
+        - name: host-cgroup-cpu
+          mountPath: /hostCgroupCpu/
+{{- end }}
+        - name: config-volume1
+          mountPath: /etc/sysconfig/
+        - name: config-volume2
+          mountPath: /conf/
+{{- range $i, $j := .Values.storage.cfAInfo }}
+{{- $c := add $i 1 }}
+        - name: {{ $j.pvName }}
+          mountPath: /vol/cflash{{ $c }}/
+{{- end }}
+        - name: mgfsroot
+          mountPath: /mgfsroot/
+{{- if eq $loamBEnable 1 }}
+        - name: config-volume3
+          mountPath: /scripts/
+{{- end }}
+        - name: config-volume5
+          mountPath: /license/
+        command:
+        - /bin/sh
+        - -c
+        - |
+          {{ if eq $loamBEnable 1 }}cp -vf /scripts/toActive.py /bin/toActive.py; chmod 777 /bin/toActive.py; {{ end }}./cpm /etc/sysconfig/loam.cfg
+        env:
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: MY_POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: MY_CNF_UUID
+{{- if .Values.uuid }}
+          value: {{ .Values.uuid }}
+{{- end }}
+        securityContext:
+{{- if .Values.podsecuritypolicy.create }}
+          privileged: false
+          capabilities:
+            add:
+            - SYS_NICE
+            - SYS_RESOURCE
+            - NET_ADMIN
+            - NET_RAW
+            - NET_BIND_SERVICE
+{{- else }}
+          privileged: true
+{{- end }}
+        resources:
+          requests:
+            cpu: {{ .Values.resources.loam.cpu }}
+            memory: {{ .Values.resources.loam.memory }}
+          limits:
+            cpu: {{ .Values.resources.loam.cpu }}
+            memory: {{ .Values.resources.loam.memory }}
+{{- if .Values.logging.enable }}
+      - name: logging
+        image: {{ .Values.logging.imageRepository }}/{{ .Values.logging.imageName }}:{{ .Values.logging.imageTag }}
+        imagePullPolicy: {{ .Values.logging.imagePullPolicy }}
+        volumeMounts:
+        - name: mgfsroot
+          mountPath: /mgfsroot/
+        - name: config-volume4
+          mountPath: /logging/
+        command:
+        - /bin/bash
+        - -c
+        - |
+          cp -vf /logging/logging.sh /usr/bin/logging.sh; chmod 777 /usr/bin/logging.sh; /usr/bin/logging.sh
+        resources:
+          requests:
+            cpu: {{ .Values.resources.logging.cpu }}
+            memory: {{ .Values.resources.logging.memory }}
+          limits:
+            cpu: {{ .Values.resources.logging.cpu }}
+            memory: {{ .Values.resources.logging.memory }}
+{{- end }}
+{{- if .Values.nasc.enable }}
+      - name: nok-analytics
+        image: {{ .Values.nasc.imageRepository }}/{{ .Values.nasc.imageName }}:{{ .Values.nasc.imageTag }}
+        imagePullPolicy: {{ .Values.nasc.imagePullPolicy }}
+        volumeMounts:
+        - name: config-sidecar
+          mountPath: /etc/stats-exporter-sidecar/
+        terminationMessagePath: "/tmp/nasc-end.log"
+        resources:
+          requests:
+            cpu: {{ .Values.resources.nasc.cpu }}
+            memory: {{ .Values.resources.nasc.memory }}
+          limits:
+            cpu: {{ .Values.resources.nasc.cpu }}
+            memory: {{ .Values.resources.nasc.memory }}
+        env:
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: MY_POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: CONFIG_READ_INTERVAL
+          value: "{{ .Values.nasc.configReadInterval }}"
+{{- end }}
+      serviceAccountName: {{ .Release.Namespace }}-serviceaccount
+
+---
+{{- if eq $loamBEnable 1 }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loam-b-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: loam-b
+  template:
+    metadata:
+      labels:
+        name: loam-b
+        version: v1
+{{- if .Values.uuid }}
+        uuid: {{ .Values.uuid }}
+{{- end }}
+    spec:
+      volumes:
+      - name: shared-data
+        persistentVolumeClaim:
+          claimName: {{ .Values.storage.pvLogsClaimName }}
+{{- range .Values.storage.cfBInfo }}
+      - name: {{ .pvName }}
+        persistentVolumeClaim:
+          claimName: {{ .pvcName }}
+{{- end }}
+{{- if .Values.nasc.enable }}
+      - name: config-sidecar
+        configMap:
+         name: stats-sidecar-loam
+{{- end }}
+{{- $rtScheduling_enable := (.Values.rtScheduling.enable | int) }}
+{{- if eq $rtScheduling_enable 1 }}
+      - name: host-cgroup-cpu
+        hostPath:
+          path: {{ .Values.rtScheduling.cgroupHostPath }}
+{{- end }}
+      - name: config-volume1
+        configMap:
+         name: loam-b
+      - name: config-volume2
+        configMap:
+         name: dut-a-cfg
+      - name: mgfsroot
+      - name: config-volume3
+        configMap:
+          name: to-active
+{{- if .Values.logging.enable }}
+      - name: config-volume4
+        configMap:
+          name: logging
+{{- end }}
+      - name: config-volume5
+        configMap:
+          name: license
+{{- if .Values.podsecuritypolicy.create }}
+      securityContext:
+        sysctls:
+        - name: net.ipv4.conf.all.rp_filter
+          value: "0"
+        - name: net.ipv4.conf.default.rp_filter
+          value: "0"
+{{- end }}
+      containers:
+      - name: loam-b
+        image: {{ .Values.image.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        volumeMounts:
+        - name: shared-data
+          mountPath: /logs/
+{{- if eq $rtScheduling_enable 1 }}
+        - name: host-cgroup-cpu
+          mountPath: /hostCgroupCpu/
+{{- end }}
+        - name: config-volume1
+          mountPath: /etc/sysconfig/
+        - name: config-volume2
+          mountPath: /conf/
+{{- range $i, $j := .Values.storage.cfBInfo }}
+{{- $c := add $i 1 }}
+        - name: {{ $j.pvName }}
+          mountPath: /vol/cflash{{ $c }}/
+{{- end }}
+        - name: mgfsroot
+          mountPath: /mgfsroot/
+        - name: config-volume3
+          mountPath: /scripts/
+        - name: config-volume5
+          mountPath: /license/
+        command:
+        - /bin/sh
+        - -c
+        - |
+          cp -vf /scripts/toActive.py /bin/toActive.py; chmod 777 /bin/toActive.py; ./cpm /etc/sysconfig/loam.cfg
+        env:
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: MY_POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: MY_CNF_UUID
+{{- if .Values.uuid }}
+          value: {{ .Values.uuid }}
+{{- end }}
+        securityContext:
+{{- if .Values.podsecuritypolicy.create }}
+          privileged: false
+          capabilities:
+            add:
+            - SYS_NICE
+            - SYS_RESOURCE
+            - NET_ADMIN
+            - NET_RAW
+            - NET_BIND_SERVICE
+{{- else }}
+          privileged: true
+{{- end }}
+        resources:
+          requests:
+            cpu: {{ .Values.resources.loam.cpu }}
+            memory: {{ .Values.resources.loam.memory }}
+          limits:
+            cpu: {{ .Values.resources.loam.cpu }}
+            memory: {{ .Values.resources.loam.memory }}
+{{- if .Values.logging.enable }}
+      - name: logging
+        image: {{ .Values.logging.imageRepository }}/{{ .Values.logging.imageName }}:{{ .Values.logging.imageTag }}
+        imagePullPolicy: {{ .Values.logging.imagePullPolicy }}
+        volumeMounts:
+        - name: mgfsroot
+          mountPath: /mgfsroot/
+        - name: config-volume4
+          mountPath: /logging/
+        command:
+        - /bin/bash
+        - -c
+        - |
+          cp -vf /logging/logging.sh /usr/bin/logging.sh; chmod 777 /usr/bin/logging.sh; /usr/bin/logging.sh
+        resources:
+          requests:
+            cpu: {{ .Values.resources.logging.cpu }}
+            memory: {{ .Values.resources.logging.memory }}
+          limits:
+            cpu: {{ .Values.resources.logging.cpu }}
+            memory: {{ .Values.resources.logging.memory }}
+{{- end }}
+{{- if .Values.nasc.enable }}
+      - name: nok-analytics
+        image: {{ .Values.nasc.imageRepository }}/{{ .Values.nasc.imageName }}:{{ .Values.nasc.imageTag }}
+        imagePullPolicy: {{ .Values.nasc.imagePullPolicy }}
+        volumeMounts:
+        - name: config-sidecar
+          mountPath: /etc/stats-exporter-sidecar/
+        terminationMessagePath: "/tmp/nasc-end.log"
+        resources:
+          requests:
+            cpu: {{ .Values.resources.nasc.cpu }}
+            memory: {{ .Values.resources.nasc.memory }}
+          limits:
+            cpu: {{ .Values.resources.nasc.cpu }}
+            memory: {{ .Values.resources.nasc.memory }}
+        env:
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: MY_POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: CONFIG_READ_INTERVAL
+          value: "{{ .Values.nasc.configReadInterval }}"
+{{- end }}
+      serviceAccountName: {{ .Release.Namespace }}-serviceaccount
+
+---
+{{- end }}
