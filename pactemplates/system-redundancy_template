@@ -1,0 +1,8 @@
+/configure mobile-gateway system group {{per["GroupID"]}} redundancy one-to-one gateway 1 card {{per["working-card"]}} working
+/configure mobile-gateway system group {{per["GroupID"]}} redundancy one-to-one gateway 1 card {{per["protect-card"]}} protect
+/configure mobile-gateway system group {{per["GroupID"]}} redundancy one-to-one gateway 1 shutdown
+/configure mobile-gateway system group {{per["GroupID"]}} redundancy one-to-one gateway 1 override-profile {{per["override-profile"]}}
+/configure mobile-gateway system thresholds system-mg-ism {{per["GroupID"]}}  counter cp-isa-cpu high-threshold {{per["isa-cpu-high-threshold"]}} low-threshold {{per["isa-cpu-low-threshold"]}}
+/configure mobile-gateway system thresholds system-mg-ism {{per["GroupID"]}}  interval {{per["Interval"]}}
+/configure mobile-gateway system call-insight location {{per["location"]}} limit {{per["limit"]}}
+/configure mobile-gateway system group {{per["GroupID"]}} redundancy one-to-one gateway 1 no shutdown

@@ -1,0 +1,5 @@
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} ipsec security-policy {{per["security-policy"]}} create
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} ipsec security-policy {{per["security-policy"]}} entry {{per["entry"]}} create
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} ipsec security-policy {{per["security-policy"]}} entry {{per["entry"]}} local-ip {{per["local-ip"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} ipsec security-policy {{per["security-policy"]}} entry {{per["entry"]}} remote-ip {{per["remote-ip"]}}

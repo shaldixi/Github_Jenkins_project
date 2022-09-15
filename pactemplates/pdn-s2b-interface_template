@@ -1,0 +1,1 @@
+/configure mobile-gateway pdn 1 {{per["service-name"]}} "{{per["instance-name"]}}" interface gtp-c router "{{per["router"]}}" "{{per["interface"]}}" interface-realm "{{per["realm"]}}"

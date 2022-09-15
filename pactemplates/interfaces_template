@@ -1,0 +1,37 @@
+/configure router {{per["Router"]}} create interface "{{per["interface"]}}" description "{{per["interface_description"]}}"
+/configure router {{per["Router"]}} create interface "{{per["interface"]}}" {{per["interface_stats"]}}
+/configure router {{per["Router"]}} create interface "{{per["interface"]}}" address {{per["interface_ip"]}}
+/configure router {{per["Router"]}} create interface "{{per["interface"]}}" bfd {{per["bfd"]}}
+/configure router {{per["Router"]}} create interface "{{per["interface"]}}" sap {{per["sap"]}} create
+/configure router {{per["Router"]}} create interface "{{per["interface"]}}" port {{per["port"]}} 
+/configure router {{per["Router"]}} create interface "{{per["interface"]}}" sap {{per["sap"]}} create {{per["collect-stats"]}}
+/configure router {{per["Router"]}} create interface "{{per["interface"]}}" ip-mtu {{per["IpMtu"]}}
+/configure router {{per["Router"]}} create interface "{{per["interface"]}}" sap {{per["sap"]}} create accounting-policy {{per["accounting-policy"]}}
+/configure router {{per["Router"]}} create interface "{{per["interface"]}}" {{per["urpf-check"]}}
+/configure router {{per["Router"]}} create interface "{{per["interface"]}}" ip-reassembly {{per["ip-reassembly"]}}
+/configure router {{per["Router"]}} create interface "{{per["interface"]}}" no shutdown
+/configure service ies {{per["iesid"]}} name "{{per["name"]}}" customer {{per["customer"]}} create no shutdown
+/configure service ies {{per["iesid"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create address {{per["interface_ip"]}}
+/configure service ies {{per["iesid"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create vpls {{per["vplsName"]}}
+/configure service ies {{per["iesid"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" {{per["urpf-check"]}}
+/configure service ies {{per["iesid"]}} name "{{per["name"]}}" customer {{per["customer"]}} create no shutdown
+/configure service vpls {{per["vplsId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create sap {{per["sap"]}} create no shutdown
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create description "{{per["interface_description"]}}"
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create {{per["interface_stats"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create address {{per["interface_ip"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create ipv6 address {{per["interface_ipv6"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create vpls {{per["vplsName"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create bfd {{per["bfd"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create ipv6 bfd {{per["bfd_ipv6"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create sap {{per["sap"]}} create
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create dynamic-sap mg-group-{{per["dynamic-sap mg-group"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create sap {{per["sap"]}} {{per["collect-stats"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create sap {{per["sap"]}} ingress {{per["IngressQos"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create sap {{per["sap"]}} egress {{per["EgressQos"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create sap {{per["sap"]}} ingress filter ip {{per["IngressIP"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create sap {{per["sap"]}} egress filter ip {{per["EgressIP"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create ip-mtu {{per["IpMtu"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create {{per["urpf-check"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create sap {{per["sap"]}} accounting-policy {{per["accounting-policy"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" create ip-reassembly {{per["ip-reassembly"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create interface "{{per["interface"]}}" no shutdown

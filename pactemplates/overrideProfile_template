@@ -1,0 +1,1 @@
+/configure mobile-gateway pdn 1 override-profile {{per["override-profile"]}} override ref-point-type {{per["ref-point-type"]}} "{{per["instance"]}}" with "{{per["with"]}}"

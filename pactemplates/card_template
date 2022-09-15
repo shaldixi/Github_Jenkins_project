@@ -1,0 +1,2 @@
+/configure card {{per["Card"]}} card-type "{{per["CardType"]}}"
+/configure card {{per["Card"]}} mda {{per["Mda"]}} mda-type {{per["MdaType"]}}

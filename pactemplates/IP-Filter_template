@@ -1,0 +1,9 @@
+/configure filter ip-filter {{per["IP-FilterID"]}} name "{{per["name"]}}" create
+/configure filter ip-filter {{per["IP-FilterID"]}} name "{{per["name"]}}" create entry {{per["entry"]}} create
+/configure filter ip-filter {{per["IP-FilterID"]}} name "{{per["name"]}}" create default-action {{per["default-action"]}}
+/configure filter ip-filter {{per["IP-FilterID"]}} name "{{per["name"]}}" create entry {{per["entry"]}} create match dst-ip {{per["dst-ip"]}}
+/configure filter ip-filter {{per["IP-FilterID"]}} name "{{per["name"]}}" create entry {{per["entry"]}} create match src-ip {{per["src-ip"]}}
+/configure filter ip-filter {{per["IP-FilterID"]}} name "{{per["name"]}}" create entry {{per["entry"]}} create match protocol {{per["protocol"]}}
+/configure filter ip-filter {{per["IP-FilterID"]}} name "{{per["name"]}}" create entry {{per["entry"]}} create match port eq {{per["port"]}}
+/configure filter ip-filter {{per["IP-FilterID"]}} name "{{per["name"]}}" create entry {{per["entry"]}} create log {{per["log"]}}
+/configure filter ip-filter {{per["IP-FilterID"]}} name "{{per["name"]}}" create entry {{per["entry"]}} create action {{per["action"]}}

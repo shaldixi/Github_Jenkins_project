@@ -1,0 +1,5 @@
+/configure mobile-gateway profile list nf-id-list "{{per["nf-id-list"]}}"
+/configure mobile-gateway profile list nf-id-list "{{per["nf-id-list"]}}" nf-prof-id {{per["nf-id"]}} prioritized-address-list "{{per["prioritized-address-list"]}}"
+/configure mobile-gateway profile list nf-id-list "{{per["nf-id-list"]}}" nf-prof-id {{per["nf-id"]}} uuid {{per["uuid"]}}
+/configure mobile-gateway profile list nf-id-list "{{per["nf-id-list"]}}" nf-prof-id {{per["nf-id"]}} nf-priority {{per["nf-priority"]}}
+/configure mobile-gateway profile list nf-id-list "{{per["nf-id-list"]}}" nf-prof-id {{per["nf-id"]}} enable

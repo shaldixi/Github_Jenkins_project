@@ -1,0 +1,36 @@
+/configure router {{per["Router"]}} create bgp router-id {{per["router-id"]}}
+/configure router {{per["Router"]}} create bgp min-route-advertisement {{per["min-route-adv"]}}
+/configure router {{per["Router"]}} create bgp multipath {{per["multipath"]}}
+/configure router {{per["Router"]}} create bgp {{per["ibgp-multipath"]}}
+/configure router {{per["Router"]}} create bgp {{per["enable-peer-tracking"]}}
+/configure router {{per["Router"]}} create bgp {{per["rapid-withdrawal"]}}
+/configure router {{per["Router"]}} create bgp connect-retry {{per["connect-retry"]}}
+/configure router {{per["Router"]}} create bgp keepalive {{per["keepalive"]}}
+/configure router {{per["Router"]}} create bgp hold-time {{per["hold-time"]}}
+/configure router {{per["Router"]}} create bgp multihop {{per["multihop"]}}																		   
+/configure router {{per["Router"]}} create bgp local-as {{per["local-as"]}}
+/configure router {{per["Router"]}} create bgp {{per["enable-inter-as-vpn"]}}
+/configure router {{per["Router"]}} create bgp {{per["split-horizon"]}}
+/configure router {{per["Router"]}} create bgp export {{per["export"]}}
+/configure router {{per["Router"]}} create bgp import {{per["import"]}}
+/configure router {{per["Router"]}} create bgp next-hop-resolution {{per["next-hop-resolution"]}}
+/configure router {{per["Router"]}} create bgp multihop {{per["multihop"]}}
+/configure router {{per["Router"]}} create bgp loop-detect {{per["discard-route"]}}
+/configure router {{per["Router"]}} create bgp {{per["initial-send-delay-zero"]}}
+/configure router {{per["Router"]}} bgp family {{per["family"]}}
+/configure router Base bgp no shutdown
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp router-id {{per["router-id"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp min-route-advertisement {{per["min-route-adv"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp multipath {{per["multipath"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp {{per["ibgp-multipath"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp {{per["enable-peer-tracking"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp {{per["rapid-withdrawal"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp {{per["bfd-enable"]}}																																  
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp connect-retry {{per["connect-retry"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp loop-detect {{per["discard-route"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp {{per["initial-send-delay-zero"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp keepalive {{per["keepalive"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp hold-time {{per["hold-time"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp local-as {{per["local-as"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp {{per["split-horizon"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp multihop {{per["multihop"]}}

@@ -1,0 +1,3 @@
+/configure application-assurance group {{per['GroupId']}} policer "{{per['Policer']}}" type {{per['Type']}} granularity {{per['Granularity']}} create rate {{per['Rate']}} mbs {{per['mbs']}}
+
+

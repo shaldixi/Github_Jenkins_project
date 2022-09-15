@@ -1,0 +1,12 @@
+    "http2_config": {
+        "{{per["option"]}}": {
+            "enableNoHdrIdx": {{per["enableNoHdrIdx"]}},
+            "setting-win-size": {{per["setting-win-size"]}},
+            "local-win-size": {{per["local-win-size"]}},
+            "max-concur-streams": {{per["max-concur-streams"]}},
+            "header-table-size": {{per["header-table-size"]}},
+            "max-header-list-size": {{per["max-header-list-size"]}},
+            "max-frame-size": {{per["max-frame-size"]}},
+            "request-timeout": {{per["request-timeout"]}}
+        }
+    },

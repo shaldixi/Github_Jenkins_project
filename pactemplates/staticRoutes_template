@@ -1,0 +1,6 @@
+/configure router {{per["Router"]}} static-route-entry {{per["static-route"]}} next-hop {{per["next-hop"]}} {{per["bfd"]}}
+/configure router {{per["Router"]}} static-route-entry {{per["static-route"]}} next-hop {{per["next-hop"]}} no shutdown
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create static-route-entry {{per["static-route"]}} next-hop {{per["next-hop"]}} {{per["bfd"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create static-route-entry {{per["static-route"]}} ipsec-tunnel {{per["ipsec-tunnel"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create static-route-entry {{per["static-route"]}} next-hop {{per["next-hop"]}} cpe-check {{per["cpe-check"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create static-route-entry {{per["static-route"]}} next-hop {{per["next-hop"]}} no shutdown

@@ -1,0 +1,40 @@
+/configure system name "{{per["name"]}}" 
+/configure system management-interface cli cli-engine {{per["cli-engine"]}}
+/configure system rollback local-max-checkpoints {{per["local-max-checkpoints"]}}
+/configure system contact "{{per["contact"]}}" 
+/configure system location "{{per["location"]}}" 
+/configure system coordinates "{{per["coordinates"]}}" 
+/configure system load-balancing {{per["l4-load-balancing"]}} 
+/configure system load-balancing lsr-load-balancing {{per["lbl-ip"]}}
+/configure system load-balancing lsr-load-balancing {{per["lbl-only"]}}
+/configure system load-balancing lsr-load-balancing {{per["ip-only"]}}
+/configure system load-balancing lsr-load-balancing {{per["eth-encap-ip"]}}
+/configure system load-balancing lsr-load-balancing {{per["lbl-ip-l4-teid"]}}
+/configure system load-balancing {{per["system-ip-load-balancing"]}} 
+/configure system load-balancing {{per["service-id-lag-hashing"]}} 
+/configure system load-balancing {{per["mc-enh-load-balancing"]}}
+/configure system rollback rollback-location "{{per["rollback_loc"]}}"
+/configure system rollback rescue-location "{{per["rescue-location"]}}"
+/configure system snmp packet-size {{per["packet-size"]}}
+/configure system snmp {{per["streaming"]}} no shutdown
+/configure system snmp no shutdown
+/configure system snmp {{per["shutdown"]}}
+/configure system time ntp no shutdown
+/configure system time sntp shutdown
+/configure system time zone {{per["time-zone"]}}
+/configure system time dst-zone {{per["Zone"]}}
+/configure system time dst-zone {{per["Zone"]}} start {{per["start"]}}
+/configure system time dst-zone {{per["Zone"]}} end {{per["end"]}}
+/configure system time ntp server {{per["primary"]}} prefer
+/configure system time ntp server {{per["secondary"]}}
+/configure system time ntp server {{per["secondary1"]}}
+/configure system time ntp server {{per["secondary2"]}}
+/configure system time ntp {{per["no authentication-check"]}}
+/configure system security tech-support ts-location "{{per["ts-location"]}}"
+/configure system thresholds kb-memory-use-alarm rising-threshold {{per["alarm-rising-threshold"]}} falling-threshold {{per["alarm-falling-threshold"]}} interval {{per["alarm-threshold-interval"]}}
+/configure system thresholds kb-memory-use-warn rising-threshold {{per["warn-rising-threshold"]}} falling-threshold {{per["warn-falling-threshold"]}} interval {{per["warn-threshold-interval"]}}
+/configure system thresholds cflash-cap-alarm-pct {{per["cflash"]}} rising-threshold {{per["rising-threshold"]}} falling-threshold {{per["falling-threshold"]}} interval {{per["interval"]}}
+/configure system security ssh {{per["ssh-preserve-key"]}}
+/configure redundancy synchronize {{per["synchronise"]}}
+/configure system security dist-cpu-protection policy "_default-access-policy" create
+/configure system security dist-cpu-protection policy "_default-network-policy" create

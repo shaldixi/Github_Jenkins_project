@@ -1,0 +1,3 @@
+/configure mobile-gateway pdn 1 sba-client-services amf-client {{per["amf-client"]}} "{{per["namf-comm"]}}" nf-id-list "{{per["nf-id-list"]}}"
+/configure mobile-gateway pdn 1 sba-client-services amf-client {{per["amf-client"]}} "{{per["namf-comm"]}}" n1-profile "{{per["n1-profile"]}}"
+/configure mobile-gateway pdn 1 sba-client-services amf-client {{per["amf-client"]}} "{{per["namf-comm"]}}" interface router "{{per["router"]}}" "{{per["interface"]}}"

@@ -1,0 +1,1 @@
+/configure mobile-gateway profile list slice-instance-list "{{per["sliceInstanceList"]}}" slice-instance {{per["slice-instance"]}}

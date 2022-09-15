@@ -1,0 +1,2 @@
+/configure mobile-gateway profile dns-profile "{{per["dnsProfile"]}}" primary-dns {{per["primary-dns"]}}
+/configure mobile-gateway profile dns-profile "{{per["dnsProfile"]}}" secondary-dns {{per["secondary-dns"]}}

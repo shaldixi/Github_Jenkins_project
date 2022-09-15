@@ -1,0 +1,7 @@
+/configure lag {{per["LagID"]}} description "{{per["Description"]}}"
+/configure lag {{per["LagID"]}} mode {{per["Mode"]}}
+/configure lag {{per["LagID"]}} encap-type {{per["EncapType"]}}
+/configure lag {{per["LagID"]}} port {{per["Port"]}}
+/configure lag {{per["LagID"]}} port {{per["Port2"]}}
+/configure lag {{per["LagID"]}} port {{per["Port3"]}}
+/configure lag {{per["LagID"]}} no shutdown

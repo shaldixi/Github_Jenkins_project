@@ -1,0 +1,12 @@
+/configure mobile-gateway profile pfcp pfcp-profile "{{per["Profile-name"]}}"
+/configure mobile-gateway profile pfcp pfcp-profile "{{per["Profile-name"]}}" description "{{per["Description"]}}"
+/configure mobile-gateway profile pfcp pfcp-profile "{{per["Profile-name"]}}" ip-dscp {{per["Ip-dscp"]}}
+/configure mobile-gateway profile pfcp pfcp-profile "{{per["Profile-name"]}}" heart-beat interval {{per["interval"]}}
+/configure mobile-gateway profile pfcp pfcp-profile "{{per["Profile-name"]}}" heart-beat timeout {{per["timeout"]}}
+/configure mobile-gateway profile pfcp pfcp-profile "{{per["Profile-name"]}}" heart-beat retry-count {{per["retry-count"]}}
+/configure mobile-gateway profile pfcp pfcp-profile "{{per["Profile-name"]}}" heart-beat interval {{per["interval"]}} timeout {{per["timeout"]}}
+/configure mobile-gateway profile pfcp pfcp-profile "{{per["Profile-name"]}}" heart-beat timeout {{per["timeout"]}} retry-count {{per["retry-count"]}}
+/configure mobile-gateway profile pfcp pfcp-profile "{{per["Profile-name"]}}" heart-beat interval {{per["interval"]}} timeout {{per["timeout"]}} retry-count {{per["retry-count"]}}
+/configure mobile-gateway profile pfcp pfcp-profile "{{per["Profile-name"]}}" message-retransmit timeout {{per["msg-retransmit-timeout"]}} 
+/configure mobile-gateway profile pfcp pfcp-profile "{{per["Profile-name"]}}" message-retransmit timeout {{per["msg-retransmit-timeout"]}} retry-count {{per["msg-retry-count"]}}
+/configure mobile-gateway profile pfcp pfcp-profile "{{per["Profile-name"]}}" association-retry-timer {{per["association-retry-timer"]}}

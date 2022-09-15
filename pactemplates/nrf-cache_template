@@ -1,0 +1,7 @@
+    "nrf-network": {
+        "nrf-cache": {
+            "validity-time": {{per['validity-time']}},
+            "prohibited-localities": [
+            ]
+        }
+	},

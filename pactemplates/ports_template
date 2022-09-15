@@ -1,0 +1,8 @@
+/configure port {{per["Port"]}} shutdown
+/configure port {{per["Port"]}} description "{{per["PortDescription"]}}"
+/configure port {{per["Port"]}} ethernet mode {{per["PortMode"]}}
+/configure port {{per["Port"]}} ethernet encap-type {{per["PortEncapType"]}}
+/configure port {{per["Port"]}} ethernet mtu {{per["PortMtu"]}}
+/configure port {{per["Port"]}} ethernet speed {{per["Speed"]}}
+/configure port {{per["Port"]}} ethernet egress-scheduler-policy {{per["egress-scheduler-policy"]}}
+/configure port {{per["Port"]}} no shutdown

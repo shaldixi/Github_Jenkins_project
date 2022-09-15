@@ -67,4 +67,5 @@ def process(ciqsheetpath, folderpath):
 
                 with open(values_yaml, "w") as yamlFile:
                     ruamel.yaml.round_trip_dump(excel_dict, yamlFile, default_flow_style=False)
-    return eligible_sheet_names, alias_sheets
+    values_yaml = cwd + "/Output/helm_chart/" + folderpath + alias_sheets[eligible_sheet_names[0]] +".yaml"
+    return values_yaml

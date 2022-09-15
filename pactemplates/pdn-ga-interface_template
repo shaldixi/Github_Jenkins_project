@@ -1,0 +1,2 @@
+/configure mobile-gateway pdn 1 {{per["service-name"]}} gtp-prime-group "{{per["gtp-prime-group"]}}"
+/configure mobile-gateway pdn 1 {{per["service-name"]}} interface-gtp-prime router "{{per["vprn-id"]}}" "{{per["interface"]}}"

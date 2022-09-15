@@ -1,0 +1,65 @@
+/configure mobile-gateway pdn 1 apn {{per['apnid']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" {{per['allow-emergency']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" {{per['allow-emergency']}} emergency-profile {{per['emergency-profile']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} description "{{per['description']}}"
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} aa-group "{{per['aa-group']}}" def-app-profile "{{per['def-app-profile']}}"
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} idle-timeout {{per['idle-timeout']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" converged-interface-support converged-n7 {{per['converged-n7']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" converged-interface-support converged-n10 {{per['converged-n10']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" converged-interface-support converged-n40 {{per['converged-n40']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" charging charging-prof home {{per['home']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" charging charging-prof visiting {{per['visiting']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" charging charging-prof roaming {{per['roaming']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" charging cc-ignore any {{per['any']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} charging gtp-prime-group "{{per['ga_peer']}}"
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" pco-option pcscf-srvr-ipv4 "{{per['pcscf-srvr-ipv4']}}"
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" pco-option pcscf-srvr-v4-group "{{per['primary-pcscf-v4']}}"
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" pco-option pcscf-srvr-v4-group "{{per['primary-pcscf-v4']}}" secondary "{{per['secondary-pcscf-v4']}}"
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" pco-option pcscf-srvr-v6-group "{{per['primary-pcscf']}}"
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" pco-option pcscf-srvr-v6-group "{{per['primary-pcscf']}}" secondary "{{per['secondary-pcscf']}}"
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} pco-option dns-server-ipv4  primary {{per['pri_ipv4_dns']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} pco-option dns-server-ipv4  secondary {{per['sec_ipv4_dns']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} pco-option dns-server-ipv6 primary {{per['pri_ipv6_dns']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} pco-option dns-server-ipv6 secondary {{per['sec_ipv6_dns']}}   
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} pcrf-selection dynamic-pcc fh-session {{per['fh-session']}} fh-3xxx {{per['fh-3xxx']}} fh-4xxx {{per['fh-4xxx']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} pcrf-selection primary-diameter-peer "{{per['Gx_peer']}}"
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} pcrf-selection diameter-peer-group-list "{{per['diameter-peer-group-list']}}"
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} pcf-selection nf-id-list "{{per['nf-id-list']}}"
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} pcf-selection npcf-profile "{{per['npcf-profile']}}"
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} pcf-selection dnn type "{{per['dnn-type']}}" {{per['apn-ni-only']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" apn-network-id type {{per['type']}} application {{per['application']}} {{per['parameter']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} ip-alloc-method {{per['ip-alloc-method']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} pdn-type {{per['pdn_type']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" acct-fixed user-name {{per['user-name']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" dedicated-bearer-idle-timeout-profile {{per['dedicated-bearer-idle-timeout-profile']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} qci-policy {{per['QciPolicy']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} pco-option link-mtu {{per['link-mtu']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" access-type {{per['access-type']}} default-qos-profile "{{per['default-qos-profile']}}"
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" radius-nas-identifier "{{per['radius-nas-identifier']}}"
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" radius-nas-ip-address {{per['radius-nas-ip-address']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" router-advertisements min-advertisement-interval {{per['min-advertisement-interval']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" router-advertisements max-advertisement-interval {{per['max-advertisement-interval']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" radius-accounting-on-off messages-sent {{per['messages-sent']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} router {{per['router']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} router {{per['router']}} ip-local-pool {{per['IpLocalPool']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} selection-mode {{per['selection-mode']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} session-timeout {{per['session-timeout']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} {{per['optimize-gbr']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} dedicated-bearer-create-retry-wait-timer {{per['dedicated-bearer-create-retry-wait-timer']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} static-local-pcc begin
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} static-local-pcc policy-rule "{{per['static-local-pcc']}}"
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} static-predefined-pcc default-policy-rule-base "{{per['default-policy-rule-base']}}"
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} static-predefined-pcc default-qci "{{per['default-qci']}}" arp "{{per['arp']}}"
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} static-local-pcc dedicated-bearers default-bearer-qci {{per['s-default-bearer-qci']}} arp {{per['s-default-bearer-arp']}} policy-rule "{{per['policy-rule']}}"
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} static-local-pcc commit
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" kpi-kci qci-apn-stat "{{per['qci-apn-stat']}}"
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" kpi-kci arp-traffic-stats {{per['arp-traffic-stats']}}
+/configure mobile-gateway pdn 1 apn "{{per['apnid']}}" kpi-kci enhanced-traffic-stats {{per['enhanced-traffic-stats']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} {{per['hybrid-access']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} virtual-apn-selection selection-prio {{per['selection-prio']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} virtual-apn-selection user-range {{per['user-range']}} type {{per['selection-type']}} start-cc {{per['start-cc']}} end-cc {{per['end-cc']}} virtual-apn {{per['virtual-apn']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} fqdn-group {{per['fqdn-group']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} qfi-mapping-profile {{per['qfi-mapping-profile']}}
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} slices slice-list "{{per['slice-list']}}"
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} slices default-slice "{{per['default-slice']}}"
+/configure mobile-gateway pdn 1 apn {{per['apnid']}} no shutdown

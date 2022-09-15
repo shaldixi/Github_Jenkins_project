@@ -1,0 +1,6 @@
+{
+    "node_configuration": {
+        "node-name": "{{per["node-name"]}}",
+        "node-location": "{{per["node-location"]}}",
+        "nrd-features":{{per["nrd-features"]}}
+    },

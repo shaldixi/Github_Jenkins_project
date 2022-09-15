@@ -1,0 +1,6 @@
+/configure mobile-gateway profile gtp "{{per["Profile-name"]}}" ip-dscp "{{per["Ip-dscp"]}}"
+/configure mobile-gateway profile gtp "{{per["Profile-name"]}}" keep-alive retry-count "{{per["keep-alive-retry"]}}"
+/configure mobile-gateway profile gtp "{{per["Profile-name"]}}" keep-alive interval "{{per["keep-alive-interval"]}}"
+/configure mobile-gateway profile gtp "{{per["Profile-name"]}}" gtpv2-options {{per["gtpv2-options"]}}
+/configure mobile-gateway profile gtp "{{per["Profile-name"]}}" gtpv2-node-features {{per["gtpv2-node-features"]}}
+/configure mobile-gateway profile gtp "{{per["Profile-name"]}}" message-retransmit timeout-msec {{per["timeout-msec"]}} retry-count {{per["retry-count"]}}

@@ -1,0 +1,9 @@
+    "nrf-network": {
+        "nrf-roaming": {
+            "hplmn-list": [
+                {"plmn-id": "{{per['plmn-id']}}"}
+            ],
+            "sepp-list": [],
+            "nrf-list": []
+        }
+	},

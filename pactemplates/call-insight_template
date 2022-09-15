@@ -1,0 +1,23 @@
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} description "{{per["description"]}}"
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} format {{per["format"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} live-output {{per["address"]}} port {{per["port"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} user-traffic {{per["ingress"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} user-traffic {{per["egress"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} user-traffic {{per["metadata"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} user-traffic {{per["statistics"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} user-traffic {{per["internal"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} events {{per["events"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} ref-point {{per["ref-point"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} path-management ref-point {{per["path-mng-ref-point"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} size-limit {{per["size-limit"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} time-limit {{per["time-limit"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} sba-service {{per["namf-comm"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} sba-service {{per["namf-evts"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} sba-service {{per["nchf-convergedcharging"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} sba-service {{per["npcf-smpolicycontrol"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} sba-service {{per["nsmf-pdusession"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} sba-service {{per["nudm-sdm"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} sba-service {{per["nudm-uecm"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} sba-service {{per["sba-service"]}}
+/configure mobile-gateway profile call-insight {{per["type"]}} {{per["profile-name"]}} path-management sba-service {{per["path-mng-sba-service"]}}

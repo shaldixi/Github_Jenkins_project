@@ -1,0 +1,6 @@
+/configure mobile-gateway pdn 1 s6b interface diameter router "{{per["router"]}}" "{{per["interface"]}}"
+/configure mobile-gateway pdn 1 s6b s6b-profile "{{per["s6b-profile"]}}"
+/configure mobile-gateway pdn 1 s6b origin-host "{{per["origin-host"]}}"
+/configure mobile-gateway pdn 1 s6b username-leading-digit "{{per["username-leading-digit"]}}"
+/configure mobile-gateway pdn 1 s6b peer-group {{per["peer-group"]}} primary-diameter-peer "{{per["primary-diameter-peer"]}}"
+/configure mobile-gateway pdn 1 s6b peer-group {{per["peer-group"]}} primary-diameter-peer "{{per["primary-diameter-peer"]}}" secondary-diameter-peer "{{per["secondary-diameter-peer"]}}"

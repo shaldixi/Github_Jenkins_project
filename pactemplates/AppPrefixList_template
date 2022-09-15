@@ -1,0 +1,3 @@
+/configure application-assurance group {{per["GroupID"]}} create
+/configure application-assurance group {{per["GroupID"]}} ip-prefix-list "{{per["PrefixListName"]}}" create
+/configure application-assurance group {{per["GroupID"]}} ip-prefix-list "{{per["PrefixListName"]}}" prefix {{per["Prefix"]}}

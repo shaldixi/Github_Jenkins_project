@@ -1,0 +1,8 @@
+/configure mobile-gateway pdn 1 shutdown
+/configure mobile-gateway pdn 1 {{per["service-name"]}} interface diameter router "{{per["vprn-id"]}}" "{{per["interface"]}}"
+/configure mobile-gateway pdn 1 {{per["service-name"]}} interface multi-homing diameter router "{{per["vprn-id"]}}" "{{per["multi-homing-interface"]}}"
+/configure mobile-gateway pdn 1 {{per["service-name"]}} origin-host {{per["origin-host"]}}
+/configure mobile-gateway pdn 1 {{per["service-name"]}} supported-vendor {{per["supported-vendor"]}}
+/configure mobile-gateway pdn 1 {{per["service-name"]}} {{per["alt-peer-rar"]}}
+/configure mobile-gateway pdn 1 {{per["service-name"]}} gx-profile {{per["gx-profile"]}}
+/configure mobile-gateway pdn 1 no shutdown

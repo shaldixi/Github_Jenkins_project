@@ -1,0 +1,7 @@
+/configure log accounting-policy {{per["AccountingPolicy"]}} shutdown 
+/configure log accounting-policy {{per["AccountingPolicy"]}} description "{{per["KPIDescription"]}}" 
+/configure log accounting-policy {{per["AccountingPolicy"]}} record {{per["Record"]}} 
+/configure log accounting-policy {{per["AccountingPolicy"]}} collection-interval {{per["CollectionInterval"]}} 
+/configure log accounting-policy {{per["AccountingPolicy"]}} to file {{per["KPIFileID"]}}
+/configure log accounting-policy {{per["AccountingPolicy"]}} {{per["include-system-info"]}}
+/configure log accounting-policy {{per["AccountingPolicy"]}} no shutdown

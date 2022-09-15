@@ -1,0 +1,4 @@
+/configure mobile-gateway profile s6b-profile "{{per["s6b-profile"]}}" 
+/configure mobile-gateway profile s6b-profile "{{per["s6b-profile"]}}" s6b-avp-options {{per["s6b-avp-options1"]}}
+/configure mobile-gateway profile s6b-profile "{{per["s6b-profile"]}}" s6b-avp-options {{per["s6b-avp-options2"]}}
+/configure mobile-gateway profile s6b-profile "{{per["s6b-profile"]}}" s6b-avp-options {{per["s6b-avp-options3"]}}

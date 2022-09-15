@@ -1,0 +1,4 @@
+/configure mobile-gateway profile diameter-peer-group-list "{{per["diamPeerGrpList"]}}"
+/configure mobile-gateway profile diameter-peer-group-list "{{per["diamPeerGrpList"]}}" peer-group {{per["PeerGroup"]}} primary-diameter-peer "{{per["PriDiamPeer"]}}"
+/configure mobile-gateway profile diameter-peer-group-list "{{per["diamPeerGrpList"]}}" peer-group {{per["PeerGroup"]}} primary-diameter-peer "{{per["PriDiamPeer"]}}" secondary-diameter-peer "{{per["SecDiamPeer"]}}"
+/configure mobile-gateway profile diameter-peer-group-list "{{per["diamPeerGrpList"]}}" peer-group {{per["PeerGroup"]}} primary-diameter-peer "{{per["PriDiamPeer"]}}" secondary-diameter-peer "{{per["SecDiamPeer"]}}" priority {{per["Priority"]}}

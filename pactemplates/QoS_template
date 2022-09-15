@@ -1,0 +1,7 @@
+/configure qos {{per["Qos PolicyType"]}} {{per["ID"]}} name "{{per["name"]}}" create description "{{per["description"]}}"
+/configure qos {{per["Qos PolicyType"]}} {{per["ID"]}} name "{{per["name"]}}" create queue {{per["queue"]}} create
+/configure qos {{per["Qos PolicyType"]}} {{per["ID"]}} name "{{per["name"]}}" create fc "{{per["fc"]}}" create
+/configure qos {{per["Qos PolicyType"]}} {{per["ID"]}} name "{{per["name"]}}" create fc "{{per["fc"]}}" queue {{per["queue"]}}
+/configure qos {{per["Qos PolicyType"]}} {{per["ID"]}} name "{{per["name"]}}" create fc "{{per["fc"]}}" dot1p {{per["fc-dot1p"]}}
+/configure qos {{per["Qos PolicyType"]}} {{per["ID"]}} name "{{per["name"]}}" create dot1p {{per["dot1p"]}} fc "{{per["dot1p-fc"]}}"
+/configure qos {{per["Qos PolicyType"]}} {{per["ID"]}} name "{{per["name"]}}" create dscp {{per["dscp"]}} fc "{{per["dscp-fc"]}}"

@@ -1,0 +1,4 @@
+/configure mobile-gateway pdn 1 {{per["service-name"]}} interface diameter router "{{per["vprn-id"]}}" "{{per["interface"]}}"
+/configure mobile-gateway pdn 1 {{per["service-name"]}} origin-host {{per["origin-host"]}}
+/configure mobile-gateway pdn 1 {{per["service-name"]}} outage location {{per["primary"]}} primary
+/configure mobile-gateway pdn 1 {{per["service-name"]}} outage location {{per["secondary"]}} 

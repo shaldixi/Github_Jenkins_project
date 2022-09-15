@@ -1,0 +1,10 @@
+/configure mobile-gateway pdn 1 {{per["service-name"]}} "{{per["instance-name"]}}" interface {{per["interface-protocol"]}} router "{{per["vprn-id"]}}" "{{per["interface"]}}" 
+/configure mobile-gateway pdn 1 {{per["service-name"]}} "{{per["instance-name"]}}" interface {{per["interface-protocol"]}} router "{{per["vprn-id"]}}" "{{per["interface"]}}" interface-realm {{per["interface-realm"]}} 
+/configure mobile-gateway pdn 1 {{per["service-name"]}} "{{per["instance-name"]}}" signaling gtp-c profile {{per["gtpProfile-c"]}} 
+/configure mobile-gateway pdn 1 {{per["service-name"]}} "{{per["instance-name"]}}" signaling gtp-c pause-charging pgw-pause-charging  {{per["pgw-pause-charging"]}}
+/configure mobile-gateway pdn 1 {{per["service-name"]}} "{{per["instance-name"]}}" signaling gtp-u profile {{per["gtpProfile-u"]}} 
+/configure mobile-gateway pdn 1 {{per["service-name"]}} "{{per["group-specific"]}}" group-specific interface {{per["interface-protocol"]}} router "{{per["vprn-id"]}}" "{{per["interface"]}}" 
+/configure mobile-gateway pdn 1 {{per["service-name"]}} "{{per["group-specific"]}}" group-specific interface {{per["interface-protocol"]}} router "{{per["vprn-id"]}}" "{{per["interface"]}}" interface-realm {{per["interface-realm"]}} 
+/configure mobile-gateway pdn 1 {{per["service-name"]}} "{{per["group-specific"]}}" group-specific signaling gtp-c profile {{per["gtpProfile-c"]}} 
+/configure mobile-gateway pdn 1 {{per["service-name"]}} "{{per["group-specific"]}}" group-specific signaling gtp-c pause-charging pgw-pause-charging  {{per["pgw-pause-charging"]}}
+/configure mobile-gateway pdn 1 {{per["service-name"]}} "{{per["group-specific"]}}" group-specific signaling gtp-u profile {{per["gtpProfile-u"]}}

@@ -1,0 +1,9 @@
+/configure system login-control ftp inbound-max-sessions {{per["inbound-ftp-sessions"]}}
+/configure system login-control ftp outbound-max-sessions {{per["outbound-ftp-sessions"]}}
+/configure system login-control ssh inbound-max-sessions {{per["inbound-ssh-sessions"]}}
+/configure system login-control ssh outbound-max-sessions {{per["outbound-ssh-sessions"]}}
+/configure system login-control telnet inbound-max-sessions {{per["inbound-telnet-sessions"]}}
+/configure system login-control telnet outbound-max-sessions {{per["outbound-telnet-sessions"]}}
+/configure system login-control motd text "{{per["text"]}}"
+/configure system login-control {{per["exponential-backoff"]}}
+/configure system login-control idle-timeout {{per["idle-timeout"]}}

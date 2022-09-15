@@ -1,0 +1,4 @@
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" radius-avp-options {{per["avp"]}}
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" radius-avp-options acct-interim-avp-options {{per["acct-interim-avp-options"]}}
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" radius-avp-options disconnect-ack-avp-options {{per["disconnect-ack-avp-options"]}}
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" radius-avp-options disconnect-nak-avp-options {{per["disconnect-nak-avp-options"]}}

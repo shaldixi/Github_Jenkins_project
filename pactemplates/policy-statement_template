@@ -1,0 +1,14 @@
+/configure router Base policy-options begin
+/configure router Base policy-options policy-statement "{{per["policy-statement"]}}" entry {{per["entry"]}} from prefix-list "{{per["from-prefix-list"]}}"
+/configure router Base policy-options policy-statement "{{per["policy-statement"]}}" entry {{per["entry"]}} from protocol {{per["from-protocol"]}}
+/configure router Base policy-options policy-statement "{{per["policy-statement"]}}" entry {{per["entry"]}} from family {{per["from-family"]}}
+/configure router Base policy-options policy-statement "{{per["policy-statement"]}}" entry {{per["entry"]}} from community "{{per["from-community"]}}"
+/configure router Base policy-options policy-statement "{{per["policy-statement"]}}" entry {{per["entry"]}} from community expression "[{{per["community-expression1"]}}]"
+/configure router Base policy-options policy-statement "{{per["policy-statement"]}}" entry {{per["entry"]}} from community expression "[{{per["community-expression1"]}}] OR [{{per["community-expression2"]}}]"
+/configure router Base policy-options policy-statement "{{per["policy-statement"]}}" entry {{per["entry"]}} from active-mg "{{per["active-mg"]}}"
+/configure router Base policy-options policy-statement "{{per["policy-statement"]}}" entry {{per["entry"]}} to protocol {{per["to-protocol"]}}
+/configure router Base policy-options policy-statement "{{per["policy-statement"]}}" entry {{per["entry"]}} action {{per["action"]}}
+/configure router Base policy-options policy-statement "{{per["policy-statement"]}}" entry {{per["entry"]}} action {{per["action"]}} next-hop {{per["next-hop"]}}
+/configure router Base policy-options policy-statement "{{per["policy-statement"]}}" entry {{per["entry"]}} action {{per["action"]}} community add {{per["community"]}}
+/configure router Base policy-options policy-statement "{{per["policy-statement"]}}" default-action {{per["default-action"]}}
+/configure router Base policy-options commit

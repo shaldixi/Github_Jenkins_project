@@ -1,0 +1,2 @@
+/configure mobile-gateway profile pfcp up-peer-list "{{per["up-peer-list-name"]}}" peer {{per["peer"]}} apn "{{per["apn"]}}" network-realm "{{per["networkRealm"]}}"
+/configure mobile-gateway profile pfcp up-peer-list "{{per["up-peer-list-name"]}}" peer {{per["peer"]}} apn "{{per["apn"]}}" ip-pool-list ip-pool {{per["ip-pool-list"]}}

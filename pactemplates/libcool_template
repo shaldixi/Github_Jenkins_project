@@ -1,0 +1,22 @@
+    "libcool": {
+        "daemon": {{per["daemon"]}},
+        "logging": {
+            "verbose": {{per["verbose"]}},
+            "syslog": "{{per["syslog"]}}",
+            "color": {{per["color"]}},
+            "ctxsys": {{per["ctxsys"]}},
+            "ctxusr": {{per["ctxusr"]}},
+            "ctxhttp": {{per["ctxhttp"]}},
+            "ctxnghttp": {{per["ctxnghttp"]}},
+            "ctxjson": {{per["ctxjson"]}},
+            "ctxdb": {{per["ctxdb"]}},
+            "ctxnrf": {{per["ctxnrf"]}},
+            "ctxnssf": {{per["ctxnssf"]}},
+            "ctxparser": {{per["ctxparser"]}},
+            "ctxgrpc": {{per["ctxgrpc"]}}
+        },
+        "core": {
+            "bufamnt": {{per["bufamnt"]}},
+            "tcps": {{per["tcps"]}}
+        }
+    },

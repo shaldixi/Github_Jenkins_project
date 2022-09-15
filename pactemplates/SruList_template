@@ -1,0 +1,4 @@
+/configure mobile-gateway profile policy-options begin
+/configure mobile-gateway profile policy-options sru-list "{{per["SruList"]}}" stat-rule-unit {{per["StatRuleUnit1"]}}
+/configure mobile-gateway profile policy-options sru-list "{{per["SruList"]}}" stat-rule-unit {{per["StatRuleUnit2"]}} 
+/configure mobile-gateway profile policy-options commit

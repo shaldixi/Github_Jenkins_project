@@ -1,0 +1,3 @@
+/configure system script-control script "{{per["ScriptName"]}}" description "{{per["Description"]}}"
+/configure system script-control script "{{per["ScriptName"]}}" location "{{per["OutputLocation"]}}"
+/configure system script-control script "{{per["ScriptName"]}}" no shutdown

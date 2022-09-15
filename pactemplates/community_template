@@ -1,0 +1,3 @@
+/configure router Base policy-options begin
+/configure router Base policy-options community "{{per["community"]}}" members "{{per["members"]}}"
+/configure router Base policy-options commit

@@ -1,0 +1,4 @@
+/configure system security profile "{{per["profileName"]}}" default-action {{per["defaultAction"]}}
+/configure system security profile "{{per["profileName"]}}" {{per["li"]}}
+/configure system security profile "{{per["profileName"]}}" entry {{per["Entry"]}} match "{{per["Match"]}}"
+/configure system security profile "{{per["profileName"]}}" entry {{per["Entry"]}} action {{per["Action"]}}

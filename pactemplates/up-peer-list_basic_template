@@ -1,0 +1,2 @@
+/configure mobile-gateway profile pfcp up-peer-list "{{per["up-peer-list-name"]}}" peer {{per["peer"]}} {{per["eps-iwk enabled"]}}
+/configure mobile-gateway profile pfcp up-peer-list "{{per["up-peer-list-name"]}}" peer {{per["peer"]}} upf-id uuid {{per["uuid"]}}

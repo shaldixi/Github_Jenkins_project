@@ -1,0 +1,9 @@
+    "nrf_config": {
+        "threshold-based-alarms":
+            {
+                "counter-name": "{{per['counter-name']}}",
+                "counter-table": "{{per['counter-table']}}",
+                "threshold": "{{per['threshold']}}"
+            }
+	},
+

@@ -1,0 +1,5 @@
+/configure mobile-gateway profile pcscf-group "{{per["pcscf-group"]}}" pcscf-server {{per["pcscf-server"]}} 
+/configure mobile-gateway profile pcscf-group "{{per["pcscf-group"]}}" pcscf-server {{per["pcscf-server"]}} {{per["pcscf-server-weight"]}}
+/configure mobile-gateway profile pcscf-group "{{per["pcscf-group"]}}" pcscf-server {{per["pcscf-server"]}} {{per["pcscf-server-type"]}}
+/configure mobile-gateway profile pcscf-group "{{per["pcscf-group"]}}" pcscf-server {{per["pcscf-server1"]}} {{per["pcscf-server1-weight"]}}
+/configure mobile-gateway profile pcscf-group "{{per["pcscf-group"]}}" pcscf-server {{per["pcscf-server2"]}} {{per["pcscf-server2-weight"]}}

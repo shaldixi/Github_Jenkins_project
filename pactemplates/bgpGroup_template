@@ -1,0 +1,18 @@
+/configure router {{per["Router"]}} bgp group "{{per["group-name"]}}" type {{per["group-type"]}}
+/configure router {{per["Router"]}} bgp group "{{per["group-name"]}}" export "{{per["export-policy"]}}"
+/configure router {{per["Router"]}} bgp group "{{per["group-name"]}}" import "{{per["import-policy"]}}"
+/configure router {{per["Router"]}} bgp group "{{per["group-name"]}}" authentication-key "{{per["authentication-key"]}}" 
+/configure router {{per["Router"]}} bgp group "{{per["group-name"]}}" local-as {{per["local-as"]}}
+/configure router {{per["Router"]}} bgp group "{{per["group-name"]}}" family {{per["family"]}}
+/configure router {{per["Router"]}} bgp group "{{per["group-name"]}}" peer-as {{per["peer-as"]}}
+/configure router {{per["Router"]}} bgp group "{{per["group-name"]}}" {{per["bfd"]}}
+/configure router {{per["Router"]}} bgp group "{{per["group-name"]}}" prefix-limit ipv4 {{per["prefix-limit-ipv4"]}} threshold {{per["threshold"]}} idle-timeout {{per["idle-timeout"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp group "{{per["group-name"]}}" family {{per["family"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp group "{{per["group-name"]}}" type {{per["group-type"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp group "{{per["group-name"]}}" authentication-key {{per["authentication-key"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp group "{{per["group-name"]}}" export "{{per["export-policy"]}}"
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp group "{{per["group-name"]}}" prefix-limit ipv4 {{per["prefix-limit-ipv4"]}} threshold {{per["threshold"]}} idle-timeout {{per["idle-timeout"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp group "{{per["group-name"]}}" import "{{per["import-policy"]}}"
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp group "{{per["group-name"]}}" local-as {{per["local-as"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp group "{{per["group-name"]}}" peer-as {{per["peer-as"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp group "{{per["group-name"]}}" {{per["bfd"]}}

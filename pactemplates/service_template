@@ -1,0 +1,39 @@
+/configure router management
+/configure router Base selective-reassembly
+/configure router {{per["Router"]}} description "{{per["description"]}}"
+/configure router {{per["Router"]}} vrf-import "{{per["vrf-import"]}}"
+/configure router {{per["Router"]}} vrf-export "{{per["vrf-export"]}}"
+/configure router {{per["Router"]}} ecmp {{per["ecmp"]}}
+/configure router {{per["Router"]}} snmp {{per["snmp"]}}
+/configure router {{per["Router"]}} autonomous-system {{per["as-number"]}}
+/configure router {{per["Router"]}} route-distinguisher {{per["route-distinguisher"]}}
+/configure router {{per["Router"]}} router-id {{per["router-id"]}}
+/configure router {{per["Router"]}} {{per["policy-reference-checks"]}}
+/configure service ies {{per["iesid"]}} name "{{per["name"]}}" customer {{per["customer"]}} create
+/configure service ies {{per["iesid"]}} name "{{per["name"]}}" customer {{per["customer"]}}  create description "{{per["description"]}}"
+/configure service ies {{per["iesid"]}} name "{{per["name"]}}" customer {{per["customer"]}} create vrf-import "{{per["vrf-import"]}}"
+/configure service ies {{per["iesid"]}} name "{{per["name"]}}" customer {{per["customer"]}} create vrf-export "{{per["vrf-export"]}}"
+/configure service ies {{per["iesid"]}} name "{{per["name"]}}" customer {{per["customer"]}} create ecmp {{per["ecmp"]}}
+/configure service ies {{per["iesid"]}} name "{{per["name"]}}" customer {{per["customer"]}} create snmp {{per["snmp"]}}
+/configure service ies {{per["iesid"]}} name "{{per["name"]}}" customer {{per["customer"]}} create autonomous-system {{per["as-number"]}}
+/configure service ies {{per["iesid"]}} name "{{per["name"]}}" customer {{per["customer"]}} create route-distinguisher {{per["route-distinguisher"]}}
+/configure service ies {{per["iesid"]}} name "{{per["name"]}}" customer {{per["customer"]}} create no shutdown
+/configure service vpls {{per["vplsId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create description "{{per["description"]}}"
+/configure service vpls {{per["vplsId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create allow-ip-int-bind
+/configure service vpls {{per["vplsId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create stp shutdown
+/configure service vpls {{per["vplsId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create no shutdown
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create description "{{per["description"]}}"
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create snmp {{per["snmp"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create vrf-import "{{per["vrf-import"]}}"
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create vrf-export "{{per["vrf-export"]}}"
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create ecmp {{per["ecmp"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create mg-group {{per["local-ecmp-mgGroup"]}} local-ecmp-egress
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create autonomous-system {{per["as-number"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create route-distinguisher {{per["route-distinguisher"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create no shutdown
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} ip-local-pool {{per["pool-name"]}} {{per["remote"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} ip-local-pool {{per["pool-name"]}} ipv4-prefix {{per["ipv4-prefix"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} ip-local-pool {{per["pool-name"]}} ipv6-prefix {{per["ipv6-prefix"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create static-route-entry {{per["ipv4-prefix"]}} {{per["nexthop"]}} no shutdown
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create static-route-entry {{per["ipv6-prefix"]}} {{per["nexthop"]}} no shutdown

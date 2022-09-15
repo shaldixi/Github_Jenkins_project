@@ -1,0 +1,6 @@
+/configure system cron schedule "{{per["CronName"]}}" shutdown
+/configure system cron schedule "{{per["CronName"]}}" interval {{per["interval"]}}
+/configure system cron schedule "{{per["CronName"]}}" script-policy "{{per["script-policy"]}}"
+/configure system cron schedule "{{per["CronName"]}}" day-of-month {{per["day-of-month"]}}
+/configure system cron schedule "{{per["CronName"]}}" hour {{per["hour"]}}
+/configure system cron schedule "{{per["CronName"]}}" minute {{per["minute"]}}

@@ -1,0 +1,2 @@
+/configure mobile-gateway profile pfcp pfcp-association-peer-list "{{per["peer-list-name"]}}" description "{{per["Description"]}}"
+/configure mobile-gateway profile pfcp pfcp-association-peer-list "{{per["peer-list-name"]}}" peer {{per["peer-ip"]}}

@@ -1,0 +1,7 @@
+    "nrf_config": {
+		"default-plmn-list": [
+            {
+                "plmn-id": "{{per["plmn-id"]}}"
+            }
+        ]
+	},

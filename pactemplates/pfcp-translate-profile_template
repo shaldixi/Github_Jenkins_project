@@ -1,0 +1,7 @@
+/configure mobile-gateway profile pfcp pfcp-translate-profile {{per["pfcp-translate-profile-name"]}} description {{per["description"]}}
+/configure mobile-gateway profile pfcp pfcp-translate-profile {{per["pfcp-translate-profile-name"]}} field {{per["field1"]}}
+/configure mobile-gateway profile pfcp pfcp-translate-profile {{per["pfcp-translate-profile-name"]}} field {{per["field2"]}}
+/configure mobile-gateway profile pfcp pfcp-translate-profile {{per["pfcp-translate-profile-name"]}} field {{per["field3"]}}
+/configure mobile-gateway profile pfcp pfcp-translate-profile {{per["pfcp-translate-profile-name"]}} field {{per["field4"]}}
+/configure mobile-gateway profile pfcp pfcp-translate-profile {{per["pfcp-translate-profile-name"]}} field {{per["field5"]}}
+/configure mobile-gateway profile pfcp pfcp-translate-profile {{per["pfcp-translate-profile-name"]}} field {{per["field6"]}}

@@ -1,0 +1,6 @@
+/configure mobile-gateway profile radius "{{per["Radius"]}}" deadtime {{per["deadtime"]}}
+/configure mobile-gateway profile radius "{{per["Radius"]}}" acct-retry-timeout {{per["acct-retry-timeout"]}}
+/configure mobile-gateway profile radius "{{per["Radius"]}}" acct-retry-count {{per["acct-retry-count"]}}
+/configure mobile-gateway profile radius "{{per["Radius"]}}" auth-retry-timeout {{per["auth-retry-timeout"]}}
+/configure mobile-gateway profile radius "{{per["Radius"]}}" auth-retry-count {{per["auth-retry-count"]}}
+/configure mobile-gateway profile radius "{{per["Radius"]}}" nas-port-type {{per["nas-port-type"]}}

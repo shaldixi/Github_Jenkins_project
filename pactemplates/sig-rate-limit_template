@@ -1,0 +1,2 @@
+/configure mobile-gateway profile sig-rate-limit-profile "{{per["profile_name"]}}" max-message-rate {{per["max-message-rate"]}}
+/configure mobile-gateway profile sig-rate-limit-profile "{{per["profile_name"]}}" delay-tolerance {{per["delay-tolerance"]}}

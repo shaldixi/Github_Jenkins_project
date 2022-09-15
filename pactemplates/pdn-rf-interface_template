@@ -1,0 +1,1 @@
+/configure mobile-gateway pdn 1 rf acct-level {{per["acct-level"]}}

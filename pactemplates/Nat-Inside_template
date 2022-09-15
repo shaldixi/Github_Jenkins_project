@@ -1,0 +1,7 @@
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} nat inside classic-lsn-max-subscriber-limit {{per["classic-lsn-max-subscriber-limit"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} nat inside destination-prefix {{per["destination-prefix"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} nat inside destination-prefix {{per["destination-prefix"]}} nat-policy {{per["destination-prefix-nat-policy"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} nat inside nat-policy {{per["nat-policy"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} nat inside deterministic prefix {{per["prefix"]}}  subscriber-type {{per["subscriber-type"]}} nat-policy {{per["nat-policy"]}} create
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} nat inside deterministic prefix {{per["prefix"]}}  subscriber-type {{per["subscriber-type"]}} nat-policy {{per["nat-policy"]}} map start {{per["start"]}} end {{per["end"]}} to {{per["to"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} nat inside deterministic prefix {{per["prefix"]}}  subscriber-type {{per["subscriber-type"]}} nat-policy {{per["nat-policy"]}} no shutdown

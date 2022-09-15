@@ -1,0 +1,8 @@
+    "nrf_config": {
+		"preferred-locality-list": 
+            {
+                "preferred-locality": "{{per["preferred-locality"]}}",
+                "locality"          : "{{per["locality"]}}",
+                "delta"             : "{{per["delta"]}}"
+            }
+	},

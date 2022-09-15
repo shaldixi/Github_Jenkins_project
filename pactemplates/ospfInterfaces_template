@@ -1,0 +1,3 @@
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create ospf area {{per["area"]}} interface "{{per["interface"]}}" interface-type {{per["interface-type"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create ospf area {{per["area"]}} interface "{{per["interface"]}}" {{per["bfd-enable"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create ospf area {{per["area"]}} interface "{{per["interface"]}}" no shutdown

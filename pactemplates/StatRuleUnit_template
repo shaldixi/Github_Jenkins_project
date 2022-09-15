@@ -1,0 +1,3 @@
+/configure mobile-gateway profile policy-options begin
+/configure mobile-gateway profile policy-options stat-rule-unit "{{per["StatRuleUnit"]}}" urr-id {{per["URR-ID"]}} urr-profile "{{per["URR-Profile"]}}"
+/configure mobile-gateway profile policy-options commit

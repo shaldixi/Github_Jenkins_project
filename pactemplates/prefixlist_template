@@ -1,0 +1,3 @@
+/configure router Base policy-options begin
+/configure router Base policy-options prefix-list "{{per["prefix-list"]}}" prefix {{per["prefix"]}} {{per["prefix-type"]}}				
+/configure router Base policy-options commit

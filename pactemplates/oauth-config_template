@@ -1,0 +1,6 @@
+	"oauth-config": {
+        "token-validity-period": {{per["token-validity-period"]}},
+        "uuid-policies": [],
+        "uuid-policy-list": []
+    }
+}

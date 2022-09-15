@@ -1,0 +1,3 @@
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create ospf timers lsa-arrival {{per["lsa-arrival"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create ospf timers spf-wait {{per["spf-wait"]}} spf-initial-wait {{per["spf-initial-wait"]}} spf-second-wait {{per["spf-second-wait"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create ospf no shutdown

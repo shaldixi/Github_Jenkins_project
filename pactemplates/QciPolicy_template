@@ -1,0 +1,6 @@
+/configure mobile-gateway profile policy-options begin
+/configure mobile-gateway profile policy-options qci-policy "{{per["QciPolicy"]}}" qci {{per["Qci"]}} arp {{per["Arp"]}} dscp-preserve {{per["preserve-user-plane"]}}
+/configure mobile-gateway profile policy-options qci-policy "{{per["QciPolicy"]}}" qci {{per["Qci"]}} arp {{per["Arp"]}} dscp {{per["dscp"]}}
+/configure mobile-gateway profile policy-options qci-policy "{{per["QciPolicy"]}}" qci {{per["Qci"]}} arp {{per["Arp"]}} {{per["no dscp-preserve"]}}
+/configure mobile-gateway profile policy-options qci-policy "{{per["QciPolicy"]}}" qci {{per["Qci"]}} arp {{per["Arp"]}} fc {{per["fc"]}}
+/configure mobile-gateway profile policy-options commit

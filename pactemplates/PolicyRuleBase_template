@@ -1,0 +1,5 @@
+/configure mobile-gateway profile policy-options begin
+/configure mobile-gateway profile policy-options policy-rule-base "{{per["RuleBaseName"]}}" policy-rule "{{per["PolicyRuleName"]}}"
+/configure mobile-gateway profile policy-options policy-rule-base "{{per["RuleBaseName"]}}" apn-ambr-attr aggr-rate downlink-rate {{per["downlink-rate"]}} uplink-rate {{per["uplink-rate"]}}
+/configure mobile-gateway profile policy-options policy-rule-base "{{per["RuleBaseName"]}}" aa-adv-functions characteristic "{{per["characteristic"]}}" value "{{per["value"]}}"
+/configure mobile-gateway profile policy-options commit

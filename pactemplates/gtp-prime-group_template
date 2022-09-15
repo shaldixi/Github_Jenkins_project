@@ -1,0 +1,23 @@
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" local-cdr-storage file-params closure-rec-num {{per["closure-rec-num"]}}
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" local-cdr-storage file-params closure-size {{per["closure-size"]}}
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" local-cdr-storage file-params closure-time {{per["closure-time"]}}
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" local-cdr-storage file-params max-number-subdirectories {{per["max-number-subdirectories"]}}
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" local-cdr-storage file-params extension {{per["extension"]}}
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" local-cdr-storage file-params obsolete-time {{per["obsolete-time"]}}
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" local-cdr-storage file-params private-info {{per["private-info"]}}
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" local-cdr-storage location {{per["location1"]}} primary 
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" local-cdr-storage location {{per["location2"]}}
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" local-cdr-storage location {{per["location1"]}} limit {{per["location1Limit"]}}
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" local-cdr-storage location {{per["location2"]}} limit {{per["location2Limit"]}}
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" local-cdr-storage location {{per["primary"]}} primary
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" interface router "{{per["router"]}}" "{{per["interface"]}}"
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" gtp-prime-server {{per["server-ip"]}} port {{per["port"]}} node-alive
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" gtp-prime-server {{per["server-ip"]}} port {{per["port"]}} priority {{per["priority"]}}
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" gtp-prime-server {{per["server-ip"]}} port {{per["port"]}} retries {{per["retries"]}}
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" gtp-prime-server {{per["server-ip"]}} port {{per["port"]}} timeout {{per["timeout"]}}
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" gtp-prime-server {{per["server-ip"]}} port {{per["port"]}} echo-interval {{per["echo-interval"]}}
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" gtp-prime-server {{per["server-ip"]}} port {{per["port"]}} max-outstanding-requests {{per["max-outstanding-requests"]}}
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" gtp-prime-server {{per["server-ip"]}} port {{per["port"]}} no shutdown
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" no shutdown
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" {{per["duplicate-prevention"]}}
+/configure mobile-gateway profile gtp-prime-group "{{per["Group-name"]}}" {{per["duplicate-prevention-storage"]}}

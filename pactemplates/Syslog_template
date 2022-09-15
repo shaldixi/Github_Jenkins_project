@@ -1,0 +1,4 @@
+/configure log syslog {{per["syslogID"]}} description "{{per["description"]}}"
+/configure log syslog {{per["syslogID"]}} address {{per["address"]}}
+/configure log syslog {{per["syslogID"]}} facility {{per["facility"]}}
+/configure log syslog {{per["syslogID"]}} level {{per["level"]}}

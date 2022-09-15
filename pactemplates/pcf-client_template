@@ -1,0 +1,3 @@
+/configure mobile-gateway pdn 1 sba-client-services pcf-client {{per["pcf-client"]}} "{{per["npcf-smpolicycontrol"]}}" npcf-profile "{{per["npcf-profile"]}}"
+/configure mobile-gateway pdn 1 sba-client-services pcf-client {{per["pcf-client"]}} "{{per["npcf-smpolicycontrol"]}}" nf-id-list "{{per["nf-id-list"]}}"
+/configure mobile-gateway pdn 1 sba-client-services pcf-client {{per["pcf-client"]}} "{{per["npcf-smpolicycontrol"]}}" interface "{{per["interface"]}}" router "{{per["router"]}}" 

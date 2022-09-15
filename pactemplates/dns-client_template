@@ -1,0 +1,5 @@
+/configure mobile-gateway pdn 1 shutdown
+/configure mobile-gateway pdn 1 dns-client refresh-interval pcscf refresh-interval-sec {{per["refresh-interval-sec"]}} use-dns-ttl
+/configure mobile-gateway pdn 1 dns-client dns-interface router "{{per["router"]}}" "{{per["interface"]}}"
+/configure mobile-gateway pdn 1 dns-client dns-profile "{{per["dns-profile"]}}"
+/configure mobile-gateway pdn 1 no shutdown

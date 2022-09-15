@@ -1,0 +1,5 @@
+/configure mobile-gateway pdn 1 {{per["service-name"]}}  pfcp-association-list "{{per["pfcp-association-list"]}}"
+/configure mobile-gateway pdn 1 {{per["service-name"]}}  interface pfcp router "{{per["vprn-id"]}}" "{{per["interface"]}}"
+/configure mobile-gateway pdn 1 {{per["service-name"]}}  interface {{per["interface-protocol"]}} router "{{per["vprn-id"]}}" "{{per["interface"]}}"
+/configure mobile-gateway pdn 1 {{per["service-name"]}}  signaling pfcp profile "{{per["pfcp-profile"]}}"
+/configure mobile-gateway pdn 1 up-peer-list "{{per["up-peer-list"]}}"

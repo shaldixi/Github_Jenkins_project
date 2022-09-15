@@ -1,0 +1,10 @@
+    "nrf_config": {
+		"nf-specific-heartbeat-options": {
+            "{{per['NF']}}": {
+                "hb-timer": {{per['hb-timer']}},
+                "local-hb-timer": {{per['local-hb-timer']}},
+                "suspend-time": {{per['suspend-time']}},
+                "override": {{per['override']}}
+            }
+		}
+	},

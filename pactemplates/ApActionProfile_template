@@ -1,0 +1,3 @@
+/configure mobile-gateway profile policy-options begin
+/configure mobile-gateway profile policy-options ap-action-profile "{{per["ap-action-profile"]}}" policy-action {{per["policy-action"]}}
+/configure mobile-gateway profile policy-options commit

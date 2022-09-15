@@ -1,0 +1,11 @@
+/configure application-assurance group {{per['GroupID']}} policy begin
+/configure application-assurance group {{per['GroupID']}} policy app-qos-policy entry {{per['EntryId']}} create
+/configure application-assurance group {{per['GroupID']}} policy app-qos-policy entry {{per['EntryId']}} description {{per['Description']}}
+/configure application-assurance group {{per['GroupID']}} policy app-qos-policy entry {{per['EntryId']}} match traffic-direction {{per['TrafficDirection']}}
+/configure application-assurance group {{per['GroupID']}} policy app-qos-policy entry {{per['EntryId']}} match charging-group eq "{{per['Charging-Group']}}"
+/configure application-assurance group {{per['GroupID']}} policy app-qos-policy entry {{per['EntryId']}} match application eq {{per['Application']}}
+/configure application-assurance group {{per['GroupID']}} policy app-qos-policy entry {{per['EntryId']}} match characteristic "{{per['CharacteristicProfile']}}" eq "{{per['CharacteristicValue']}}"
+/configure application-assurance group {{per['GroupID']}} policy app-qos-policy entry {{per['EntryId']}} action tcp-mss-adjust {{per['tcp-mss-adjust']}}
+/configure application-assurance group {{per['GroupID']}} policy app-qos-policy entry {{per['EntryId']}} action http-enrich {{per['http-enrich']}}
+/configure application-assurance group {{per['GroupID']}} policy app-qos-policy entry {{per['EntryId']}} action bandwidth-policer "{{per['Bandwidth-Policer']}}"
+/configure application-assurance group {{per['GroupID']}} policy commit

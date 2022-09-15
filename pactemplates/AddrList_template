@@ -1,0 +1,1 @@
+/configure mobile-gateway profile addr-list "{{per["AddrListName"]}}" ip-address {{per["IPAddress"]}}

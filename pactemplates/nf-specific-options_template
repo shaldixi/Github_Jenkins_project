@@ -1,0 +1,8 @@
+    "nrf_config": {
+		"nf-specific-options": {
+            "def-h2client-ping-timer": {{per['def-h2client-ping-timer']}},
+            "{{per['NF']}}": {
+                "h2client-ping-timer": {{per['h2client-ping-timer']}}
+            }
+		}
+	},

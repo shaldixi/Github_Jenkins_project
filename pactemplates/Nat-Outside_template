@@ -1,0 +1,7 @@
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} nat outside pool "{{per["pool"]}}" nat-group {{per["nat-group"]}} type {{per["type"]}} create
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} nat outside pool "{{per["pool"]}}" nat-group {{per["nat-group"]}} type {{per["type"]}} description "{{per["description"]}}"
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} nat outside pool "{{per["pool"]}}" nat-group {{per["nat-group"]}} type {{per["type"]}} port-reservation ports {{per["port-reservation-ports"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} nat outside pool "{{per["pool"]}}" nat-group {{per["nat-group"]}} type {{per["type"]}} subscriber-limit {{per["subscriber-limit"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} nat outside pool "{{per["pool"]}}" nat-group {{per["nat-group"]}} type {{per["type"]}} deterministic port-reservation {{per["deterministic-port-reservation"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} nat outside pool "{{per["pool"]}}" nat-group {{per["nat-group"]}} type {{per["type"]}} address-range {{per["address-range"]}} create
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} nat outside pool "{{per["pool"]}}" nat-group {{per["nat-group"]}} type {{per["type"]}} no shutdown

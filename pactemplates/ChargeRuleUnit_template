@@ -1,0 +1,10 @@
+/configure mobile-gateway profile policy-options begin
+/configure mobile-gateway profile policy-options charging-rule-unit "{{per["ChargeRuleUnit"]}}" rating-group {{per["RatingGroup"]}}
+/configure mobile-gateway profile policy-options charging-rule-unit "{{per["ChargeRuleUnit"]}}" description "{{per["Description"]}}"
+/configure mobile-gateway profile policy-options charging-rule-unit "{{per["ChargeRuleUnit"]}}" rating-group {{per["RatingGroup"]}} sru "{{per["SRU"]}}"
+/configure mobile-gateway profile policy-options charging-rule-unit "{{per["ChargeRuleUnit"]}}" charging-method {{per["ChargingMethod"]}}
+/configure mobile-gateway profile policy-options charging-rule-unit "{{per["ChargeRuleUnit"]}}" service-identifier {{per["ServiceIdentifier"]}}
+/configure mobile-gateway profile policy-options charging-rule-unit "{{per["ChargeRuleUnit"]}}" service-identifier {{per["ServiceIdentifier"]}} sru "{{per["SI-SRU"]}}"
+/configure mobile-gateway profile policy-options charging-rule-unit "{{per["ChargeRuleUnit"]}}" monitoring-key {{per["MonitoringKey"]}} sru "{{per["Monitoring-SRU"]}}"
+/configure mobile-gateway profile policy-options charging-rule-unit "{{per["ChargeRuleUnit"]}}" reporting-level {{per["reporting-level"]}}
+/configure mobile-gateway profile policy-options commit

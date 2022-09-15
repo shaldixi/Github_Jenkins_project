@@ -1,0 +1,17 @@
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" server-type {{per["server-type"]}}
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" interface router "{{per["router"]}}" "{{per["interface"]}}"
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" radius-profile "{{per["radiusProfile"]}}"
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" interim-update-interval "{{per["interim-update-interval"]}}"
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" ignore-acct-response "{{per["ignore-acct-response"]}}"
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" fh-session-no-response {{per["fh-session-no-response"]}}
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" peer {{per["Address"]}} shutdown
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" peer {{per["Address"]}} auth-server-port {{per["auth-server-port"]}}
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" peer {{per["Address"]}} acct-server-port {{per["acct-server-port"]}}
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" peer {{per["Address"]}} failure-detection-time {{per["failure-detection-time"]}}
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" peer {{per["Address"]}} secret "{{per["secret"]}}"
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" peer {{per["Address"]}} radius-profile "{{per["RadiusProfile"]}}"
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" peer {{per["Address"]}} priority "{{per["Priority"]}}"
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" radius-avp-options exclude-acct-session-id
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" radius-avp-options exclude-3gpp-allocate-ip-type
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" radius-avp-options include-nas-port-id
+/configure mobile-gateway profile radius-group "{{per["RadiusGroup"]}}" radius-avp-options include-nas-identifier

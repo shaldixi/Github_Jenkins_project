@@ -1,0 +1,10 @@
+/configure mobile-gateway profile charging event-triggers-fbc {{per["event-triggers-fbc"]}}
+/configure mobile-gateway profile charging event-triggers-fbc {{per["event-triggers-fbc"]}} {{per["user-loc-change"]}}
+/configure mobile-gateway profile charging event-triggers-fbc {{per["event-triggers-fbc"]}} {{per["plmn-change"]}}
+/configure mobile-gateway profile charging event-triggers-fbc {{per["event-triggers-fbc"]}} {{per["rat-type-change"]}}
+/configure mobile-gateway profile charging event-triggers-fbc {{per["event-triggers-fbc"]}} {{per["user-loc-change"]}}
+/configure mobile-gateway profile charging event-triggers-fbc {{per["event-triggers-fbc"]}} max-change-condition {{per["max-change-condition"]}}
+/configure mobile-gateway profile charging event-triggers-fbc {{per["event-triggers-fbc"]}} {{per["ue-time-zone-change"]}}
+/configure mobile-gateway profile charging event-triggers-fbc {{per["event-triggers-fbc"]}} time-limit {{per["time-limit"]}}
+/configure mobile-gateway profile charging event-triggers-fbc {{per["event-triggers-fbc"]}} serving-node-change-limit {{per["serving-node-change-limit"]}}
+/configure mobile-gateway profile charging event-triggers-fbc {{per["event-triggers-fbc"]}} volume-limit {{per["volume-limit"]}}

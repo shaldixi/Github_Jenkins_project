@@ -1,0 +1,3 @@
+/configure log snmp-trap-group {{per["snmp-trap-group"]}}
+/configure log snmp-trap-group {{per["snmp-trap-group"]}} description "{{per["description"]}}"
+/configure log snmp-trap-group {{per["snmp-trap-group"]}} trap-target "{{per["trap-target"]}}" address {{per["address"]}} {{per["snmp-version"]}} notify-community "{{per["notify-community"]}}"

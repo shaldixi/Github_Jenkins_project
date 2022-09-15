@@ -1,0 +1,16 @@
+    "nrf_config": {
+        "node-name": "{{per["node-name"]}}",
+        "nrf-json-version": "{{per["nrf-json-version"]}}",
+		"default-preferred-locality-delta": {{per["default-preferred-locality-delta"]}},
+		"discovery-validity-time": {{per["discovery-validity-time"]}},
+		"discovery-max-instances": {{per["discovery-max-instances"]}},
+		"hb-timer": {{per["hb-timer"]}},
+		"local-hb-timer": {{per["local-hb-timer"]}},
+		"suspend-time": {{per["suspend-time"]}},
+		"subscription-time": {{per["subscription-time"]}},
+		"skip-static-cfg": {{per["skip-static-cfg"]}},
+		"load-high-water-mark": {{per["load-high-water-mark"]}},
+		"load-low-water-mark": {{per["load-low-water-mark"]}},
+		"isolation-detect-timer": {{per["isolation-detect-timer"]}},
+		"apply-oauth-policies-at-discover": {{per["apply-oauth-policies-at-discover"]}}
+    },

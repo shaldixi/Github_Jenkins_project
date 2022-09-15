@@ -1,0 +1,5 @@
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp group "{{per["group-name"]}}" neighbor {{per["neighbor"]}} local-address {{per["local-address"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["vprnName"]}}" customer {{per["customer"]}} create bgp group "{{per["group-name"]}}" neighbor {{per["neighbor"]}} description "{{per["description"]}}"
+/configure router {{per["Router"]}} create bgp group "{{per["group-name"]}}" neighbor {{per["neighbor"]}} local-address {{per["local-address"]}}
+/configure router {{per["Router"]}} create bgp group "{{per["group-name"]}}" neighbor {{per["neighbor"]}}  {{per["bfd-enable"]}}
+/configure router {{per["Router"]}} create bgp group "{{per["group-name"]}}" neighbor {{per["neighbor"]}} description "{{per["description"]}}"

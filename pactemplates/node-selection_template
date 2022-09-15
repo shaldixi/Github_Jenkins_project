@@ -1,0 +1,12 @@
+/configure mobile-gateway profile node-selection begin
+/configure mobile-gateway profile node-selection client-profile {{per["client-profile"]}}
+/configure mobile-gateway profile node-selection client-profile {{per["client-profile"]}} entry {{per["entry"]}}
+/configure mobile-gateway profile node-selection client-profile {{per["client-profile"]}} entry {{per["entry"]}} match {{per["match"]}}
+/configure mobile-gateway profile node-selection client-profile {{per["client-profile"]}} entry {{per["entry"]}} action set-target-profile {{per["set-target-profile"]}}
+/configure mobile-gateway profile node-selection client-profile {{per["client-profile"]}} default-action set-target-profile {{per["def-set-target-profile"]}}
+/configure mobile-gateway profile node-selection target-profile {{per["target-profile"]}}
+/configure mobile-gateway profile node-selection target-profile {{per["target-profile"]}} entry {{per["entry"]}}
+/configure mobile-gateway profile node-selection target-profile {{per["target-profile"]}} entry {{per["entry"]}} match {{per["match"]}}
+/configure mobile-gateway profile node-selection target-profile {{per["target-profile"]}} entry {{per["entry"]}} action set-target-profile {{per["set-target-profile"]}}
+/configure mobile-gateway profile node-selection target-profile {{per["target-profile"]}} default-action set-target-profile {{per["def-set-target-profile"]}}
+/configure mobile-gateway profile node-selection commit

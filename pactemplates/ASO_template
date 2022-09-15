@@ -1,0 +1,4 @@
+/configure application-assurance group {{per['GroupId']}} policy begin
+/configure application-assurance group {{per['GroupId']}} policy app-service-options characteristic {{per['CharacteristicProfile']}} persist-id {{per['CharacteristicProfilePersistID']}} create
+/configure application-assurance group {{per['GroupId']}} policy app-service-options characteristic {{per['CharacteristicProfile']}} persist-id {{per['CharacteristicProfilePersistID']}} value "{{per['CharacteristicValue']}}" persist-id {{per['PersistID']}}
+/configure application-assurance group {{per['GroupId']}} policy commit

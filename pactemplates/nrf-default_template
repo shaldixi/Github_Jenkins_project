@@ -1,0 +1,7 @@
+    "nrf-network": {
+        "nrf-default":
+            {
+                "nrf-id": {{per['nrf-id']}},
+                "priority": {{per['priority']}}
+            }
+	},

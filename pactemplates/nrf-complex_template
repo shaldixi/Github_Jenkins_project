@@ -1,0 +1,11 @@
+    "nrf-network": {
+        "nrf-complex":
+            {
+                "nrf-id": {{per['nrf-id']}},
+                "nrf-type": "{{per['nrf-type']}}",
+                "nrf-locality": "{{per['nrf-locality']}}",
+                "nrf-service":"{{per['nrf-service']}}",
+                "addr": "{{per['addr']}}",
+                "port": {{per['port']}}
+            }
+	},

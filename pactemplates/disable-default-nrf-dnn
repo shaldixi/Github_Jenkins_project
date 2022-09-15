@@ -1,0 +1,3 @@
+		"nrf_config": {
+            "disable-default-nrf-dnn" : [],
+		};

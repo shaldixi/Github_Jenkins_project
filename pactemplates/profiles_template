@@ -1,0 +1,21 @@
+/configure mobile-gateway profile pcmd "{{per["pcmdProfileName"]}}" destination {{per["destination"]}} port {{per["port"]}}
+/configure mobile-gateway profile pcmd "{{per["pcmdProfileName"]}}" heartbeat
+/configure mobile-gateway profile pcmd "{{per["pcmdProfileName"]}}" session-report verbosity {{per["reportVerbosity"]}}
+/configure mobile-gateway profile dedicated-bearer-idle-timeout-profile "{{per["dedicated-bearer-idle-timeout-profile"]}}" qci {{per["qci"]}} timeout {{per["timeout"]}}
+/configure mobile-gateway profile cloud-db "{{per["cloud-db"]}}" server {{per["cloud-db-server"]}} port {{per["cloud-db-port"]}} no shutdown
+/configure mobile-gateway profile qos-profile "{{per["qos-profile"]}}" qci {{per["Qci"]}}
+/configure mobile-gateway profile qos-profile "{{per["qos-profile"]}}" arp {{per["Arp"]}}
+/configure mobile-gateway profile qos-profile "{{per["qos-profile"]}}" ul-ambr {{per["ul-ambr"]}}
+/configure mobile-gateway profile qos-profile "{{per["qos-profile"]}}" dl-ambr {{per["dl-ambr"]}}
+/configure mobile-gateway profile qfi-mapping-profile {{per["qfi-mapping-profile"]}} dynamic-mapping {{per["average-window"]}}
+/configure mobile-gateway profile qfi-mapping-profile {{per["qfi-mapping-profile"]}} dynamic-mapping {{per["max-data-burst-vol"]}}
+/configure mobile-gateway profile qfi-mapping-profile {{per["qfi-mapping-profile"]}} dynamic-mapping {{per["priority-level"]}}
+/configure mobile-gateway profile qfi-mapping-profile {{per["qfi-mapping-profile"]}} dynamic-mapping {{per["qnc"]}}
+/configure mobile-gateway profile qfi-mapping-profile {{per["qfi-mapping-profile"]}} {{per["5qi-as-qfi"]}}
+/configure mobile-gateway profile npcf "{{per["npcfProfile"]}}"
+/configure mobile-gateway profile npcf "{{per["npcfProfile"]}}" supported-features {{per["supported-features"]}}
+/configure mobile-gateway profile emergency-profile "{{per["emergency-profile-name"]}}"
+/configure mobile-gateway profile emergency-profile "{{per["emergency-profile-name"]}}" {{per["allow-udm-sdm"]}}
+/configure mobile-gateway profile emergency-profile "{{per["emergency-profile-name"]}}" default-5qi {{per["default-5qi"]}}
+/configure mobile-gateway profile emergency-profile "{{per["emergency-profile-name"]}}" default-arp {{per["default-arp"]}}
+/configure mobile-gateway profile emergency-profile "{{per["emergency-profile-name"]}}" default-ambr ul-rate {{per["default-ambr-ul-rate"]}} dl-rate {{per["default-ambr-ul-rate"]}}

@@ -1,0 +1,12 @@
+/configure mobile-gateway profile diameter-peer "{{per["diameter-peer"]}}" application-type {{per["application-type"]}}
+/configure mobile-gateway profile diameter-peer "{{per["diameter-peer"]}}" destination-realm "{{per["destination-realm"]}}"
+/configure mobile-gateway profile diameter-peer "{{per["diameter-peer"]}}" diameter-profile "{{per["diameter-profile"]}}"
+/configure mobile-gateway profile diameter-peer "{{per["diameter-peer"]}}" sig-rate-limit-profile "{{per["sig-rate-limit-profile"]}}"
+/configure mobile-gateway profile diameter-peer "{{per["diameter-peer"]}}" interface router "{{per["router"]}}" "{{per["interface"]}}"
+/configure mobile-gateway profile diameter-peer "{{per["diameter-peer"]}}" {{per["load-balance"]}}
+/configure mobile-gateway profile diameter-peer "{{per["diameter-peer"]}}" {{per["switchover-source-port-consistent"]}}
+/configure mobile-gateway profile diameter-peer "{{per["diameter-peer"]}}" transport {{per["transport"]}}
+/configure mobile-gateway profile diameter-peer "{{per["diameter-peer"]}}" multi-homing interface router "{{per["multi-homing_router"]}}" "{{per["multi-homing_interface"]}}"
+/configure mobile-gateway profile diameter-peer "{{per["diameter-peer"]}}" peer {{per["peer"]}} port {{per["port"]}}
+/configure mobile-gateway profile diameter-peer "{{per["diameter-peer"]}}" peer {{per["peer"]}} port {{per["port"]}} {{per["enable-dra"]}}
+/configure mobile-gateway profile diameter-peer "{{per["diameter-peer"]}}" peer {{per["peer"]}} port {{per["port"]}} no shutdown

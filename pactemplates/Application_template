@@ -1,0 +1,6 @@
+/configure application-assurance group {{per["GroupID"]}} create policy begin
+/configure application-assurance group {{per["GroupID"]}} policy application "{{per["ApplicationName"]}}" create
+/configure application-assurance group {{per["GroupID"]}} policy application "{{per["ApplicationName"]}}" create description "{{per["AppDescription"]}}"
+/configure application-assurance group {{per["GroupID"]}} policy application "{{per["ApplicationName"]}}" create app-group "{{per["AppGroup"]}}"
+/configure application-assurance group {{per["GroupID"]}} policy application "{{per["ApplicationName"]}}" create charging-group "{{per["ChargeGroup"]}}"
+/configure application-assurance group {{per["GroupID"]}} create policy commit

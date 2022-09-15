@@ -1,0 +1,5 @@
+/configure mobile-gateway profile charging ccfh-profile {{per["ccfh-profile"]}} cc-failure-handling {{per["cc-failure-handling"]}}
+/configure mobile-gateway profile charging ccfh-profile {{per["ccfh-profile"]}} {{per["disable-cc-session-failover"]}}
+/configure mobile-gateway profile charging ccfh-profile {{per["ccfh-profile"]}} fh-session-continue-timer {{per["fh-session-continue-timer"]}}
+/configure mobile-gateway profile charging ccfh-profile {{per["ccfh-profile"]}} fh-continue-action {{per["fh-continue-action"]}}
+

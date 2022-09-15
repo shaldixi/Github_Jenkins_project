@@ -1,0 +1,5 @@
+/configure mobile-gateway profile policy-options begin
+/configure mobile-gateway profile policy-options policy-rule "{{per["PolicyRuleName"]}}" policy-rule-unit "{{per["PolicyRuleUnit"]}}" charging-rule-unit "{{per["ChargeRuleUnit"]}}" qci {{per["QCI"]}} arp {{per["ARP"]}} precedence {{per["Precedence"]}}
+/configure mobile-gateway profile policy-options policy-rule "{{per["PolicyRuleName"]}}" policy-rule-unit "{{per["PolicyRuleUnit"]}}" charging-rule-unit "{{per["ChargeRuleUnit"]}}" trigger-rule-unit "{{per["TriggerRuleUnit"]}}" qci {{per["QCI"]}} arp {{per["ARP"]}} precedence {{per["Precedence"]}}
+/configure mobile-gateway profile policy-options policy-rule "{{per["PolicyRuleName"]}}" policy-rule-unit "{{per["PolicyRuleUnit"]}}" charging-rule-unit "{{per["ChargeRuleUnit"]}}" action-rule-unit "{{per["ActionRuleUnit"]}}" qci {{per["QCI"]}} arp {{per["ARP"]}} precedence {{per["Precedence"]}}
+/configure mobile-gateway profile policy-options commit

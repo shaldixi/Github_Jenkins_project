@@ -1,0 +1,10 @@
+/configure service nat deterministic-script location "{{per["deterministic-script-location"]}}"
+/configure service nat nat-policy "{{per["Name"]}}" create
+/configure service nat nat-policy "{{per["Name"]}}" alg {{per["rstp"]}}
+/configure service nat nat-policy "{{per["Name"]}}" alg {{per["pptp"]}}
+/configure service nat nat-policy "{{per["Name"]}}" pool {{per["pool"]}} router {{per["router"]}}
+/configure service nat nat-policy "{{per["Name"]}}" block-limit {{per["block-limit"]}}
+/configure service nat nat-policy "{{per["Name"]}}" timeouts tcp-established min {{per["min"]}}
+/configure service nat nat-policy "{{per["Name"]}}" tcp-mss-adjust {{per["tcp-mss-adjust"]}}
+/configure service nat nat-policy "{{per["Name"]}}" syslog-export-policy {{per["syslog-export-policy"]}}
+/configure service nat nat-policy "{{per["Name"]}}" {{per["udp-inbound-refresh"]}} 

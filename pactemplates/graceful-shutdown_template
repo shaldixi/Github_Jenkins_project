@@ -1,0 +1,21 @@
+    "nrf_config": {    
+		"graceful-shutdown": {
+            "{{per['Instance']}}": {
+                "new-registration" : {
+                    "http2-result-code" : "{{per['new-registration.http2-result-code']}}",
+                    "problemdetails-cause" : "{{per['new-registration.problemdetails-cause']}}",
+                    "override" : {{per['new-registration.override']}}
+                },
+                "nf-update" : {
+                    "http2-result-code" : "{{per['nf-update.http2-result-code']}}",
+                    "problemdetails-cause" : "{{per['nf-update.problemdetails-cause']}}",
+                    "override" : {{per['nf-update.override']}}
+                },
+                "subscriptions" : {
+                    "http2-result-code" : "{{per['subscriptions.http2-result-code']}}",
+                    "problemdetails-cause" : "{{per['subscriptions.problemdetails-cause']}}",
+                    "override" : {{per['subscriptions.override']}}
+                }
+            }
+		}
+	},

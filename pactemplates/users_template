@@ -1,0 +1,7 @@
+/configure system security user "{{per["UserName"]}}" password "{{per["UserPassword"]}}"
+/configure system security user "{{per["UserName"]}}" access {{per["Access"]}}
+/configure system security user "{{per["UserName"]}}" public-keys rsa rsa-key 2 create key-value "{{per["RSA-Key-Value"]}}"
+/configure system security user "{{per["UserName"]}}" console {{per["DefaultConsoleMember"]}}  
+/configure system security user "{{per["UserName"]}}" console member "{{per["ConsoleMember1"]}}"
+/configure system security user "{{per["UserName"]}}" console member "{{per["ConsoleMember2"]}}"
+/configure system security user "{{per["UserName"]}}" password-parameters aging {{per["Aging"]}}

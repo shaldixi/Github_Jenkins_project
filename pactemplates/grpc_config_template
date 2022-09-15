@@ -1,0 +1,13 @@
+    "grpc_config": {
+        "grpc-db-enabled": {{per["grpc-db-enabled"]}},
+        "db-address": {
+            "fqdn-ip": "{{per["db.fqdn-ip"]}}",
+            "async-port": {{per["db.async-port"]}},
+            "sync-port": {{per["db.sync-port"]}}
+        },
+        "local-address": {
+            "fqdn-ip": "{{per["local.fqdn-ip"]}}",
+            "async-port": {{per["local.async-port"]}},
+            "sync-port": {{per["local.sync-port"]}}
+        }
+    },

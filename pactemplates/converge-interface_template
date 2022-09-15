@@ -1,0 +1,1 @@
+/configure mobile-gateway pdn 1 sba-client-services converged-interface-support {{per["Enable for"]}} enable

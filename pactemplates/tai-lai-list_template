@@ -1,0 +1,2 @@
+/configure mobile-gateway profile tai-lai-list "{{per["tai-lai-list"]}}" tai mcc {{per["mcc"]}} mnc {{per["mnc"]}} tac {{per["tac"]}}
+/configure mobile-gateway profile tai-lai-list "{{per["tai-lai-list"]}}" tai mcc {{per["mcc"]}} mnc {{per["mnc"]}} tac-range-start {{per["tac-range-start"]}} tac-range-end {{per["tac-range-end"]}}

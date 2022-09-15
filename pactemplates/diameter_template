@@ -1,0 +1,8 @@
+/configure mobile-gateway profile diameter "{{per["diameter_name"]}}"
+/configure mobile-gateway profile diameter "{{per["diameter_name"]}}" connection-timer {{per["connection-timer"]}}
+/configure mobile-gateway profile diameter "{{per["diameter_name"]}}" dpr-timeout {{per["dpr-timeout"]}}
+/configure mobile-gateway profile diameter "{{per["diameter_name"]}}" ip-dscp {{per["ip-dscp"]}}
+/configure mobile-gateway profile diameter "{{per["diameter_name"]}}" transaction-timer {{per["transaction-timer"]}}
+/configure mobile-gateway profile diameter "{{per["diameter_name"]}}" perm-fail-retry-timeout {{per["perm-fail-retry-timeout"]}}
+/configure mobile-gateway profile diameter "{{per["diameter_name"]}}" dns-refresh-interval {{per["dns-refresh-interval"]}}
+/configure mobile-gateway profile diameter "{{per["diameter_name"]}}" fail-num-retries {{per["fail-num-retries"]}}

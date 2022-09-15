@@ -1,0 +1,6 @@
+/configure mobile-gateway profile charging chf-profile {{per["chf-profile"]}} description "{{per["description"]}}"
+/configure mobile-gateway profile charging chf-profile {{per["chf-profile"]}} ccfh-profile {{per["ccfh-profile"]}}
+/configure mobile-gateway profile charging chf-profile {{per["chf-profile"]}} {{per["request-quota-before-traffic"]}}
+/configure mobile-gateway profile charging chf-profile {{per["chf-profile"]}} uuc-options-with-quota {{per["uplink"]}} {{per["downlink"]}}
+/configure mobile-gateway profile charging chf-profile {{per["chf-profile"]}} {{per["smf-generate-charging-data-ref"]}}
+/configure mobile-gateway profile charging chf-profile {{per["chf-profile"]}} {{per["uuc-reporting-enh"]}}

@@ -1,0 +1,2 @@
+/configure mobile-gateway pdn 1 cdbx cloud-db-profile {{per["cloud-db-profile"]}}
+/configure mobile-gateway pdn 1 cdbx interface "{{per["interface"]}}" router "{{per["router"]}}"

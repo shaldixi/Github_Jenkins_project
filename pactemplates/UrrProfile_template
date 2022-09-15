@@ -1,0 +1,4 @@
+/configure mobile-gateway profile policy-options begin
+/configure mobile-gateway profile policy-options urr-profile "{{per["UrrProfile"]}}"
+/configure mobile-gateway profile policy-options urr-profile "{{per["UrrProfile"]}}" {{per["fpt-mode"]}}
+/configure mobile-gateway profile policy-options commit

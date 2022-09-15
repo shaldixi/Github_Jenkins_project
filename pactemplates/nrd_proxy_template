@@ -1,0 +1,18 @@
+    "nrd_proxy": {
+        "user_workers": {{per["user_workers"]}},
+        "ctrl_workers": {{per["ctrl_workers"]}},
+        "keep_alive_time": {{per["keep_alive_time"]}},
+        "keep_alive_intvl": {{per["keep_alive_intvl"]}},
+        "keep_alive_probes": {{per["keep_alive_probes"]}},
+        "listen_servers":
+            {
+                "addr": "{{per["addr"]}}",
+                "port": {{per["port"]}},
+                "amount": {{per["amount"]}}
+                "health-server": {{per["health-server"]}},
+                "start-probe-path": "{{per["start-probe-path"]}}",
+                "live-probe-path": "{{per["live-probe-path"]}}",
+                "ready-probe-path": "{{per["ready-probe-path"]}}",
+                "live-probe-wd-secs": {{per["live-probe-wd-secs"]}}
+            }
+    },

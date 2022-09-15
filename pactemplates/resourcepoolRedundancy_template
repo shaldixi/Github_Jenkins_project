@@ -1,0 +1,3 @@
+/configure mobile-gateway system resource-pool {{per["resource-pool"]}} redundancy {{per["redundancy"]}} gateway {{per["gateway"]}} card {{per["card"]}}
+/configure mobile-gateway system group {{per["group"]}} resource-pool {{per["resource-pool"]}} override-profile {{per["override-profile"]}}
+/configure mobile-gateway system group {{per["group"]}} resource-pool {{per["resource-pool"]}} no shutdown

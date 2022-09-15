@@ -1,0 +1,3 @@
+/configure log file-id {{per['FileID']}} description "{{per['FileDescription']}}"
+/configure log file-id {{per['FileID']}} location {{per['FileLocation']}} 
+/configure log file-id {{per['FileID']}} rollover {{per['FileRollover']}} retention {{per['FileRetention']}}

@@ -1,0 +1,2 @@
+/configure mobile-gateway pdn 1 sba-client-services chf-client nchf-convergedcharging "{{per["nchf-convergedcharging"]}}" nf-id-list "{{per["nf-id-list"]}}"
+/configure mobile-gateway pdn 1 sba-client-services chf-client nchf-convergedcharging "{{per["nchf-convergedcharging"]}}" interface router "{{per["router"]}}" "{{per["interface"]}}"

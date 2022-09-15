@@ -1,0 +1,1 @@
+/configure mobile-gateway system group {{per["group"]}} redundancy {{per["redundancy"]}} gateway {{per["gateway"]}} override-profile {{per["override-profile"]}}

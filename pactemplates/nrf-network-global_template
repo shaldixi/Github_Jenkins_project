@@ -1,0 +1,18 @@
+    "nrf-network": {
+        "nrf-network-check" : {{per['nrf-network-check']}},
+        "nrf-dns-enabled" : {{per['nrf-dns-enabled']}},
+        "nf-instance-id" : "{{per['nf-instance-id']}}",
+        "nrf-type" : "{{per['nrf-type']}}",
+        "nrf-locality" : "{{per['nrf-locality']}}",
+        "nrf-fqdn" : "{{per['nrf-fqdn']}}",
+        "nrf-inter-plmn-fqdn" : "{{per['nrf-inter-plmn-fqdn']}}",
+        "nrf-max-load" : {{per['nrf-max-load']}},
+        "nrf-mgmt-addr" : "{{per['nrf-mgmt-addr']}}",
+        "nrf-mgmt-port" : {{per['nrf-mgmt-port']}},
+        "nrf-mgmt-timeout" : {{per['nrf-mgmt-timeout']}},
+        "nrf-disc-addr" : "{{per['nrf-disc-addr']}}",
+        "nrf-disc-port" : {{per['nrf-disc-port']}},
+        "nrf-disc-timeout" : {{per['nrf-disc-timeout']}},
+        "nrf-enable-allowed-fields" : {{per['nrf-enable-allowed-fields']}},
+        "nrf-override-validity-period" : {{per['nrf-override-validity-period']}}
+	},

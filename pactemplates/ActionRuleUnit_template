@@ -1,0 +1,5 @@
+/configure mobile-gateway profile policy-options begin
+/configure mobile-gateway profile policy-options action-rule-unit "{{per["ActionRuleUnit"]}}" {{per["Bearer-type"]}}
+/configure mobile-gateway profile policy-options action-rule-unit "{{per["ActionRuleUnit"]}}" characteristic {{per["characteristic"]}} value {{per["value"]}}
+/configure mobile-gateway profile policy-options action-rule-unit "{{per["ActionRuleUnit"]}}" sdf-level-policing direction {{per["direction"]}} group {{per["group"]}}
+/configure mobile-gateway profile policy-options commit

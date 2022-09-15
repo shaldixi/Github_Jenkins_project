@@ -1,0 +1,12 @@
+/configure application-assurance group {{per["GroupID"]}} create policy begin
+/configure application-assurance group {{per["GroupID"]}} policy app-filter entry {{per["Entry"]}} create description "{{per["Description"]}}"
+/configure application-assurance group {{per["GroupID"]}} policy app-filter entry {{per["Entry"]}} create protocol eq "{{per["Protocol"]}}"
+/configure application-assurance group {{per["GroupID"]}} policy app-filter entry {{per["Entry"]}} create flow-setup-direction {{per["FlowSetupDirection"]}}
+/configure application-assurance group {{per["GroupID"]}} policy app-filter entry {{per["Entry"]}} create server-port eq {{per["ServerPort"]}}
+/configure application-assurance group {{per["GroupID"]}} policy app-filter entry {{per["Entry"]}} create server-address eq {{per["ServerAddress"]}}
+/configure application-assurance group {{per["GroupID"]}} policy app-filter entry {{per["Entry"]}} create server-address eq ip-prefix-list "{{per["ServerPrefixList"]}}"
+/configure application-assurance group {{per["GroupID"]}} policy app-filter entry {{per["Entry"]}} create expression {{per["Number"]}} http-host eq "{{per["http-host"]}}"
+/configure application-assurance group {{per["GroupID"]}} policy app-filter entry {{per["Entry"]}} create expression {{per["Number"]}} http-uri eq "{{per["http-uri"]}}"
+/configure application-assurance group {{per["GroupID"]}} policy app-filter entry {{per["Entry"]}} create application "{{per["Application"]}}"
+/configure application-assurance group {{per["GroupID"]}} policy app-filter entry {{per["Entry"]}} create no shutdown
+/configure application-assurance group {{per["GroupID"]}} create policy commit

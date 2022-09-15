@@ -1,0 +1,6 @@
+/configure mobile-gateway profile "{{per["gxProfile"]}}" "default" {{per["forced-triggers"]}}
+/configure mobile-gateway profile "{{per["gxProfile"]}}" fh-session-no-resp {{per["fh-session-no-resp"]}} ap-action-profile "{{per["ap-action-profile"]}}"
+/configure mobile-gateway profile "{{per["gxProfile"]}}" message ccr-u result-code-5xxx retry-and-ap-continue ap-action-profile "{{per["ap-action-profile"]}}"
+/configure mobile-gateway profile "{{per["gxProfile"]}}" message {{per["message"]}} result-code {{per["result-code"]}} {{per["action"]}}
+/configure mobile-gateway profile "{{per["gxProfile"]}}" message {{per["message"]}} retry-count {{per["retry-count"]}}
+/configure mobile-gateway profile "{{per["gxProfile"]}}" message {{per["message"]}} transaction-timer timeout-msec {{per["transaction-timer-timeout-msec"]}}

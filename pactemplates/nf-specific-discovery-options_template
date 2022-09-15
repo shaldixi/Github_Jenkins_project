@@ -1,0 +1,9 @@
+    "nrf_config": {
+		"nf-specific-discovery-options": {
+            "{{per['NF']}}": {
+                "validity-time": {{per['validity-time']}},
+                "override": {{per['override']}},
+                "max-instances": {{per['max-instances']}}
+            }
+		}
+	},

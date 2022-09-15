@@ -1,0 +1,10 @@
+/configure mobile-gateway profile list qci-list "{{per["qci-list"]}}" qci {{per["Value"]}}
+/configure mobile-gateway profile list qci-list "{{per["qci-list"]}}" qci {{per["1"]}}
+/configure mobile-gateway profile list qci-list "{{per["qci-list"]}}" qci {{per["2"]}}
+/configure mobile-gateway profile list qci-list "{{per["qci-list"]}}" qci {{per["3"]}}
+/configure mobile-gateway profile list qci-list "{{per["qci-list"]}}" qci {{per["4"]}}
+/configure mobile-gateway profile list qci-list "{{per["qci-list"]}}" qci {{per["5"]}}
+/configure mobile-gateway profile list qci-list "{{per["qci-list"]}}" qci {{per["6"]}}
+/configure mobile-gateway profile list qci-list "{{per["qci-list"]}}" qci {{per["7"]}}
+/configure mobile-gateway profile list qci-list "{{per["qci-list"]}}" qci {{per["8"]}}
+/configure mobile-gateway profile list qci-list "{{per["qci-list"]}}" qci {{per["9"]}}

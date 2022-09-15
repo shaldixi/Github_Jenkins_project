@@ -1,0 +1,6 @@
+    "nrf-network": {
+        "nrf-registration":
+            {
+                "nrf-id": {{per['nrf-id']}}
+            }
+	},

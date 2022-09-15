@@ -1,0 +1,16 @@
+/configure mobile-gateway profile charging {{per["node"]}}-charging {{per["charging-id"]}}
+/configure mobile-gateway profile charging {{per["node"]}}-charging {{per["charging-id"]}} description "{{per["description"]}}"
+/configure mobile-gateway profile charging {{per["node"]}}-charging {{per["charging-id"]}} smf-legacy-nr-rattype {{per["smf-legacy-nr-rattype"]}}
+/configure mobile-gateway profile charging {{per["node"]}}-charging {{per["charging-id"]}} off-line {{per["enable-offline"]}}
+/configure mobile-gateway profile charging {{per["node"]}}-charging {{per["charging-id"]}} off-line {{per["exclude-zero-vol-cdr"]}}
+/configure mobile-gateway profile charging {{per["node"]}}-charging {{per["charging-id"]}} off-line {{per["include-bearer-charging"]}}
+/configure mobile-gateway profile charging {{per["node"]}}-charging {{per["charging-id"]}} off-line partial-record-closure-trigger {{per["prct_ms-time-zone-change"]}}
+/configure mobile-gateway profile charging {{per["node"]}}-charging {{per["charging-id"]}} off-line partial-record-closure-trigger {{per["prct_plmn-change"]}}
+/configure mobile-gateway profile charging {{per["node"]}}-charging {{per["charging-id"]}} off-line partial-record-closure-trigger {{per["prct_rat-change"]}}
+/configure mobile-gateway profile charging {{per["node"]}}-charging {{per["charging-id"]}} off-line partial-record-closure-trigger time-limit {{per["prct_time-limit(sec)"]}}
+/configure mobile-gateway profile charging {{per["node"]}}-charging {{per["charging-id"]}} off-line partial-record-closure-trigger volume-limit {{per["prct_vol-limit(kb)"]}}
+/configure mobile-gateway profile charging {{per["node"]}}-charging {{per["charging-id"]}} off-line partial-record-closure-trigger volume-limit-eutran {{per["prct_vol-limit-eutran(kb)"]}}
+/configure mobile-gateway profile charging {{per["node"]}}-charging {{per["charging-id"]}} off-line charging-info-trigger {{per["charging-info-trigger"]}}
+/configure mobile-gateway profile charging {{per["node"]}}-charging {{per["charging-id"]}} off-line {{per["sgw-change-cause-record-closure"]}}
+/configure mobile-gateway profile charging {{per["node"]}}-charging {{per["charging-id"]}} on-line dcca-profile {{per["dcca-profile"]}}
+/configure mobile-gateway profile charging {{per["node"]}}-charging {{per["charging-id"]}} on-line {{per["enable-online"]}}

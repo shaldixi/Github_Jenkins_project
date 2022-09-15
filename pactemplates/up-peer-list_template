@@ -1,0 +1,6 @@
+/configure mobile-gateway profile pfcp up-peer-list "{{per["up-peer-list-name"]}}" peer {{per["peer"]}} network-realm "{{per["network-realm"]}}" ip-pool "{{per["ip-pool"]}}" hold-timer {{per["hold-timer"]}}
+/configure mobile-gateway profile pfcp up-peer-list "{{per["up-peer-list-name"]}}" peer {{per["peer"]}} network-realm "{{per["network-realm"]}}" ip-pool "{{per["ip-pool"]}}" ipv4-prefix {{per["ipv4-prefix"]}}
+/configure mobile-gateway profile pfcp up-peer-list "{{per["up-peer-list-name"]}}" peer {{per["peer"]}} network-realm "{{per["network-realm"]}}" ip-pool "{{per["ip-pool"]}}" ipv6-prefix {{per["ipv6-prefix"]}}
+/configure mobile-gateway profile pfcp up-peer-list "{{per["up-peer-list-name"]}}" peer {{per["peer"]}} network-realm "{{per["network-realm"]}}" {{per["ip-pool-distribution"]}}
+/configure mobile-gateway profile pfcp up-peer-list "{{per["up-peer-list-name"]}}" peer {{per["peer"]}} apn "{{per["apn"]}}" network-realm "{{per["networkRealm"]}}"
+/configure mobile-gateway profile pfcp up-peer-list "{{per["up-peer-list-name"]}}" peer {{per["peer"]}} apn "{{per["apn"]}}" ip-pool-list ip-pool {{per["ip-pool-list"]}}

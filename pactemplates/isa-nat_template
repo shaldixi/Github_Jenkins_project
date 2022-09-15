@@ -1,0 +1,5 @@
+/configure isa nat-group {{per["nat-group"]}} create
+/configure isa nat-group {{per["nat-group"]}} active-mda-limit {{per["active-mda-limit"]}}
+/configure isa nat-group {{per["nat-group"]}} {{per["local-nat"]}}
+/configure isa nat-group {{per["nat-group"]}} mda {{per["mda"]}}
+/configure isa nat-group {{per["nat-group"]}} no shutdown

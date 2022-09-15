@@ -1,0 +1,45 @@
+/configure mobile-gateway profile list plmn "{{per["HomePlmnList"]}}" mcc {{per["MCC"]}} mnc {{per["MNC"]}}
+/configure mobile-gateway pdn 1 instance-type {{per["InstanceType"]}}
+/configure mobile-gateway pdn 1 {{per["feature"]}}
+/configure mobile-gateway pdn 1 pfcp-node-id-type {{per["pfcp-node-id-type"]}}
+/configure mobile-gateway pdn 1 aa-group "{{per["aa-group"]}}" def-app-profile "{{per["def-app-profile"]}}"
+/configure mobile-gateway pdn 1 epc-node "{{per["EpcNodeID"]}}"
+/configure mobile-gateway pdn 1 home-plmn-list "{{per["HomePlmnList"]}}"
+/configure mobile-gateway pdn 1 radius accounting-on-off-level {{per["accounting-on-off-level"]}}
+/configure mobile-gateway pdn 1 radius interface {{per["Radius-interface"]}} router {{per["Radius-router"]}}
+/configure mobile-gateway pdn 1 kpi-kci accounting-policy "{{per["kpi-accounting-policy"]}}"
+/configure mobile-gateway pdn 1 kpi-kci accounting-policy "{{per["kpi-accounting-policy"]}}" {{per["collect-stats"]}}
+/configure mobile-gateway pdn 1 kpi-kci accounting-policy "{{per["kpi-accounting-policy"]}}" {{per["arp-traffic-stats"]}}
+/configure mobile-gateway pdn 1 kpi-kci accounting-policy "{{per["kpi-accounting-policy"]}}" {{per["enhanced-traffic-stats"]}}
+/configure mobile-gateway pdn 1 charging charging-prof home {{per['chrg-prof-home']}}
+/configure mobile-gateway pdn 1 charging charging-prof visiting {{per['chrg-prof-visiting']}}
+/configure mobile-gateway pdn 1 charging charging-prof roaming {{per['chrg-prof-roam']}}
+/configure mobile-gateway pdn 1 charging pgw-node-id "{{per["chrg-pgw-node-id"]}}"
+/configure mobile-gateway pdn 1 charging sgw-node-id "{{per["chrg-sgw-node-id"]}}"
+/configure mobile-gateway pdn 1 charging {{per["volume-limit-enh"]}}
+/configure mobile-gateway pdn 1 charging cc-ignore {{per['cc-ignore']}}
+/configure mobile-gateway pdn 1 charging {{per['enable-nchf-charging']}}
+/configure mobile-gateway pdn 1 charging node-id "{{per['chrg-node-id']}}"
+/configure mobile-gateway pdn 1 charging cdr-transfer {{per['cdr-transfer']}}
+/configure mobile-gateway pdn 1 charging cdr-avp-options-profile {{per['cdr-avp-options-profile']}}
+/configure mobile-gateway pdn 1 signaling diameter mip6-agent-info use-fqdn "{{per['use-fqdn']}}" use-realm "{{per['use-realm']}}"
+/configure mobile-gateway pdn 1 signaling diameter profile "{{per['diameterProfile']}}"
+/configure mobile-gateway pdn 1 signaling diameter origin-host "{{per["DiaOriginHost"]}}"
+/configure mobile-gateway pdn 1 signaling diameter origin-realm "{{per["DiaOriginRealm"]}}"
+/configure mobile-gateway pdn 1 signaling gtp-c profile "{{per['gtpcProfile']}}"
+/configure mobile-gateway pdn 1 signaling gtp-u profile "{{per['gtpuProfile']}}"
+/configure mobile-gateway pdn 1 signaling interface router "{{per['router']}}" "{{per['interface']}}"
+/configure mobile-gateway pdn 1 qci-policy "{{per["QciPolicy"]}}" 
+/configure mobile-gateway pdn 1 qci-policy uplink "{{per["qciUplink"]}}" 
+/configure mobile-gateway pdn 1 qci-policy downlink "{{per["qciDownlink"]}}"
+/configure mobile-gateway pdn 1 pcmd profile "{{per["pcmd-profile"]}}"
+/configure mobile-gateway pdn 1 session-deletion-rate "{{per["session-deletion-rate"]}}""
+/configure mobile-gateway pdn 1 slices slice-list "{{per["slice-list"]}}"
+/configure mobile-gateway pdn 1 slices slice-instance-list "{{per["slice-instance-list"]}}"
+/configure mobile-gateway pdn 1 call-procedure-retry retry-time {{per["call-procedure-retry-time"]}} retry-attempts {{per["call-procedure-retry-attempts"]}}
+/configure mobile-gateway pdn 1 nf-profile-attributes capacity {{per["capacity"]}}
+/configure mobile-gateway pdn 1 nf-profile-attributes locality {{per["locality"]}}
+/configure mobile-gateway pdn 1 nf-profile-attributes priority {{per["priority"]}}
+/configure mobile-gateway pdn 1 nf-profile-attributes tai-list "{{per["tai-list"]}}"
+/configure mobile-gateway pdn 1 nf-profile-attributes nf-instance-id "{{per["nf-instance-id"]}}"
+/configure mobile-gateway pdn 1 qfi-mapping-profile "{{per["qfi-mapping-profile"]}}"

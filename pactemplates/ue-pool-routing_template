@@ -1,0 +1,6 @@
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} ip-local-pool "{{per["pool-name"]}}" {{per["remote"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} ip-local-pool "{{per["pool-name"]}}" {{per["suppress-dotzero-broadcast-address"]}}
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} ip-local-pool "{{per["pool-name"]}}" ipv4-prefix "{{per["ipv4-prefix"]}}"
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} ip-local-pool "{{per["pool-name"]}}" ipv6-prefix "{{per["ipv6-prefix"]}}"
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create static-route-entry {{per["ipv4-prefix"]}} {{per["nexthop"]}} no shutdown
+/configure service vprn {{per["vprnId"]}} name "{{per["name"]}}" customer {{per["customer"]}} create static-route-entry {{per["ipv6-prefix"]}} {{per["nexthop"]}} no shutdown

@@ -1,0 +1,7 @@
+/configure mobile-gateway pdn 1 sba-client-services udm-client nudm-sdm "{{per["nudm-sdm"]}}" interface "{{per["interface"]}}" router "{{per["router"]}}"
+/configure mobile-gateway pdn 1 sba-client-services udm-client nudm-sdm "{{per["nudm-sdm"]}}" nf-id-list "{{per["nf-id-list"]}}"
+/configure mobile-gateway pdn 1 sba-client-services udm-client nudm-sdm "{{per["nudm-sdm"]}}" {{per["explicit-unsubscribe"]}}
+/configure mobile-gateway pdn 1 sba-client-services udm-client nudm-uecm "{{per["nudm-uecm"]}}" interface "{{per["interface"]}}" router "{{per["router"]}}"
+/configure mobile-gateway pdn 1 sba-client-services udm-client nudm-uecm "{{per["nudm-uecm"]}}" nf-id-list "{{per["nf-id-list"]}}"
+/configure mobile-gateway pdn 1 sba-client-services udm-client nudm-uecm "{{per["nudm-uecm"]}}" {{per["explicit-unsubscribe"]}}
+

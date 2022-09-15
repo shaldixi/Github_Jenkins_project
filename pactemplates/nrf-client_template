@@ -1,0 +1,12 @@
+/configure mobile-gateway pdn 1 sba-client-services nrf-client {{per["nrf-client"]}} "{{per["nnrf-nfm"]}}" nf-id-list "{{per["nf-id-list"]}}"
+/configure mobile-gateway pdn 1 sba-client-services nrf-client {{per["nrf-client"]}} "{{per["nnrf-nfm"]}}" interface router "{{per["router"]}}" "{{per["interface"]}}"
+/configure mobile-gateway pdn 1 sba-client-services nrf-client {{per["nrf-client"]}} "{{per["nnrf-nfm"]}}" blocklist-duration {{per["blocklist-duration"]}}
+/configure mobile-gateway pdn 1 sba-client-services nrf-client {{per["nrf-client"]}} "{{per["nnrf-nfm"]}}" nfm-nrf-blocklist retry {{per["nfm-nrf-blocklist_retry"]}} wait-timer {{per["nfm-nrf-blocklist_wait_timer"]}}
+/configure mobile-gateway pdn 1 sba-client-services nrf-client {{per["nrf-client"]}} "{{per["nnrf-nfm"]}}" heartbeat-nrf-blocklist retry {{per["heartbeat-nrf-blocklist_retry"]}} wait-timer {{per["heartbeat-nrf-blocklist_wait_timer"]}}
+/configure mobile-gateway pdn 1 sba-client-services nrf-client {{per["nrf-client"]}} "{{per["nnrf-nfm"]}}" suppress-discovery {{per["suppress-discovery"]}}
+/configure mobile-gateway pdn 1 sba-client-services nrf-client {{per["nrf-client"]}} "{{per["nnrf-disc"]}}" nf-id-list "{{per["nf-id-list"]}}"
+/configure mobile-gateway pdn 1 sba-client-services nrf-client {{per["nrf-client"]}} "{{per["nnrf-disc"]}}" interface router "{{per["router"]}}" "{{per["interface"]}}"
+/configure mobile-gateway pdn 1 sba-client-services nrf-client {{per["nrf-client"]}} "{{per["nnrf-disc"]}}" nfm-nrf-blocklist retry {{per["nfm-nrf-blocklist_retry"]}} wait-timer {{per["nfm-nrf-blocklist_wait_timer"]}}
+/configure mobile-gateway pdn 1 sba-client-services nrf-client {{per["nrf-client"]}} "{{per["nnrf-disc"]}}" heartbeat-nrf-blocklist retry {{per["heartbeat-nrf-blocklist_retry"]}} wait-timer {{per["heartbeat-nrf-blocklist_wait_timer"]}}
+/configure mobile-gateway pdn 1 sba-client-services nrf-client {{per["nrf-client"]}} "{{per["nnrf-disc"]}}" suppress-discovery {{per["suppress-discovery"]}}
+/configure mobile-gateway pdn 1 sba-client-services nrf-client {{per["nrf-client"]}} "{{per["nnrf-disc"]}}" {{per["use-locality"]}}

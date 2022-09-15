@@ -1,0 +1,4 @@
+/configure mobile-gateway profile policy-options begin
+/configure mobile-gateway profile policy-options qos-rule-unit "{{per["QosRuleUnit"]}}" down-link gbr {{per["D-GBR"]}} mbr {{per["D-MBR"]}}
+/configure mobile-gateway profile policy-options qos-rule-unit "{{per["QosRuleUnit"]}}" up-link gbr {{per["D-GBR"]}} mbr {{per["D-MBR"]}}
+/configure mobile-gateway profile policy-options commit

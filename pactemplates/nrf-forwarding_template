@@ -1,0 +1,6 @@
+	"nrf_config": {	
+		"nrf-forwarding": {
+            "forwarding-list": [],
+            "disallowed-fqdns": []
+			},
+		},

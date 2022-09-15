@@ -1,0 +1,7 @@
+/configure log filter {{per["Filter"]}} create
+/configure log filter {{per["Filter"]}} default-action {{per["DefaultAction"]}}
+/configure log filter {{per["Filter"]}} description "{{per["Description"]}}"
+/configure log filter {{per["Filter"]}} entry {{per["Entry"]}} description "{{per["EntryDescription"]}}"
+/configure log filter {{per["Filter"]}} entry {{per["Entry"]}} action {{per["Action"]}}
+/configure log filter {{per["Filter"]}} entry {{per["Entry"]}} match application eq "{{per["Application"]}}"
+/configure log filter {{per["Filter"]}} entry {{per["Entry"]}} match number eq {{per["Number"]}}

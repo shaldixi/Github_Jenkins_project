@@ -1,0 +1,22 @@
+    "nssf_config": {
+        "node-name": "{{per["node-name"]}}",
+        "nssf-instance-id": "{{per["nssf-instance-id"]}}",
+        "nssf-address": {
+            "addr": "{{per["nssf.addr"]}}",
+            "port": {{per["nssf.port"]}}
+        },
+        "nssf-json-version": "{{per["nssf-json-version"]}}",
+        "nssf-network-check": {{per["nssf-network-check"]}},
+        "nssf-dns-enabled": {{per["nssf-dns-enabled"]}},
+        "nssf-use-discover": {{per["nssf-use-discover"]}},
+        "nrf-address":  [
+            {
+                 "addr"  : "{{per["nrf.addr"]}}",
+                 "port"  : {{per["nrf.port"]}}
+             }
+         ],
+        "skip-static-cfg": {{per["skip-static-cfg"]}},
+        "amf-prof-list": [],
+        "ta-prof-list": [],
+        "nssf-slices": []
+    },

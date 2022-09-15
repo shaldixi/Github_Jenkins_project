@@ -1,0 +1,19 @@
+/configure mobile-gateway profile policy-options begin
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" qos down-link gbr {{per["D-gbr"]}} mbr {{per["D-mbr"]}}
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" qos up-link gbr {{per["U-gbr"]}} mbr {{per["U-mbr"]}}
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" description "{{per["Description"]}}"
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" pdr-id {{per["PDR-ID"]}}
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" {{per["shallow-inspection-only"]}}
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" {{per["aa-advanced-functions"]}}
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" flow-description {{per["Flow-Description"]}}
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" flow-description {{per["Flow-Description"]}} direction {{per["Direction"]}}
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" flow-description {{per["Flow-Description"]}} match remote-ip {{per["Remote-IP"]}}
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" flow-description {{per["Flow-Description"]}} match fqdn-group {{per["fqdn-group"]}}
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" flow-description {{per["Flow-Description"]}} match remote-ip-list {{per["RemoteIpList"]}}
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" flow-description {{per["Flow-Description"]}} match protocol {{per["Protocol"]}}
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" flow-description {{per["Flow-Description"]}} match remote-port eq {{per["Remote-Port"]}}
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" flow-description {{per["Flow-Description"]}} match protocol {{per["Protocol"]}}
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" flow-description {{per["Flow-Description"]}} match aa-charging-group "{{per["AA-charging-group"]}}"
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" flow-description {{per["Flow-Description"]}} match tos-tc {{per["tos-tc"]}}
+/configure mobile-gateway profile policy-options policy-rule-unit "{{per["PolicyRuleUnit"]}}" flow-gate-status {{per["Flow-Gate-Status"]}}
+/configure mobile-gateway profile policy-options commit

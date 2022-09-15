@@ -1,0 +1,7 @@
+/configure log log-id {{per['LogID']}} description "{{per['LogDescription']}}"
+/configure log log-id {{per['LogID']}} filter {{per['LogFilter']}}
+/configure log log-id {{per['LogID']}} time-format {{per["TimeFormatLocal"]}}
+/configure log log-id {{per['LogID']}} from {{per['LogsFrom']}}
+/configure log log-id {{per['LogID']}} to {{per['LogsTo']}}
+/configure log log-id {{per['LogID']}} to file {{per['LogsToFile']}}
+/configure log log-id {{per['LogID']}} no shutdown

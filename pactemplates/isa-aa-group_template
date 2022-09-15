@@ -1,0 +1,15 @@
+/configure isa application-assurance-group {{per["aa-group"]}} aa-sub-scale mobile-gateway create
+/configure isa application-assurance-group {{per["aa-group"]}} aa-sub-scale mobile-gateway primary {{per["primary1"]}}
+/configure isa application-assurance-group {{per["aa-group"]}} aa-sub-scale mobile-gateway primary {{per["primary2"]}}
+/configure isa application-assurance-group {{per["aa-group"]}} aa-sub-scale mobile-gateway shared-resources tcp-adv-func {{per["tcp-adv-func"]}}
+/configure isa application-assurance-group {{per["aa-group"]}} aa-sub-scale mobile-gateway shared-resources web-service-url-filter {{per["web-service-url-filter"]}}
+/configure isa application-assurance-group {{per["aa-group"]}} aa-sub-scale mobile-gateway partitions divert-fc {{per["af"]}}
+/configure isa application-assurance-group {{per["aa-group"]}} aa-sub-scale mobile-gateway partitions divert-fc {{per["be"]}}
+/configure isa application-assurance-group {{per["aa-group"]}} aa-sub-scale mobile-gateway partitions divert-fc {{per["ef"]}}
+/configure isa application-assurance-group {{per["aa-group"]}} aa-sub-scale mobile-gateway partitions divert-fc {{per["h1"]}}
+/configure isa application-assurance-group {{per["aa-group"]}} aa-sub-scale mobile-gateway partitions divert-fc {{per["h2"]}}
+/configure isa application-assurance-group {{per["aa-group"]}} aa-sub-scale mobile-gateway partitions divert-fc {{per["l1"]}}
+/configure isa application-assurance-group {{per["aa-group"]}} aa-sub-scale mobile-gateway partitions divert-fc {{per["l2"]}}
+/configure isa application-assurance-group {{per["aa-group"]}} aa-sub-scale mobile-gateway partitions divert-fc {{per["nc"]}}
+/configure isa application-assurance-group {{per["aa-group"]}} aa-sub-scale mobile-gateway statistics performance {{per["collect-stats"]}}
+/configure isa application-assurance-group {{per["aa-group"]}} aa-sub-scale mobile-gateway no shutdown

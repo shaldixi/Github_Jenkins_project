@@ -1,0 +1,5 @@
+/configure system script-control script-policy "{{per["ScriptPolicyName"]}}" results "{{per["ResultLocation"]}}"
+/configure system script-control script-policy "{{per["ScriptPolicyName"]}}" script "{{per["ScriptName"]}}"
+/configure system script-control script-policy "{{per["ScriptPolicyName"]}}" max-completed {{per["max-completed"]}}
+/configure system script-control script-policy "{{per["ScriptPolicyName"]}}" lifetime {{per["lifetime"]}}
+/configure system script-control script-policy "{{per["ScriptPolicyName"]}}" no shutdown

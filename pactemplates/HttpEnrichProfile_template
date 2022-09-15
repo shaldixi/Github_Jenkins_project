@@ -1,0 +1,13 @@
+/configure application-assurance group {{per['GroupID']}} http-enrich {{per['HttpEnrichProfileName']}} create
+/configure application-assurance group {{per['GroupID']}} http-enrich {{per['HttpEnrichProfileName']}} field "apn" name {{per['apn_name']}}
+/configure application-assurance group {{per['GroupID']}} http-enrich {{per['HttpEnrichProfileName']}} field "billing-type" name {{per['billing-type_name']}}
+/configure application-assurance group {{per['GroupID']}} http-enrich {{per['HttpEnrichProfileName']}} field "charging-id" name {{per['charging-id_name']}}
+/configure application-assurance group {{per['GroupID']}} http-enrich {{per['HttpEnrichProfileName']}} field "imei" name {{per['imei_name']}}
+/configure application-assurance group {{per['GroupID']}} http-enrich {{per['HttpEnrichProfileName']}} field "imsi" name {{per['imsi_name']}}
+/configure application-assurance group {{per['GroupID']}} http-enrich {{per['HttpEnrichProfileName']}} field "msisdn" name {{per['msisdn_name']}}
+/configure application-assurance group {{per['GroupID']}} http-enrich {{per['HttpEnrichProfileName']}} field "rat-type" name {{per['rat-type_name']}}
+/configure application-assurance group {{per['GroupID']}} http-enrich {{per['HttpEnrichProfileName']}} field "subscriber-ip" name {{per['subscriber-ip_name']}}
+/configure application-assurance group {{per['GroupID']}} http-enrich {{per['HttpEnrichProfileName']}} field "user-location" name {{per['user-location_name']}}
+/configure application-assurance group {{per['GroupID']}} http-enrich {{per['HttpEnrichProfileName']}} field "sgw-sgsn-address" name {{per['sgw-sgsn-address_name']}}
+/configure application-assurance group {{per['GroupID']}} http-enrich {{per['HttpEnrichProfileName']}} field "plmn-id" name {{per['plmn-id_name']}}
+/configure application-assurance group {{per['GroupID']}} http-enrich {{per['HttpEnrichProfileName']}} no shutdown

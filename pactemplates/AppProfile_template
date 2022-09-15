@@ -1,0 +1,3 @@
+/configure application-assurance group {{per["GroupId"]}} create policy begin
+/configure application-assurance group {{per["GroupId"]}} policy app-profile "{{per["app-profile"]}}" create
+/configure application-assurance group {{per["GroupId"]}} policy commit

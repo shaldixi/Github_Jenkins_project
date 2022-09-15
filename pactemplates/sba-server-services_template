@@ -1,0 +1,7 @@
+/configure mobile-gateway pdn 1 sba-server-services nsmf-pdusession "{{per["nsmf-pdusession"]}}" indirect-forwarding-timeout {{per["indirect-forwarding-timeout"]}}
+/configure mobile-gateway pdn 1 sba-server-services nsmf-pdusession "{{per["nsmf-pdusession"]}}" n3-interface-realm "{{per["n3-interface-realm"]}}"
+/configure mobile-gateway pdn 1 sba-server-services nsmf-pdusession "{{per["nsmf-pdusession"]}}" s5-ref-point "{{per["s5-ref-point"]}}"
+/configure mobile-gateway pdn 1 sba-server-services nsmf-pdusession "{{per["nsmf-pdusession"]}}" allowed-nf-types {{per["allowed-nf-types"]}}
+/configure mobile-gateway pdn 1 sba-server-services nsmf-pdusession "{{per["nsmf-pdusession"]}}" version {{per["version"]}} patch {{per["patch"]}}
+/configure mobile-gateway pdn 1 sba-server-services nsmf-pdusession "{{per["nsmf-pdusession"]}}" interface router "{{per["router"]}}" "{{per["interface"]}}" port {{per["port"]}}
+/configure mobile-gateway pdn 1 sba-server-services nsmf-event-exposure "{{per["nsmf-event-exposure"]}}" interface router "{{per["router"]}}" "{{per["interface"]}}" port {{per["port"]}}

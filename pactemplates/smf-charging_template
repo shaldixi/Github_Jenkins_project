@@ -1,0 +1,6 @@
+/configure mobile-gateway profile charging smf-charging {{per["smf-charging"]}} default-charging-method {{per["default-charging-method"]}}
+/configure mobile-gateway profile charging smf-charging {{per["smf-charging"]}} description "{{per["description"]}}"
+/configure mobile-gateway profile charging smf-charging {{per["smf-charging"]}} event-triggers-fbc {{per["event-triggers-fbc"]}}
+/configure mobile-gateway profile charging smf-charging {{per["smf-charging"]}} chf-selection chf-profile {{per["chf-profile"]}}
+/configure mobile-gateway profile charging smf-charging {{per["smf-charging"]}} quota-management traffic-handling-options quota-unavailable {{per["quota-unavailable"]}}
+/configure mobile-gateway profile charging smf-charging {{per["smf-charging"]}} quota-management final-unit-indication {{per["final-unit-indication"]}}
