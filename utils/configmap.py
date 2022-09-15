@@ -2,6 +2,12 @@ import os
 import re
 import pandas as pd
 from openpyxl import load_workbook
+from ruamel.yaml import ruamel
+
+tempDict = dict()
+tempDict["kind"] = "ConfigMap"
+tempDict["metadata"] = {"name": "dut-a-cfg"}
+tempDict["data"] = {"mg.cfg": "|"}
 
 
 def createConfigMap(line):
@@ -34,7 +40,7 @@ def readAllTemplates(dut_config_path):
         templateName = finalSheetList[item]
         finalTemplateName = templateName.replace("-", "_")
         content = "\n    #------------------------------------\n    echo " + templateName + " Configuration\n    " \
-                                                                                          "#------------------------------------\n "
+                                                                                            "#------------------------------------\n "
         content = content + "\n{{- if .Values." + finalTemplateName + " }}" \
                                                                       "\n{{- range .Values." + finalTemplateName + " }}"
         try:
@@ -91,12 +97,11 @@ def readAllTemplates(dut_config_path):
         except:
             exceptionList.append(arr[item])
             continue
-    print(configMap)
+    # print(configMap)
     if not os.path.exists(dut_config_path):
         os.remove(dut_config_path)
-    with open(dut_config_path, "w") as yaml_file:
+    with open(dut_config_path, "w") as yamlFile:
+        ruamel.yaml.round_trip_dump(tempDict, yamlFile, default_flow_style=False)
+    with open(dut_config_path, "a") as yaml_file:
         yaml_file.write(configMap)
     # print("Exception List: \n", exceptionList)
-
-
-

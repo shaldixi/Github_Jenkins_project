@@ -12,7 +12,7 @@ pacinputsheetpath = 'Input/PAC_LLD.xlsx'
 json_path = "Input/input.json"
 with open(json_path, 'r') as f:
     data = json.loads(f.read())
-    print(data)
+    # print(data)
 
 node_type = data["Node_Type"]
 version = data["Version"]

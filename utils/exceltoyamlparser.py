@@ -15,14 +15,14 @@ def processciqsheet(ciqpath, values_yaml):
     final_dic = dict()
     for sheetname in provisioning_sheets:
         current_sheet_data = pd.read_excel(ciqpath, sheet_name=sheetname, index_col=None, header=None)
-        print(current_sheet_data)
+        # print(current_sheet_data)
         maxcolumnlen = current_sheet_data.columns.size
         current_sheet_dic_list = []
         for rowNo in range(len(current_sheet_data)):
             if rowNo >1:
                 current_sheet_row_dic = dict()
                 for columnNo in range(maxcolumnlen):
-                    print(current_sheet_data.iloc[rowNo, columnNo])
+                    # print(current_sheet_data.iloc[rowNo, columnNo])
                     headerName = current_sheet_data.iloc[1, columnNo]
                     headerName = "_".join(headerName.split(' '))
                     headerName = "_".join(headerName.split('-'))
