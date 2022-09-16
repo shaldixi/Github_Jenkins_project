@@ -1,0 +1,61 @@
+{{- if .Values.podsecuritypolicy.create }}
+{{- $privileged := ternary "true" "false" (ne (.Values.podsecuritypolicy.privileged | toString) "false") }}
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+{{- if .Values.podsecuritypolicy.name }}
+  name: {{ .Values.podsecuritypolicy.name }}
+{{- else }}
+  name: {{ .Release.Namespace }}-psp
+{{- end }}
+  annotations:
+    seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
+spec:
+{{- if eq $privileged "true" }}
+  privileged: true
+  allowPrivilegeEscalation: true
+  allowedCapabilities:
+  - '*'
+  volumes:
+  - '*'
+  hostNetwork: true
+  hostPorts:
+  - min: 0
+    max: 65535
+  hostIPC: true
+  hostPID: true
+  runAsUser:
+    rule: 'RunAsAny'
+  seLinux:
+    rule: 'RunAsAny'
+  supplementalGroups:
+    rule: 'RunAsAny'
+  fsGroup:
+    rule: 'RunAsAny'
+{{- else }}
+  privileged: false
+  allowPrivilegeEscalation: true
+  allowedCapabilities:
+  - NET_ADMIN
+  volumes:
+  - configMap
+  - emptyDir
+  - projected
+  - secret
+  - downwardAPI
+  - persistentVolumeClaim
+  hostNetwork: false
+  hostIPC: false
+  hostPID: false
+  runAsUser:
+    rule: 'RunAsAny'
+  seLinux:
+    rule: 'RunAsAny'
+  supplementalGroups:
+    rule: 'RunAsAny'
+  fsGroup:
+    rule: 'RunAsAny'
+{{- end }}
+
+---
+{{- end }}
