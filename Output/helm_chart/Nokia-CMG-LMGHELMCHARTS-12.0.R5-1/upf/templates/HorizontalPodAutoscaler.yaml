@@ -1,0 +1,31 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: lmg-hpa
+spec:
+  maxReplicas: {{ .Values.lmgScale.maxReplicas }}
+  minReplicas: {{ .Values.lmgScale.minReplicas }}
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: lmg-statefulset
+  targetCPUUtilizationPercentage: {{ .Values.lmgScale.targetCPUUtilizationPercentage }}
+
+---
+{{- $llbMinReplicas := (.Values.llbScale.minReplicas | int) }}
+{{- if ge $llbMinReplicas 1 }}
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: llb-hpa
+spec:
+  maxReplicas: {{ .Values.llbScale.maxReplicas }}
+  minReplicas: {{ .Values.llbScale.minReplicas }}
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: llb-statefulset
+  targetCPUUtilizationPercentage: {{ .Values.llbScale.targetCPUUtilizationPercentage }}
+
+---
+{{- end }}
