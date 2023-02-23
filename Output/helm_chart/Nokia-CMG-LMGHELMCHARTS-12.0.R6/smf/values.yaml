@@ -1,0 +1,253 @@
+service:
+  loam:
+    telnet:
+      nodePort: 23
+      port: 2323
+      targetPort: 2323
+    ssh:
+      nodePort: 31221
+      port: 2222
+      targetPort: 2222
+    snmp1:
+      nodePort: 163
+      port: 163
+      targetPort: 163
+  loamA:
+    console:
+      nodePort: 31000
+      port: 2000
+      targetPort: 2000
+  loamB:
+    console:
+      nodePort: 31000
+      port: 2000
+      targetPort: 2000
+  lmg:
+    console:
+      nodePort: 31000
+      port: 2000
+      targetPort: 2000
+  llb:
+    console:
+      nodePort: 31000
+      port: 2000
+      targetPort: 2000
+image:
+  repository: master1vm.novalocal:5000
+  name: lmg
+  tag: test1
+  pullPolicy: IfNotPresent
+nasc:
+  enable: 0
+  imageRepository: master1vm.novalocal:5000
+  imageName: nasc
+  imageTag: test1
+  imagePullPolicy: IfNotPresent
+  configReadInterval: 300
+  scrapeInterval:
+    loam:
+      kciInfo:
+      - name: KCISystemCPM
+        interval: 60
+      - name: KCIControlPlaneIpPool
+        interval: 60
+      kpiInfo:
+    lmg:
+      kciInfo:
+      - name: KCISystem
+        interval: 60
+      - name: KCIBearerManagementSmf
+        interval: 60
+      - name: KCIBearerManagementSmfDnn
+        interval: 60
+      - name: KCIBearerManagementSmfNssai
+        interval: 60
+      kpiInfo:
+      - name: KPIBearerManagementSmf
+        interval: 60
+      - name: KPIBearerManagementSmfNssai
+        interval: 60
+      - name: KPIBearerManagementSmfDnn
+        interval: 60
+      - name: KPIBearerTrafficQci
+        interval: 60
+      - name: KPIServiceNpcfSmPolicyControl
+        interval: 60
+      - name: KPIServiceNudmUecm
+        interval: 60
+      - name: KPIReferencePointPFCP
+        interval: 60
+      - name: KPIPathManagementPFCP
+        interval: 60
+      - name: KPIPfcpSessionProcedureCauseCode
+        interval: 60
+      - name: KPIPfcpNodeProcedureCauseCode
+        interval: 60
+logging:
+  enable: 0
+  imageRepository: master1vm.novalocal:5000
+  imageName: lmg
+  imageTag: test1
+  imagePullPolicy: IfNotPresent
+multus:
+  lmg:
+    numDevices: 0
+  llb:
+    numDevices: 1
+    netNames:
+    - sriov-net1
+    resourceName: []
+    envName: []
+  attachDef:
+  - name: sriov-net1
+    cniVersion: 0.3.1
+    resourceName: intel.com/intel_sriov_netdevice
+  groFlag: 1
+  dsf:
+    enable: 0
+  xdp:
+    enable: 0
+  dpdk:
+    enable: 0
+gwConfig: smf
+gwRedundancy:
+  active: 1
+lmgScale:
+  minReplicas: 2
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 90
+llbScale:
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 90
+resources:
+  loam:
+    cpu: 6
+    memory: 8Gi
+  lmg:
+    cpu: 8
+    memory: 16Gi
+  llb:
+    cpu: 6
+    memory: 16Gi
+    multus:
+    - resourceName: intel.com/intel_sriov_netdevice
+      numDevices: 1
+  nasc:
+    cpu: 2
+    memory: 1Gi
+  logging:
+    cpu: 2
+    memory: 1Gi
+storage:
+#pvCreation to be set to 0 in case Persistent Volume already created
+  pvCreation: 1
+  parentPath: /mnt/glusterfs/
+  pvStorageClass: manual
+  pvSize: 1Gi
+  cfSize: 1Gi
+  cfAInfo:
+  - pvcName: cf1-a-volume-claim
+  - pvcName: cf2-a-volume-claim
+  cfBInfo:
+  - pvcName: cf1-b-volume-claim
+  - pvcName: cf2-b-volume-claim
+rtScheduling:
+  enable: 0
+  cgroupHostPath: /sys/fs/cgroup/cpu,cpuacct/
+loamB:
+  enable: 1
+bootString:
+  ht: 2
+  fswo: 300
+  lmg:
+    cpcores: 6
+    cfp: 1
+  llb:
+    cpcores: 4
+    cfp: 1
+podsecuritypolicy:
+  create: false
+peers:
+  cdbx:
+    ip: 10.100.11.9
+    port: 5678
+    interface: sigRefPointIf
+  nrf:
+    ip: 10.100.11.15
+    port: 8083
+    uuid: 77080788-13C8-4B04-7CA5-65D433B15B11
+    interface: sigRefPointIf
+  upf:
+    peerList:
+    - ip: 10.100.11.3
+      apn:
+      - name: ipd.alcatel-lucent.com
+        uepool:
+          name: pool1
+          ipv4Prefix: 5.0.0.0/12
+    interface: sigRefPointIf
+  gx:
+    ip: 10.10.8.10
+    port: 3868
+  rf:
+    ip: 10.15.8.10
+    port: 3868
+plmn:
+- mcc: "310"
+  mnc: "12"
+- mcc: "310"
+  mnc: "012"
+slice:
+- sst: 1
+  sd: d143a5
+- sst: 2
+  sd: abcdef
+uuid: 842887ce-329d-4add-9a1c-e7dd03faa00e
+network:
+  interface:
+  - name: gx
+    ip: 10.10.8.1
+    subnet: 32
+    port: loopback
+    bfd: false
+  - name: sigRefPointIf
+    ip: 10.100.11.2
+    subnet: 24
+    port: 17/1/1
+    bfd: true
+  - name: system
+    ip: 10.20.1.2
+    subnet: 32
+    port: system
+    bfd: true
+  staticRoute:
+  - subnet: 10.10.8.10/32
+    nextHop:
+    - 10.100.11.10
+    bfd: false
+  - subnet: 10.15.8.10/32
+    nextHop:
+    - 10.100.11.10
+    bfd: false
+  - subnet: 10.20.1.1/32
+    nextHop:
+    - 10.100.11.1
+    bfd: true
+  - subnet: 10.20.1.3/32
+    nextHop:
+    - 10.100.11.3
+    bfd: true
+  bgp:
+  - peerIp: 10.20.1.1
+  - peerIp: 10.20.1.3
+apn:
+- name: ipd.alcatel-lucent.com
+  uepool:
+  - router: Base
+    name: pool1
+uepool:
+- router: Base
+  name: pool1
+  ipv4Prefix: 5.0.0.0/12
+cnfName: Dut-B

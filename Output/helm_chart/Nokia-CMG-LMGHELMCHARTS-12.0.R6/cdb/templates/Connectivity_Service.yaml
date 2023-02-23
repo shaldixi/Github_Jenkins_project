@@ -1,0 +1,35 @@
+{{- $enable := (.Values.multus.dbproxy.enable | int) }}
+{{- if not $enable }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: dbproxy-connectivity
+spec:
+  type: NodePort
+  ports:
+    - name: dbproxy
+      nodePort: {{ .Values.service.dbproxy.nodePort }}
+      port: {{ .Values.service.dbproxy.port }}
+      targetPort: {{ .Values.service.dbproxy.targetPort }}
+  selector:
+    name: dbproxy
+
+---
+{{- end }}
+{{- $redisPort := (.Values.service.redis.port | int) }}
+{{- $replicas := (.Values.redisScale.replicas | int) }}
+{{- range $i, $end := until $replicas }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-connectivity-{{ $i }}
+spec:
+  ports:
+    - name: redis-connectivity-{{ $i }}
+      port: {{ $redisPort }}
+      targetPort: {{ $redisPort }}
+  selector:
+    statefulset.kubernetes.io/pod-name: redis-statefulset-{{ $i }}
+
+---
+{{- end }}
