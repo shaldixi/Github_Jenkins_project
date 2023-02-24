@@ -1,0 +1,768 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dut-a-cfg
+{{- if .Values.uuid }}
+  labels:
+    uuid: {{ .Values.uuid }}
+{{- end }}
+data:
+  mg.cfg: |
+    exit all
+    configure
+    #--------------------------------------------------
+    echo "System Configuration"
+    #--------------------------------------------------
+        system
+{{- $cnfName := (default "VSR" .Values.cnfName) }}
+            name "{{ $cnfName }}"
+            management-interface
+                cli
+                    cli-engine classic-cli
+                exit
+            exit
+            snmp
+                general-port {{ .Values.service.loam.snmp1.targetPort }}
+                no shutdown
+            exit
+        exit
+    #--------------------------------------------------
+    echo "System Security Configuration"
+    #--------------------------------------------------
+        system
+            security
+                telnet-server
+                password
+                    admin-password "P9Hofu235MU" hash2
+                exit
+                snmp
+                    community "uTdc9j48PBRkxn5DcSjchk" hash2 rwa version both
+                    community "Lla.RtAyRW2" hash2 r version both
+                exit
+            exit
+        exit
+    #--------------------------------------------------
+    echo "System Login Control Configuration"
+    #--------------------------------------------------
+        system
+            login-control
+                idle-timeout disable
+            exit
+        exit
+    #--------------------------------------------------
+    echo "Log Configuration"
+    #--------------------------------------------------
+        log
+{{- $loggingDict := (default dict .Values.logging) }}
+{{- if $loggingDict.enable }}
+            file-id 80
+                location cf3:
+            exit
+            log-id 80
+                from main change
+                to file 80
+                no shutdown
+            exit
+{{- end }}
+{{- $nascDict := (default dict .Values.nasc) }}
+{{- if $nascDict.enable }}
+            file-id 1
+                location cf1:
+                rollover 30 retention 12
+            exit
+            accounting-policy 1
+                record complete-kpi-kci
+                collection-interval 10
+                to file 1
+                no shutdown
+            exit
+{{- end }}
+        exit
+    #--------------------------------------------------
+    echo "Card Configuration"
+    #--------------------------------------------------
+{{- $lmgMinReplicas := (.Values.lmgScale.minReplicas | int) }}
+{{- $lmgMaxReplicas := (.Values.lmgScale.maxReplicas | int) }}
+{{- $llbMinReplicas := (.Values.llbScale.minReplicas | int) }}
+{{- $llbMaxReplicas := (.Values.llbScale.maxReplicas | int) }}
+{{- $dsfDict := (default dict .Values.multus.dsf) }}
+{{- $numDsfDevices := ($dsfDict.numDsfDevices | int) }}
+{{- $numLmgDevices := (.Values.multus.lmg.numDevices | int) }}
+{{- $numLmgDevices := ternary (sub $numLmgDevices $numDsfDevices | int ) ($numLmgDevices | int) (eq ($dsfDict.enable | int) 1) }}
+{{- $numLlbDevices := (.Values.multus.llb.numDevices | int) }}
+{{- $numLlbDevices := ternary (sub $numLlbDevices $numDsfDevices | int ) ($numLlbDevices | int) (eq ($dsfDict.enable | int) 1) }}
+{{- $isaNatEnable := (default dict .Values.isa) }}
+{{- $isaNatEnable := (default dict $isaNatEnable.nat) }}
+{{- $isaNatEnable := (default false $isaNatEnable.enable) }}
+{{- range $i, $end := until $lmgMaxReplicas }}
+        card {{ add1 $i }}
+            card-type iom-v-mg
+            mda 1
+                mda-type isa-mg-v
+                no shutdown
+            exit
+{{- if ge $numLmgDevices 1 }}
+            mda 2
+                mda-type m20-v
+                no shutdown
+            exit
+{{- end }}
+{{- if $isaNatEnable }}
+            mda 3
+                mda-type isa-bb-v
+                no shutdown
+            exit
+{{- end }}
+            no shutdown
+        exit
+{{- end }}
+{{- range $i, $end := until $llbMaxReplicas }}
+        card {{ add $i 17 }}
+            card-type iom-v
+            mda 1
+                mda-type m20-v
+                no shutdown
+            exit
+            no shutdown
+        exit
+{{- end }}
+{{- $gwRedundancyActive := (default dict .Values.gwRedundancy) }}
+{{- $gwRedundancyActive := (default 0 $gwRedundancyActive.active | int) }}
+{{- if $isaNatEnable }}
+    #--------------------------------------------------
+    echo "ISA Configuration"
+    #--------------------------------------------------
+        isa
+            nat-group 1 create
+                active-mda-limit {{ $gwRedundancyActive }}
+                local-nat
+{{- range $i, $end := until $lmgMaxReplicas }}
+                mda {{ add1 $i }}/3
+{{- end }}
+            exit
+        exit
+{{- end }}
+    #--------------------------------------------------
+    echo "Port Configuration"
+    #--------------------------------------------------
+{{- if ge $numLmgDevices 1 }}
+{{- range $i, $end1 := until $lmgMaxReplicas }}
+{{- range $j, $end2 := until $numLmgDevices }}
+        port {{ add1 $i }}/2/{{ add1 $j }}
+            ethernet
+                mode hybrid
+                encap-type dot1q
+            exit
+            no shutdown
+        exit
+{{- end }}
+{{- end }}
+{{- end }}
+{{- if ge $numLlbDevices 1 }}
+{{- range $i, $end1 := until $llbMaxReplicas }}
+{{- range $j, $end2 := until $numLlbDevices }}
+        port {{ add $i 17 }}/1/{{ add1 $j }}
+            ethernet
+                mode hybrid
+                encap-type dot1q
+            exit
+            no shutdown
+        exit
+{{- end }}
+{{- end }}
+{{- end }}
+{{- if .Values.geored }}
+    #--------------------------------------------------
+    echo "Redundancy Configuration"
+    #--------------------------------------------------
+        redundancy
+            multi-chassis
+                peer {{ .Values.geored.peer }} create
+                    mc-mobile
+                        bfd-enable interface system
+                        mobile-gateway 1 role {{ .Values.geored.role }}
+                            no shutdown
+                        exit
+                    exit
+                    no shutdown
+                exit
+            exit
+        exit
+{{- end }}
+    #--------------------------------------------------
+    echo "Router (Network Side) Configuration"
+    #--------------------------------------------------
+        router Base
+{{- $networkDict := (default dict .Values.network) }}
+{{- range $networkDict.interface }}
+            interface "{{ .name }}"
+                address {{ .ip }}/{{ .subnet }}
+{{- if ne .port "system" }}
+                {{ if ne .port "loopback" }}port {{ end }}{{ .port }}{{ if ne .port "loopback" }}{{ if .vlan }}:{{ .vlan }}{{ else }}:0{{ end }}{{ end }}
+{{- end }}
+{{- if .bfd }}
+                bfd 100 receive 100 multiplier 3 echo-receive 100
+{{- end }}
+                no shutdown
+            exit
+{{- end }}
+{{- if $networkDict.bgp }}
+            autonomous-system 1
+{{- end }}
+{{- if $networkDict.ecmp }}
+            ecmp {{ $networkDict.ecmp }}
+{{- end }}
+    #--------------------------------------------------
+    echo "Static Route Configuration"
+    #--------------------------------------------------
+{{- range $networkDict.staticRoute }}
+            static-route-entry {{ .subnet }}
+{{- $bfd := .bfd }}
+{{- range .nextHop }}
+                next-hop {{ . }}
+{{- if $bfd }}
+                    bfd-enable
+{{- end }}
+                    no shutdown
+                exit
+{{- end }}
+            exit
+{{- end }}
+{{- $gwConfig := (default "" .Values.gwConfig | toString) }}
+{{- range .Values.uepool }}
+{{- $uepoolRouter := (.router | toString) }}
+{{- $uepoolName := (.name | toString) }}
+{{- $uepoolIpv4Prefix := (.ipv4Prefix | toString) }}
+{{- if eq $uepoolRouter "Base" }}
+            ip-local-pool "{{ $uepoolName }}"
+{{- if eq $gwConfig "upf" }}
+                remote
+{{- end }}
+                ipv4-prefix "{{ $uepoolIpv4Prefix }}"
+            exit
+{{- end }}
+{{- end }}
+        exit
+{{- if $isaNatEnable }}
+    #--------------------------------------------------
+    echo "NAT (Declarations) and UPnP Configuration"
+    #--------------------------------------------------
+        service
+            nat
+                nat-policy "1" create
+                exit
+            exit
+        exit
+{{- end }}
+    #--------------------------------------------------
+    echo "Service Configuration"
+    #--------------------------------------------------
+{{- if .Values.vprn }}
+        service
+{{- range .Values.vprn }}
+            vprn {{ .id }} name "{{ .id }}" customer 1 create
+{{- if .interface }}
+{{- range .interface }}
+                interface "{{ .name }}" create
+                exit
+{{- end }}
+{{- end }}
+{{- if .nat }}
+{{- if eq .nat.type "outside" }}
+                nat
+                    outside
+                        pool "pool1" nat-group 1 type large-scale create
+                            address-range {{ .nat.addressRange.start }} {{ .nat.addressRange.end }} create
+                            exit
+                            no shutdown
+                        exit
+                    exit
+                exit
+{{- end }}
+{{- end }}
+            exit
+{{- end }}
+{{- if $isaNatEnable }}
+            nat
+                nat-policy "1" create
+                    pool "pool1" router {{ .Values.isa.nat.routerId }}
+                exit
+            exit
+{{- end }}
+{{- range .Values.vprn }}
+            vprn {{ .id }} name "{{ .id }}" customer 1 create
+                route-distinguisher {{ .id }}:{{ .id }}
+{{- if .interface }}
+{{- range .interface }}
+                interface "{{ .name }}" create
+                    address {{ .ip }}/{{ .subnet }}
+{{- if .bfd }}
+                    bfd 100 receive 100 multiplier 3 echo-receive 100
+{{- end }}
+{{- if eq .sap "loopback" }}
+                    loopback
+{{- else }}
+                    sap {{ .sap }}{{ if .vlan }}:{{ .vlan }}{{ else }}:0{{ end }} create
+                    exit
+{{- end }}
+                exit
+{{- end }}
+{{- end }}
+{{- if .ipLocalPool }}
+{{- range .ipLocalPool }}
+                ip-local-pool "{{ .name }}"
+{{- if eq $gwConfig "upf" }}
+                    remote
+{{- end }}
+                    ipv4-prefix "{{ .ipv4Prefix }}"
+                exit
+{{- end }}
+{{- end }}
+{{- if .staticRoute }}
+{{- range .staticRoute }}
+                static-route-entry {{ .subnet }}
+{{- $bfd := .bfd }}
+{{- range .nextHop }}
+                    next-hop {{ . }}
+{{- if $bfd }}
+                        bfd-enable
+{{- end }}
+                        no shutdown
+                    exit
+{{- end }}
+                exit
+{{- end }}
+{{- end }}
+{{- if .nat }}
+                nat
+{{- if eq .nat.type "inside" }}
+                    inside
+                        nat-policy "1"
+                        destination-prefix 0.0.0.0/0
+                    exit
+{{- else }}
+                    outside
+                        pool "pool1" nat-group 1 type large-scale create
+                        exit
+                    exit
+{{- end }}
+                exit
+{{- end }}
+                no shutdown
+            exit
+{{- end }}
+        exit
+{{- end }}
+{{- if $isaNatEnable }}
+    #--------------------------------------------------
+    echo "ISA Administrative State Configuration"
+    #--------------------------------------------------
+        isa
+            nat-group 1
+                no shutdown
+            exit
+        exit
+{{- end }}
+    #--------------------------------------------------
+    echo "Router (Service Side) Configuration"
+    #--------------------------------------------------
+        router Base
+{{- if $networkDict.policyOptions }}
+    #--------------------------------------------------
+    echo "Policy Configuration"
+    #--------------------------------------------------
+            policy-options
+                begin
+{{- if $networkDict.policyOptions.prefixList }}
+{{- range $networkDict.policyOptions.prefixList }}
+                prefix-list "{{ .name }}"
+                    prefix {{ .prefix }} exact
+                exit
+{{- end }}
+{{- end }}
+{{- if $networkDict.policyOptions.policyStatement }}
+{{- range $networkDict.policyOptions.policyStatement }}
+                policy-statement "{{ .name }}"
+{{- range .entryList }}
+                    entry {{ .id }}
+                        from
+                            prefix-list "{{ .prefixList }}"
+                            state mobile-{{ .georedState }}
+                        exit
+                        to
+                            protocol bgp
+                        exit
+                        action accept
+                            metric set {{ .metric }}
+                        exit
+                    exit
+{{- end }}
+                exit
+{{- end }}
+{{- end }}
+                commit
+            exit
+{{- end }}
+    #--------------------------------------------------
+    echo "BGP Configuration"
+    #--------------------------------------------------
+            bgp
+{{- if $networkDict.bgp }}
+                group "system"
+{{- range $networkDict.bgp }}
+                    neighbor {{ .peerIp }}
+                        min-route-advertisement 2
+{{- if .export }}
+                        export "{{ .export }}"
+{{- end }}
+                        peer-as 1
+                        bfd-enable
+                    exit
+{{- end }}
+                exit
+                no shutdown
+{{- end }}
+            exit
+        exit
+    #--------------------------------------------------
+    echo "Mobile Gateway Configuration"
+    #--------------------------------------------------
+        mobile-gateway
+            profile
+{{- $peersDict := (default dict .Values.peers) }}
+{{- $gxMap := get $peersDict "gx" }}
+{{- if $gxMap }}
+                diameter-peer "Peer-Profile1"
+                    application-type gx
+                    destination-realm "lucent.com"
+                    diameter-profile "default"
+                    peer {{ $gxMap.ip }} port {{ $gxMap.port }}
+                        no shutdown
+                    exit
+                exit
+{{- end }}
+{{- $rfMap := get $peersDict "rf" }}
+{{- if $rfMap }}
+                diameter-peer "Peer-Profile2"
+                    application-type rf
+                    destination-realm "lucent.com"
+                    diameter-profile "default"
+                    peer {{ $rfMap.ip }} port {{ $rfMap.port }}
+                        no shutdown
+                    exit
+                exit
+{{- end }}
+                list
+{{- if .Values.plmn }}
+                    plmn "basicPlmn"
+{{- range .Values.plmn }}
+                        mcc {{ .mcc }} mnc {{ .mnc }}
+{{- end }}
+                    exit
+{{- end }}
+{{- if eq $gwConfig "smf" }}
+                    prioritized-ip-address-list "nrfPrioList1"
+                        address {{ $peersDict.nrf.ip }} port {{ $peersDict.nrf.port }}
+                    exit
+{{- end }}
+{{- if .Values.slice }}
+                    slice-instance-list "sliceInstanceList"
+                        slice-instance sliceInstance
+                    exit
+                    slice-list "sliceList"
+{{- range .Values.slice }}
+                        slice slice{{ .sst }} sst {{ .sst }} sd {{ .sd }}
+                            slice-instances sliceInstanceList
+                        exit
+{{- end }}
+                    exit
+{{- end }}
+{{- if eq $gwConfig "smf" }}
+                    nf-id-list "nrfList1"
+                        nf-prof-id 1
+                            prioritized-address-list "nrfPrioList1"
+{{- if $peersDict.nrf.uuid }}
+                            uuid {{ $peersDict.nrf.uuid }}
+                            enable
+{{- end }}
+                        exit
+                    exit
+{{- end }}
+                exit
+                pfcp
+{{- if $gwConfig }}
+                    pfcp-profile "pfcpProfile"
+                    exit
+{{- end }}
+{{- $smfPeersDict := (default dict $peersDict.smf) }}
+{{- if eq $gwConfig "smf" }}
+                    pfcp-association-peer-list "upfList"
+{{- range $peersDict.upf.peerList }}
+                        peer {{ .ip }}
+{{- end }}
+                    exit
+                    up-peer-list "upfPeerList"
+{{- range $peersDict.upf.peerList }}
+                        peer {{ .ip }}
+{{- range .apn }}
+                            network-realm "{{ .name }}"
+                                ip-pool "{{ .uepool.name }}"
+                                    ipv4-prefix {{ .uepool.ipv4Prefix }}
+                                exit
+                            exit
+{{- end }}
+{{- range .apn }}
+                            apn "{{ .name }}"
+                                network-realm "{{ .name }}"
+                                ip-pool-list
+                                    ip-pool "{{ .uepool.name }}"
+                                exit
+                            exit
+{{- end }}
+                        exit
+{{- end }}
+                    exit
+{{- else if eq $gwConfig "upf" }}
+{{- if $smfPeersDict.ip }}
+                    pfcp-association-peer-list "smfList"
+                        peer {{ $smfPeersDict.ip }}
+                    exit
+{{- end }}
+{{- end }}
+                exit
+{{- if eq $gwConfig "upf" }}
+                policy-options
+                    begin
+                    policy-rule-unit "anyAny"
+                        flow-description 1
+                        exit
+                    exit
+                    policy-rule-unit "dpiRule"
+                        flow-description 1
+                            match
+                                aa-charging-group "CG_1"
+                            exit
+                        exit
+                    exit
+                    charging-rule-unit "rg5"
+                        rating-group 5
+                    exit
+                    charging-rule-unit "rg100"
+                        rating-group 100
+                    exit
+                    policy-rule "priAny" policy-rule-unit "anyAny" charging-rule-unit "rg5" qci 9 arp 11 precedence 1000
+                    policy-rule "dpiPolicy" policy-rule-unit "dpiRule" charging-rule-unit "rg100" qci 9 arp 11 precedence 98
+                    policy-rule-base "dpi"
+                        policy-rule "priAny"
+                        policy-rule "dpiPolicy"
+                    exit
+                    commit
+                exit
+{{- end }}
+{{- $cdbxDict := (default dict $peersDict.cdbx) }}
+{{- if $cdbxDict }}
+                cloud-db "cdb-prof"
+                    server {{ $cdbxDict.ip }} port {{ $cdbxDict.port }}
+                        no shutdown
+                    exit
+                exit
+{{- end }}
+            exit
+            pdn 1
+{{- if eq $gwConfig "smf" }}
+                instance-type control
+{{- else if eq $gwConfig "upf" }}
+                instance-type user
+{{- end }}
+{{- range .Values.apn }}
+                apn "{{ .name }}"
+{{- range .uepool }}
+                    router "{{ .router }}"
+                        ip-local-pool "{{ .name }}"
+                    exit
+{{- end }}
+                    session-timeout 0
+                    no shutdown
+                exit
+{{- end }}
+{{- if $gwConfig }}
+                epc-node "310.150.PGW.1.1.1"
+{{- end }}
+{{- if .Values.plmn }}
+                home-plmn-list "basicPlmn"
+{{- end }}
+{{- if $nascDict.enable }}
+                kpi-kci
+                    accounting-policy "1"
+                        collect-stats
+                    exit
+                exit
+{{- end }}
+{{- if $gxMap }}
+                signaling
+                    diameter
+                        origin-host "diam.origRealm.com"
+                        origin-realm "origRealm.com"
+                    exit
+                    interface "gx"
+                exit
+                gx
+                    interface
+                        diameter "gx"
+                    exit
+                    pcrf-selection
+                        primary-diameter-peer "Peer-Profile1"
+                    exit
+                exit
+{{- end }}
+{{- $s5PeersDict := (default dict $peersDict.s5) }}
+{{- $s1uPeersDict := (default dict $peersDict.s1u) }}
+{{- $n3PeersDict := (default dict $peersDict.n3) }}
+{{- if $gwConfig }}
+                s5 "default"
+                    interface
+{{- if eq $gwConfig "smf" }}
+                        gtp-c "sigRefPointIf" interface-realm "s5u"
+{{- else if eq $gwConfig "upf" }}
+{{- $s5Interface := (default "s5" $s5PeersDict.interface | toString) }}
+                        gtp-u {{ if $s5PeersDict.router }}router "{{ $s5PeersDict.router }}" {{ end }}"{{ $s5Interface }}" interface-realm "s5u"
+{{- end }}
+                    exit
+                exit
+{{- if eq $gwConfig "smf" }}
+                s11 "default"
+                    interface
+                        gtp-c "sigRefPointIf" s1-u "default" interface-realm "s1u"
+                    exit
+                exit
+{{- else if eq $gwConfig "upf" }}
+                s1-u "default"
+                    interface
+{{- $s1uInterface := (default "s1u" $s1uPeersDict.interface | toString) }}
+                        gtp-u {{ if $s1uPeersDict.router }}router "{{ $s1uPeersDict.router }}" {{ end }}"{{ $s1uInterface }}" interface-realm "s1u"
+                    exit
+                exit
+                n3 "default"
+                    interface
+{{- $n3Interface := (default "s1u" $n3PeersDict.interface | toString) }}
+                        gtp-u {{ if $n3PeersDict.router }}router "{{ $n3PeersDict.router }}" {{ end }}"{{ $n3Interface }}" interface-realm "5GRAN"
+                    exit
+                exit
+{{- end }}
+                sx-n4 "default"
+{{- if eq $gwConfig "smf" }}
+                    pfcp-association-list "upfList"
+                    interface
+                        pfcp "{{ $peersDict.upf.interface }}"
+                        gtp-u "{{ $peersDict.upf.interface }}"
+                    exit
+{{- else if eq $gwConfig "upf" }}
+{{- if $smfPeersDict.ip }}
+                    pfcp-association-list "smfList"
+{{- end }}
+                    interface
+                        pfcp "{{ $smfPeersDict.interface }}"
+                        gtp-u "{{ $smfPeersDict.interface }}"
+                    exit
+{{- end }}
+                    signaling
+                        pfcp
+                            profile "pfcpProfile"
+                        exit
+                    exit
+                exit
+{{- end }}
+{{- if $rfMap }}
+                rf
+                    acct-level pdn-level
+                    primary-diameter-peer "Peer-Profile2"
+                exit
+{{- end }}
+{{- if $cdbxDict }}
+                cdbx
+                    cloud-db-profile cdb-prof
+                    interface "{{ $cdbxDict.interface }}"
+                exit
+{{- end }}
+{{- if eq $gwConfig "smf" }}
+                up-peer-list "upfPeerList"
+{{- end }}
+{{- if .Values.slice }}
+                slices
+                    slice-list "sliceList"
+                    slice-instance-list "sliceInstanceList"
+                exit
+{{- end }}
+{{- if .Values.uuid }}
+                nf-profile-attributes
+                    nf-instance-id "{{ .Values.uuid }}"
+                exit
+{{- end }}
+{{- if eq $gwConfig "smf" }}
+                sba-server-services
+                    nsmf-pdusession "amfServices"
+                        n3-interface-realm "5GRAN"
+                        interface "sigRefPointIf" port 80
+                    exit
+                exit
+                sba-client-services
+                    amf-client
+                        namf-comm "amfClientServices"
+                            n1-profile "default"
+                            interface "sigRefPointIf"
+                        exit
+                        namf-evts "amfClientServices"
+                            interface "sigRefPointIf"
+                        exit
+                    exit
+                    nrf-client
+                        nnrf-nfm "nrf"
+                            nf-id-list "nrfList1"
+                            interface "{{ $peersDict.nrf.interface }}"
+                        exit
+                        nnrf-disc "nrf"
+                            nf-id-list "nrfList1"
+                            interface "{{ $peersDict.nrf.interface }}"
+                        exit
+                    exit
+                    udm-client
+                        nudm-sdm "udm"
+                            interface "sigRefPointIf"
+                        exit
+                        nudm-uecm "udm"
+                            interface "sigRefPointIf"
+                        exit
+                    exit
+                exit
+                sba-service-realm "sbaServices"
+                    server-service nsmf-pdusession service-instance "amfServices"
+                    client-service nnrf-nfm service-instance "nrf"
+                    client-service nnrf-disc service-instance "nrf"
+                    client-service namf-comm service-instance "amfClientServices"
+                    client-service namf-evts service-instance "amfClientServices"
+                    client-service nudm-sdm service-instance "udm"
+                    client-service nudm-uecm service-instance "udm"
+                exit
+{{- end }}
+{{- if $gwConfig }}
+                no shutdown
+{{- end }}
+            exit
+            system
+{{- if $gwConfig }}
+                resource-pool 1 redundancy many-to-many gateway 1
+{{- range $i, $end := until $lmgMaxReplicas }}
+                    card {{ add1 $i }}
+{{- end }}
+                exit
+{{- range $i, $end := until $gwRedundancyActive }}
+                group {{ add1 $i }} resource-pool 1
+                    no shutdown
+                exit
+{{- end }}
+{{- end }}
+            exit
+        exit
+    exit all
+
+---

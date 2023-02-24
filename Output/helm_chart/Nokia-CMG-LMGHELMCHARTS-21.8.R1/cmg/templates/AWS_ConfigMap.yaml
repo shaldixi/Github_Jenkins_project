@@ -1,0 +1,25 @@
+{{- $awsDict := (default dict .Values.aws) }}
+{{- $awsSidecarEnable := (default 0 $awsDict.sidecarEnable | int) }}
+{{- if $awsSidecarEnable }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-sidecar
+data:
+  data.json: |
+    {
+{{- $numPods := (len $awsDict.podList | int) }}
+{{- $numPodsCommas := (sub $numPods 1 | int) }}
+{{- range $i, $j := $awsDict.podList }}
+        "{{ .name }}": [
+{{- $numIps := (len .ipList | int) }}
+{{- $numIpsCommas := (sub $numIps 1 | int) }}
+{{- range $m, $n := .ipList }}
+            "{{ $n }}"{{ if ne $m $numIpsCommas }},{{ end }}
+{{- end }}
+        ]{{ if ne $i $numPodsCommas }},{{ end }}
+{{- end }}
+    }
+
+---
+{{- end }}
