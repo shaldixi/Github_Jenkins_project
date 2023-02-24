@@ -1,0 +1,63 @@
+{{- $storageDict := (default dict .Values.storage) }}
+{{- $storageClass := ($storageDict.pvStorageClass | toString) }}
+{{- $cfSize := ($storageDict.cfSize | toString) }}
+{{- $releaseName := .Release.Name }}
+{{- $releaseNamespace := .Release.Namespace }}
+{{- $pvLogsName := (default (print "logs-volume-" $releaseName "-" $releaseNamespace) $storageDict.pvLogsName | toString) }}
+{{- $pvLogsClaimName := (default "logs-volume-claim" $storageDict.pvLogsClaimName | toString) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $pvLogsClaimName }}
+spec:
+  accessModes:
+  - ReadWriteMany
+  storageClassName: {{ $storageClass }}
+{{- if eq $storageClass "manual" }}
+  volumeName: {{ $pvLogsName }}
+{{- end }}
+  resources:
+     requests:
+       storage: {{ $storageDict.pvSize }}
+
+---
+{{- range $i, $j := $storageDict.cfAInfo }}
+{{- $pvName := (default (print $releaseName "-" $releaseNamespace "-cf" (add1 $i | toString) "-a-volume") $j.pvName | toString) }}
+{{- $pvcName := (default (print "cf" (add1 $i | toString) "-a-volume-claim") $j.pvcName | toString) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $pvcName }}
+spec:
+  accessModes:
+  - ReadWriteMany
+  storageClassName: {{ $storageClass }}
+{{- if eq $storageClass "manual" }}
+  volumeName: {{ $pvName }}
+{{- end }}
+  resources:
+     requests:
+       storage: {{ $cfSize }}
+
+---
+{{- end }}
+{{- range $i, $j := $storageDict.cfBInfo }}
+{{- $pvName := (default (print $releaseName "-" $releaseNamespace "-cf" (add1 $i | toString) "-b-volume") $j.pvName | toString) }}
+{{- $pvcName := (default (print "cf" (add1 $i | toString) "-b-volume-claim") $j.pvcName | toString) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $pvcName }}
+spec:
+  accessModes:
+  - ReadWriteMany
+  storageClassName: {{ $storageClass }}
+{{- if eq $storageClass "manual" }}
+  volumeName: {{ $pvName }}
+{{- end }}
+  resources:
+     requests:
+       storage: {{ $cfSize }}
+
+---
+{{- end }}
