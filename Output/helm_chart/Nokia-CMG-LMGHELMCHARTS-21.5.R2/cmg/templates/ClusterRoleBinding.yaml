@@ -1,0 +1,21 @@
+{{- $podsecuritypolicyDict := (default dict .Values.podsecuritypolicy) }}
+{{- $openshiftDict := (default dict .Values.openshift) }}
+{{- $openshiftEnable := (default false $openshiftDict.enable) }}
+{{- if not $openshiftEnable }}
+{{- if or $podsecuritypolicyDict.create $podsecuritypolicyDict.name }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ .Release.Namespace }}-clusterrolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ .Release.Namespace }}-clusterrole
+subjects:
+- kind: Group
+  apiGroup: rbac.authorization.k8s.io
+  name: system:serviceaccounts:{{ .Release.Namespace }}
+
+---
+{{- end }}
+{{- end }}

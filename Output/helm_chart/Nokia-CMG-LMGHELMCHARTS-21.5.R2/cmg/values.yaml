@@ -1,0 +1,2494 @@
+service:
+  loamA:
+    console:
+      nodePort: 31000
+      port: 2000
+      targetPort: 2000
+  loamB:
+    console:
+      nodePort: 31000
+      port: 2000
+      targetPort: 2000
+  lmg:
+    console:
+      nodePort: 31000
+      port: 2000
+      targetPort: 2000
+  llb:
+    console:
+      nodePort: 31000
+      port: 2000
+      targetPort: 2000
+mda:
+  llb: 2
+  lmg: 1
+multus:
+  loam:
+    ip:
+      loamA: 172.16.128.242
+      loamB: 172.16.128.243
+      active: 172.16.128.240
+      standby: 172.16.128.241
+    netMask: 24
+    subnet: 172.16.128.0
+    gw: 172.16.128.254
+    hostInterface: eth1
+    cniVersion: 0.3.1
+  llb:
+    numDevice: 6
+    resourceName:
+    - intel.com/intel_sriov_netdevice_2
+    - intel.com/intel_sriov_netdevice_3
+    - intel.com/intel_sriov_netdevice_4
+    - intel.com/intel_sriov_netdevice_5
+    - intel.com/intel_sriov_netdevice_6
+    - intel.com/intel_sriov_netdevice_7
+    envName:
+    - PCIDEVICE_INTEL_COM_INTEL_SRIOV_NETDEVICE_2
+    - PCIDEVICE_INTEL_COM_INTEL_SRIOV_NETDEVICE_3
+    - PCIDEVICE_INTEL_COM_INTEL_SRIOV_NETDEVICE_4
+    - PCIDEVICE_INTEL_COM_INTEL_SRIOV_NETDEVICE_5
+    - PCIDEVICE_INTEL_COM_INTEL_SRIOV_NETDEVICE_6
+    - PCIDEVICE_INTEL_COM_INTEL_SRIOV_NETDEVICE_7
+  dpdk:
+    enable: 1
+    dpdkRxDesc: 1024
+    dpdkTxDesc: 1024
+lmgScale:
+  minReplicas: 2
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 90
+llgScale:
+  minReplicas: 2
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 90
+resources:
+  loam:
+    cpu: 12
+    memory: 24Gi
+  lmg:
+    cpu: 12
+    memory: 32Gi
+  llb:
+    cpu: 12
+    memory: 24Gi
+    hugepages1Gi: 2Gi
+    multus:
+    - resourceName: intel.com/intel_sriov_netdevice_1
+      numDevices: 1
+    - resourceName: intel.com/intel_sriov_netdevice_2
+      numDevices: 1
+    - resourceName: intel.com/intel_sriov_netdevice_3
+      numDevices: 1
+    - resourceName: intel.com/intel_sriov_netdevice_4
+      numDevices: 1
+    - resourceName: intel.com/intel_sriov_netdevice_5
+      numDevices: 1
+  nasc:
+    cpu: 2
+    memory: 1Gi
+  logging:
+    cpu: 10m
+    memory: 100Mi
+  aws:
+    cpu: 100m
+    memory: 500Mi
+storage:
+  pvCreation: 0
+  parentPath: /mnt/glusterfs/
+  pvLogsName: logs-volume-smf
+  pvStorageClass: standard-efs
+  pvLogsClaimName: logs-volume-claim
+  pvSize: 32Gi
+  cfSize: 32Gi
+  cfAInfo:
+  - pvcName: cf1-a-volume-claim
+  - pvcName: cf2-a-volume-claim
+  cfBInfo:
+  - pvcName: cf1-b-volume-claim
+  - pvcName: cf2-b-volume-claim
+bootString:
+  ht: 3
+  fswo: 300
+  lmg:
+    cpcores: 6
+    cfp: 1
+  llb:
+    cpcores: 4
+    cfp: 1
+loamB:
+  enable: 1
+podesecuritypolicy:
+  create: =FALSE()
+aws:
+  enable: 1
+  imageRepository: 268785957902.dkr.ecr.us-west-2.amazonaws.com
+  imageName: cmg/aws
+  imageTag: 20210520
+  imagePullPolicy: Always
+  region: Us-west-2
+  interval: 30
+  podList:
+  - name: llb-statefulset-0
+    ipList:
+    - 172.16.129.25
+    - 172.16.129.89
+    - 172.16.129.153
+    - 172.16.129.217
+    - 172.16.130.25
+    - 172.16.130.89
+  - name: llb-statefulset-1
+    ipList:
+    - 172.16.129.57
+    - 172.16.129.121
+    - 172.16.129.185
+    - 172.16.129.249
+    - 172.16.130.57
+    - 172.16.130.121
+nodeSelector:
+  loamA:
+  - key: failure-domain.beta.kubernetes.io/zone
+    value: us-west-2a
+  - key: cnf
+    value: smf01
+  loamB:
+  - key: failure-domain.beta.kubernetes.io/zone
+    value: us-west-2a
+  - key: cnf
+    value: smf01
+  lmg:
+  - key: failure-domain.beta.kubernetes.io/zone
+    value: us-west-2a
+  - key: cnf
+    value: smf01
+  llb:
+  - key: failure-domain.beta.kubernetes.io/zone
+    value: us-west-2a
+  - key: cnf
+    value: smf01_test
+fabMtu: 9000
+system:
+   -  name: ssmfov01
+      contact: ''
+      location: TMO-EPL Lab (OverlandPark)
+      coordinates: ''
+      l4_load_balancing: l4-load-balancing
+      mc_enh_load_balancing: ''
+      service_id_lag_hashing: ''
+      system_ip_load_balancing: ''
+      lbl_only: ''
+      lbl_ip: ''
+      ip_only: ''
+      eth_encap_ip: ''
+      lbl_ip_l4_teid: ''
+      rollback_loc: cf1:\rollback
+      local_max_checkpoints: 20
+      rescue_location: ''
+      packet_size: 9216
+      primary: ''
+      secondary: 10.133.13.101
+      time_zone: ''
+      Zone: ''
+      start: ''
+      end: ''
+      alarm_rising_threshold: 95
+      alarm_falling_threshold: 85
+      alarm_threshold_interval: 3600
+      warn_rising_threshold: ''
+      warn_falling_threshold: ''
+      warn_threshold_interval: ''
+      cflash: 'cf1-A:'
+      rising_threshold: 95
+      falling_threshold: 85
+      interval: 3600
+      ts_location: ''
+      ssh_preserve_key: preserve-key
+      synchronise: boot-env
+   -  name: ''
+      contact: ''
+      location: ''
+      coordinates: ''
+      l4_load_balancing: ''
+      mc_enh_load_balancing: ''
+      service_id_lag_hashing: ''
+      system_ip_load_balancing: ''
+      lbl_only: ''
+      lbl_ip: ''
+      ip_only: ''
+      eth_encap_ip: ''
+      lbl_ip_l4_teid: ''
+      rollback_loc: ''
+      local_max_checkpoints: ''
+      rescue_location: ''
+      packet_size: ''
+      primary: ''
+      secondary: ''
+      time_zone: ''
+      Zone: ''
+      start: ''
+      end: ''
+      alarm_rising_threshold: ''
+      alarm_falling_threshold: ''
+      alarm_threshold_interval: ''
+      warn_rising_threshold: ''
+      warn_falling_threshold: ''
+      warn_threshold_interval: ''
+      cflash: 'cf2-A:'
+      rising_threshold: 95
+      falling_threshold: 85
+      interval: 3600
+      ts_location: ''
+      ssh_preserve_key: ''
+      synchronise: ''
+ScriptControl:
+   -  ScriptName: Stats
+      OutputLocation: cf1:\smf-stat.txt
+   -  ScriptName: TS-collect
+      OutputLocation: cf1:\ts-clearcache.txt
+   -  ScriptName: HealthCheck
+      OutputLocation: cf1:\smf-oam-cli.txt
+ScriptPolicy:
+   -  ScriptPolicyName: Stats
+      ResultLocation: cf1:\STAT\
+      ScriptName: Stats
+      max_completed: 48
+      lifetime: forever
+   -  ScriptPolicyName: TMO-TS-1hr
+      ResultLocation: cf1:\CRON-TS-1hr\
+      ScriptName: TS-collect
+      max_completed: 48
+      lifetime: forever
+   -  ScriptPolicyName: HealthCheck-15
+      ResultLocation: cf1:\HC\
+      ScriptName: HealthCheck
+      max_completed: 48
+      lifetime: forever
+Cron:
+   -  CronName: Stats
+      interval: 60
+      script_policy: Stats
+      day_of_month: all
+      hour: all
+      minute: all
+   -  CronName: TS-1Hour
+      interval: 900
+      script_policy: TMO-TS-1hr
+      day_of_month: all
+      hour: all
+      minute: 45
+   -  CronName: HealthCheck
+      interval: 300
+      script_policy: HealthCheck-15
+      day_of_month: all
+      hour: all
+      minute: all
+securityProfile:
+   -  profileName: readonly
+      defaultAction: deny-all
+      Entry: 10
+      Match: back
+      Action: permit
+   -  profileName: readonly
+      defaultAction: ''
+      Entry: 20
+      Match: exit
+      Action: permit
+   -  profileName: readonly
+      defaultAction: ''
+      Entry: 30
+      Match: help
+      Action: permit
+   -  profileName: readonly
+      defaultAction: ''
+      Entry: 40
+      Match: history
+      Action: permit
+   -  profileName: readonly
+      defaultAction: ''
+      Entry: 50
+      Match: logout
+      Action: permit
+   -  profileName: readonly
+      defaultAction: ''
+      Entry: 60
+      Match: ping
+      Action: permit
+   -  profileName: readonly
+      defaultAction: ''
+      Entry: 70
+      Match: traceroute
+      Action: permit
+   -  profileName: readonly
+      defaultAction: ''
+      Entry: 80
+      Match: monitor
+      Action: permit
+   -  profileName: readonly
+      defaultAction: ''
+      Entry: 90
+      Match: show
+      Action: permit
+login_control:
+   -  inbound_ftp_sessions: ''
+      outbound_ftp_sessions: ''
+      inbound_ssh_sessions: 15
+      outbound_ssh_sessions: 15
+      inbound_telnet_sessions: 15
+      outbound_telnet_sessions: 15
+      exponential_backoff: ''
+      text: ''
+      idle_timeout: disable
+logs:
+   -  FileID: 20
+      FileDescription: Syslog-Storage
+      FileLocation: 'cf2:'
+      FileRollover: 1440
+      FileRetention: 350
+      ToSyslog: yes
+      SyslogID: 20
+      SyslogDescription: ''
+      SyslogServerIP: ''
+      SyslogServerPort: ''
+   -  FileID: 30
+      FileDescription: Change-Storage
+      FileLocation: 'cf2:'
+      FileRollover: 1440
+      FileRetention: 350
+      ToSyslog: yes
+      SyslogID: 30
+      SyslogDescription: ''
+      SyslogServerIP: ''
+      SyslogServerPort: ''
+   -  FileID: 40
+      FileDescription: Debug-Storage
+      FileLocation: 'cf2:'
+      FileRollover: 1440
+      FileRetention: 350
+      ToSyslog: yes
+      SyslogID: 40
+      SyslogDescription: ''
+      SyslogServerIP: ''
+      SyslogServerPort: ''
+   -  FileID: 21
+      FileDescription: KPI-KCI Log File
+      FileLocation: 'cf1:'
+      FileRollover: 15
+      FileRetention: 48
+      ToSyslog: 'yes '
+      SyslogID: 21
+      SyslogDescription: ''
+      SyslogServerIP: ''
+      SyslogServerPort: ''
+kpilogs:
+   -  AccountingPolicy: 2
+      KPIDescription: KPI-KCI-storage
+      KPIFileID: 21
+      Record: complete-kpi-kci
+      CollectionInterval: 15
+      include_system_info: include-system-info
+Syslog:
+   -  syslogID: 1
+      description: To-LTMT-CMG
+      address: ''
+      facility: user
+      level: debug
+log_id:
+   -  LogID: 20
+      LogDescription: Syslog Storage on Cf2
+      LogFilter: ''
+      TimeFormatLocal: ''
+      LogsFrom: 'main security '
+      LogsTo: ''
+      LogsToFile: 20
+   -  LogID: 30
+      LogDescription: Change Storage on Cf2
+      LogFilter: ''
+      TimeFormatLocal: ''
+      LogsFrom: change
+      LogsTo: ''
+      LogsToFile: 30
+   -  LogID: 40
+      LogDescription: Debug Storage on Cf2
+      LogFilter: ''
+      TimeFormatLocal: ''
+      LogsFrom: debug-trace
+      LogsTo: ''
+      LogsToFile: 40
+card:
+   -  Card: 1
+      CardType: iom-v-mg
+      Mda: 1
+      MdaType: isa-mg-v
+   -  Card: 2
+      CardType: iom-v-mg
+      Mda: 1
+      MdaType: isa-mg-v
+   -  Card: 17
+      CardType: iom-v
+      Mda: 1
+      MdaType: m20-v
+   -  Card: 17
+      CardType: iom-v
+      Mda: 2
+      MdaType: isa-ip-reas-v
+   -  Card: 18
+      CardType: iom-v-mg
+      Mda: 1
+      MdaType: m20-v
+   -  Card: 18
+      CardType: iom-v-mg
+      Mda: 2
+      MdaType: isa-ip-reas-v
+ports:
+   -  Port: 17/1/1
+      PortDescription: LB1_AL1_S1
+      PortMode: hybrid
+      PortEncapType: dot1q
+      PortMtu: ''
+      Speed: ''
+   -  Port: 17/1/2
+      PortDescription: LB1_AL2_S2
+      PortMode: hybrid
+      PortEncapType: dot1q
+      PortMtu: ''
+      Speed: ''
+   -  Port: 18/1/1
+      PortDescription: LB2_AL1_S1
+      PortMode: hybrid
+      PortEncapType: dot1q
+      PortMtu: ''
+      Speed: ''
+   -  Port: 18/1/2
+      PortDescription: LB2_AL2_S2
+      PortMode: hybrid
+      PortEncapType: dot1q
+      PortMtu: ''
+      Speed: ''
+lag:
+   -  LagID: 1
+      Description: Access LAG for redundant pkt-reassembly ISA MDAs
+      Mode: access
+      EncapType: dot1q
+      Port: 17/2/2
+      Port2: 18/2/2
+   -  LagID: 2
+      Description: Network LAG for redundant pkt-reassembly ISA MDAs
+      Mode: network
+      EncapType: dot1q
+      Port: 17/2/1
+      Port2: 18/2/1
+service:
+   -  Router: Base
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      description: ''
+      vrf_export: ''
+      vrf_import: ''
+      snmp: ''
+      ecmp: 4
+      local_ecmp_mgGroup: ''
+      as_number: 65704
+      route_distinguisher: ''
+      router_id: 10.132.175.184
+      allow_ip_int_bind: ''
+      pool_name: ''
+      ipv4_prefix: ''
+      ipv6_prefix: ''
+      remote: ''
+      nexthop: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: 100
+      name: Control-VPRN
+      customer: 1
+      description: Core-Control VPRN
+      vrf_export: ''
+      vrf_import: ''
+      snmp: ''
+      ecmp: 4
+      local_ecmp_mgGroup: ''
+      as_number: 65704
+      route_distinguisher: 65100:100
+      router_id: 10.132.175.185
+      allow_ip_int_bind: ''
+      pool_name: ''
+      ipv4_prefix: ''
+      ipv6_prefix: ''
+      remote: ''
+      nexthop: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: 150
+      name: EPC-VPRN
+      customer: 1
+      description: EPC-VPRN
+      vrf_export: ''
+      vrf_import: ''
+      snmp: ''
+      ecmp: 4
+      local_ecmp_mgGroup: ''
+      as_number: 65704
+      route_distinguisher: 65704:150
+      router_id: 10.132.175.186
+      allow_ip_int_bind: ''
+      pool_name: ''
+      ipv4_prefix: ''
+      ipv6_prefix: ''
+      remote: ''
+      nexthop: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: 200
+      name: RAN-VPRN
+      customer: 1
+      description: RAN-VPRN
+      vrf_export: ''
+      vrf_import: ''
+      snmp: ''
+      ecmp: 4
+      local_ecmp_mgGroup: ''
+      as_number: 65704
+      route_distinguisher: 65704:200
+      router_id: 10.132.175.187
+      allow_ip_int_bind: ''
+      pool_name: ''
+      ipv4_prefix: ''
+      ipv6_prefix: ''
+      remote: ''
+      nexthop: ''
+interfaces:
+   -  Router: Base
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: Base-LB17-AL1
+      interface_description: Base-LB17-AL1
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.132.175.142/30
+      interface_ipv6: ''
+      bfd: 100 receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: ''
+      port: 17/1/1:600
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: Base
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: Base-LB17-AL2
+      interface_description: Base-LB17-AL2
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.132.175.146/30
+      interface_ipv6: ''
+      bfd: 100 receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: ''
+      port: 17/1/2:625
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: Base
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: Base-LB18-AL1
+      interface_description: Base-LB18-AL1
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.132.175.150/30
+      interface_ipv6: ''
+      bfd: 100 receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: ''
+      port: 18/1/1:601
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: Base
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: Base-LB18-AL2
+      interface_description: Base-LB18-AL2
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.132.175.154/30
+      interface_ipv6: ''
+      bfd: 100 receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: ''
+      port: 18/1/2:626
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: Base
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: system
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: 10.132.175.172/32
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: 100
+      name: Control-VPRN
+      customer: 1
+      interface: Sig-LB17-AL1
+      interface_description: Sig-LB17-AL1
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.132.175.158/30
+      interface_ipv6: ''
+      bfd: 100 receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: 17/1/1:602
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: 100
+      name: Control-VPRN
+      customer: 1
+      interface: Sig-LB17-AL2
+      interface_description: Sig-LB17-AL2
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.132.175.162/30
+      interface_ipv6: ''
+      bfd: 100 receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: 17/1/2:627
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: 100
+      name: Control-VPRN
+      customer: 1
+      interface: Sig-LB18-AL1
+      interface_description: Sig-LB18-AL1
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.132.175.166/30
+      interface_ipv6: ''
+      bfd: 100 receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: 18/1/1:603
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: 100
+      name: Control-VPRN
+      customer: 1
+      interface: Sig-LB18-AL2
+      interface_description: Sig-LB18-AL2
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.132.175.170/30
+      interface_ipv6: ''
+      bfd: 100 receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: 18/1/2:628
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: 150
+      name: EPC-VPRN
+      customer: 1
+      interface: EPC-LB17-AL1
+      interface_description: EPC-LB17-AL1
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.132.175.194/27
+      interface_ipv6: ''
+      bfd: 101 receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: 17/1/1:604
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: 150
+      name: EPC-VPRN
+      customer: 1
+      interface: EPC-LB17-AL2
+      interface_description: EPC-LB17-AL2
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.132.175.226/27
+      interface_ipv6: ''
+      bfd: 102 receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: 17/1/2:629
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: 150
+      name: EPC-VPRN
+      customer: 1
+      interface: EPC-LB18-AL1
+      interface_description: EPC-LB18-AL1
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.132.171.2/27
+      interface_ipv6: ''
+      bfd: 103 receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: 18/1/1:605
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: 150
+      name: EPC-VPRN
+      customer: 1
+      interface: EPC-LB18-AL2
+      interface_description: EPC-LB18-AL2
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.132.171.34/27
+      interface_ipv6: ''
+      bfd: 104 receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: 18/1/2:630
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: 200
+      name: RAN-VPRN
+      customer: 1
+      interface: RAN-LB17-AL1
+      interface_description: RAN-LB17-AL1
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.132.171.66/27
+      interface_ipv6: ''
+      bfd: 105 receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: 17/1/1:608
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: 200
+      name: RAN-VPRN
+      customer: 1
+      interface: RAN-LB17-AL2
+      interface_description: RAN-LB17-AL2
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.132.171.98/27
+      interface_ipv6: ''
+      bfd: 106 receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: 17/1/2:633
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: 200
+      name: RAN-VPRN
+      customer: 1
+      interface: RAN-LB18-AL1
+      interface_description: RAN-LB18-AL1
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.132.171.130/27
+      interface_ipv6: ''
+      bfd: 107 receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: 18/1/1:609
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: 200
+      name: RAN-VPRN
+      customer: 1
+      interface: RAN-LB18-AL2
+      interface_description: RAN-LB18-AL2
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.132.171.162/27
+      interface_ipv6: ''
+      bfd: 108 receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: 18/1/2:634
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: ''
+      interface_description: ''
+      interface_stats: ''
+      interface_ip: ''
+      interface_ipv6: ''
+      bfd: ''
+      bfd_ipv6: ''
+      sap: ''
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: ''
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+   -  Router: ''
+      iesid: ''
+      vplsId: ''
+      vprnId: ''
+      name: ''
+      customer: ''
+      interface: SC-CP-SGi3-EntAPN12_VR312-LB2-P2
+      interface_description: BorderRT#2-CMG-CP LB2
+      interface_stats: enable-ingress-stats
+      interface_ip: 10.191.5.165/30
+      interface_ipv6: ''
+      bfd: bfd receive 100 multiplier 3
+      bfd_ipv6: ''
+      sap: 2/1/2:737
+      port: ''
+      IngressQos: ''
+      EgressQos: ''
+      IngressIP: ''
+      EgressIP: ''
+      vplsName: ''
+      IpMtu: 1500
+      collect_stats: ''
+      accounting_policy: ''
+      ip_reassembly: ''
+loopbacks:
+   -  Router: Base
+      vprnId: ''
+      vprnName: ''
+      customer: ''
+      interface: bgp-Loopback
+      interface_description: BGP loopback for Base
+      interface_type: loopback
+      interface_ip: 10.132.175.184/32
+      IpMtu: ''
+      interface_ipv6: ''
+      ip_reassembly: ''
+   -  Router: ''
+      vprnId: 100
+      vprnName: Control-VPRN
+      customer: 1
+      interface: SBI-loopback
+      interface_description: SBI-loopback
+      interface_type: loopback
+      interface_ip: 10.132.175.176/32
+      IpMtu: ''
+      interface_ipv6: ''
+      ip_reassembly: ''
+   -  Router: ''
+      vprnId: 100
+      vprnName: Control-VPRN
+      customer: 1
+      interface: S5c-loopback
+      interface_description: S5c-loopback
+      interface_type: loopback
+      interface_ip: 10.132.175.174/32
+      IpMtu: ''
+      interface_ipv6: ''
+      ip_reassembly: ''
+   -  Router: ''
+      vprnId: 100
+      vprnName: Control-VPRN
+      customer: 1
+      interface: S11-loopback
+      interface_description: S11-loopback
+      interface_type: loopback
+      interface_ip: 10.132.175.173/32
+      IpMtu: ''
+      interface_ipv6: ''
+      ip_reassembly: ''
+   -  Router: ''
+      vprnId: 100
+      vprnName: Control-VPRN
+      customer: 1
+      interface: S8c-loopback
+      interface_description: S8c-loopback
+      interface_type: loopback
+      interface_ip: 10.132.175.175/32
+      IpMtu: ''
+      interface_ipv6: ''
+      ip_reassembly: ''
+   -  Router: ''
+      vprnId: 100
+      vprnName: Control-VPRN
+      customer: 1
+      interface: Sig-bgp-loopback
+      interface_description: Sig-bgp-loopback
+      interface_type: loopback
+      interface_ip: 10.132.175.185/32
+      IpMtu: ''
+      interface_ipv6: ''
+      ip_reassembly: ''
+   -  Router: ''
+      vprnId: 150
+      vprnName: EPC-VPRN
+      customer: 1
+      interface: S8u-loopback
+      interface_description: S8u-loopback
+      interface_type: loopback
+      interface_ip: 10.132.175.178/32
+      IpMtu: ''
+      interface_ipv6: ''
+      ip_reassembly: ''
+   -  Router: ''
+      vprnId: 150
+      vprnName: EPC-VPRN
+      customer: 1
+      interface: S5u-loopback
+      interface_description: S5u-loopback
+      interface_type: loopback
+      interface_ip: 10.132.175.178/32
+      IpMtu: ''
+      interface_ipv6: ''
+      ip_reassembly: ''
+   -  Router: ''
+      vprnId: 150
+      vprnName: EPC-VPRN
+      customer: 1
+      interface: EPC-bgp-loopback
+      interface_description: EPC-bgp-loopback
+      interface_type: loopback
+      interface_ip: 10.132.175.186/32
+      IpMtu: ''
+      interface_ipv6: ''
+      ip_reassembly: ''
+   -  Router: ''
+      vprnId: 200
+      vprnName: RAN-VPRN
+      customer: 1
+      interface: S1u-loopback
+      interface_description: S1u-loopback
+      interface_type: loopback
+      interface_ip: 10.132.175.180/32
+      IpMtu: ''
+      interface_ipv6: ''
+      ip_reassembly: ''
+   -  Router: ''
+      vprnId: 200
+      vprnName: RAN-VPRN
+      customer: 1
+      interface: RAN-bgp-loopback
+      interface_description: RAN-bgp-loopback
+      interface_type: loopback
+      interface_ip: 10.132.175.187/32
+      IpMtu: ''
+      interface_ipv6: ''
+      ip_reassembly: ''
+prefixlist:
+   -  prefix_list: base-Loopbacks-v4
+      prefix: 10.132.175.172/32
+      prefix_type: exact
+   -  prefix_list: base-Loopbacks-v4
+      prefix: 10.132.175.181/32
+      prefix_type: exact
+   -  prefix_list: base-Loopbacks-v4
+      prefix: 10.132.175.184/32
+      prefix_type: exact
+   -  prefix_list: Signaling-Loopbacks-v4
+      prefix: 10.132.175.173/32
+      prefix_type: exact
+   -  prefix_list: Signaling-Loopbacks-v4
+      prefix: 10.132.175.174/32
+      prefix_type: exact
+   -  prefix_list: Signaling-Loopbacks-v4
+      prefix: 10.132.175.175/32
+      prefix_type: exact
+   -  prefix_list: Signaling-Loopbacks-v4
+      prefix: 10.132.175.176/32
+      prefix_type: exact
+   -  prefix_list: Signaling-Loopbacks-v4
+      prefix: 10.132.175.185/32
+      prefix_type: exact
+   -  prefix_list: EPC-loopback-v4
+      prefix: 10.132.175.178/32
+      prefix_type: exact
+   -  prefix_list: EPC-loopback-v4
+      prefix: 10.132.175.179/32
+      prefix_type: exact
+   -  prefix_list: EPC-loopback-v4
+      prefix: 10.132.175.186/32
+      prefix_type: exact
+   -  prefix_list: RAN-loopback-v4
+      prefix: 10.132.175.180/32
+      prefix_type: exact
+   -  prefix_list: RAN-loopback-v4
+      prefix: 10.132.175.187/32
+      prefix_type: exact
+policy_statement: []
+bgpBasic:
+   -  Router: ''
+      vprnId: 100
+      vprnName: Control-VPRN
+      customer: 1
+      min_route_adv: 1
+      multipath: 4
+      router_id: 10.132.175.185
+      ibgp_multipath: ''
+      enable_peer_tracking: ''
+      rapid_withdrawal: ''
+      connect_retry: ''
+      keepalive: ''
+      hold_time: ''
+      multihop: 2
+      discard_route: ''
+      drop_peer: ''
+      ignore_loop: ''
+      initial_send_delay_zero: ''
+   -  Router: ''
+      vprnId: 150
+      vprnName: EPC-VPRN
+      customer: 1
+      min_route_adv: 1
+      multipath: 4
+      router_id: 10.132.175.186
+      ibgp_multipath: ''
+      enable_peer_tracking: ''
+      rapid_withdrawal: ''
+      connect_retry: ''
+      keepalive: ''
+      hold_time: ''
+      multihop: 2
+      discard_route: ''
+      drop_peer: ''
+      ignore_loop: ''
+      initial_send_delay_zero: ''
+   -  Router: ''
+      vprnId: 200
+      vprnName: RAN-VPRN
+      customer: 1
+      min_route_adv: 1
+      multipath: 4
+      router_id: 10.132.175.187
+      ibgp_multipath: ''
+      enable_peer_tracking: ''
+      rapid_withdrawal: ''
+      connect_retry: ''
+      keepalive: ''
+      hold_time: ''
+      multihop: 2
+      discard_route: ''
+      drop_peer: ''
+      ignore_loop: ''
+      initial_send_delay_zero: ''
+   -  Router: Base
+      vprnId: ''
+      vprnName: ''
+      customer: ''
+      min_route_adv: 1
+      multipath: 4
+      router_id: 10.132.175.184
+      ibgp_multipath: ''
+      enable_peer_tracking: ''
+      rapid_withdrawal: ''
+      connect_retry: ''
+      keepalive: ''
+      hold_time: ''
+      multihop: 2
+      discard_route: ''
+      drop_peer: ''
+      ignore_loop: ''
+      initial_send_delay_zero: ''
+bgpGroup:
+   -  Router: Base
+      vprnId: ''
+      vprnName: ''
+      customer: ''
+      group_name: eBGP-Base-v4
+      group_type: external
+      family: ''
+      export_policy: ''
+      import_policy: ''
+      local_as: 65704
+      peer_as: 65102
+      bfd: bfd-enable
+   -  Router: ''
+      vprnId: 100
+      vprnName: Control-VPRN
+      customer: 1
+      group_name: eBGP-Signaling-v4
+      group_type: external
+      family: ''
+      export_policy: ''
+      import_policy: ''
+      local_as: 65704
+      peer_as: 65102
+      bfd: bfd-enable
+   -  Router: ''
+      vprnId: 150
+      vprnName: EPC-VPRN
+      customer: 1
+      group_name: eBGP-EPC-v4
+      group_type: external
+      family: ''
+      export_policy: ''
+      import_policy: ''
+      local_as: 65704
+      peer_as: 65102
+      bfd: bfd-enable
+   -  Router: ''
+      vprnId: 200
+      vprnName: RAN-VPRN
+      customer: 1
+      group_name: eBGP-RAN-v4
+      group_type: external
+      family: ''
+      export_policy: ''
+      import_policy: ''
+      local_as: 65704
+      peer_as: 65102
+      bfd: bfd-enable
+bgpNeighbor:
+   -  Router: Base
+      vprnId: ''
+      vprnName: ''
+      customer: ''
+      group_name: eBGP-Base-v4
+      neighbor: 10.133.1.135
+      local_address: 10.132.175.184
+      bfd_enable: bfd-enable
+   -  Router: Base
+      vprnId: ''
+      vprnName: ''
+      customer: ''
+      group_name: eBGP-Base-v4
+      neighbor: 10.133.1.136
+      local_address: 10.132.175.184
+      bfd_enable: bfd-enable
+   -  Router: ''
+      vprnId: 100
+      vprnName: Control-VPRN
+      customer: 1
+      group_name: eBGP-Signaling-v4
+      neighbor: 10.133.1.137
+      local_address: 10.132.175.185
+      bfd_enable: bfd-enable
+   -  Router: ''
+      vprnId: 100
+      vprnName: Control-VPRN
+      customer: 1
+      group_name: eBGP-Signaling-v4
+      neighbor: 10.133.1.138
+      local_address: 10.132.175.185
+      bfd_enable: bfd-enable
+   -  Router: ''
+      vprnId: 150
+      vprnName: EPC-VPRN
+      customer: 1
+      group_name: eBGP-EPC-v4
+      neighbor: 10.133.1.139
+      local_address: 10.132.175.186
+      bfd_enable: bfd-enable
+   -  Router: ''
+      vprnId: 150
+      vprnName: EPC-VPRN
+      customer: 1
+      group_name: eBGP-EPC-v4
+      neighbor: 10.133.1.140
+      local_address: 10.132.175.186
+      bfd_enable: bfd-enable
+   -  Router: ''
+      vprnId: 200
+      vprnName: RAN-VPRN
+      customer: 1
+      group_name: eBGP-RAN-v4
+      neighbor: 10.133.1.141
+      local_address: 10.132.175.187
+      bfd_enable: bfd-enable
+   -  Router: ''
+      vprnId: 200
+      vprnName: RAN-VPRN
+      customer: 1
+      group_name: eBGP-RAN-v4
+      neighbor: 10.133.1.142
+      local_address: 10.132.175.187
+      bfd_enable: bfd-enable
+staticRoutes:
+   -  Router: Base
+      vprnId: ''
+      vprnName: ''
+      customer: ''
+      static_route: 0.0.0.0/0
+      next_hop: 10.31.106.17
+      bfd: bfd-enable
+   -  Router: Base
+      vprnId: ''
+      vprnName: ''
+      customer: ''
+      static_route: 0.0.0.0/0
+      next_hop: 10.31.106.21
+      bfd: bfd-enable
+   -  Router: Base
+      vprnId: ''
+      vprnName: ''
+      customer: ''
+      static_route: 0.0.0.0/0
+      next_hop: 10.31.106.25
+      bfd: bfd-enable
+   -  Router: Base
+      vprnId: ''
+      vprnName: ''
+      customer: ''
+      static_route: 0.0.0.0/0
+      next_hop: 10.31.106.29
+      bfd: bfd-enable
+plmn_list:
+   -  plmn_list: home
+      mcc: 310
+      mnc: 310
+      gtpv2_node_features: ''
+gtp_profile:
+   -  Profile_name: gtpProfile1
+      Ip_dscp: ''
+      keep_alive_retry: ''
+      keep_alive_interval: ''
+      gtpv2_node_features: ''
+      gtpv2_options: ''
+      timeout_msec: 2000
+      retry_count: 5
