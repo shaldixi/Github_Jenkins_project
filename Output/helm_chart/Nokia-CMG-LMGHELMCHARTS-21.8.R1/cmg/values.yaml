@@ -165,7 +165,7 @@ nodeSelector:
   - key: failure-domain.beta.kubernetes.io/zone
     value: us-west-2a
   - key: cnf
-    value: smf01
+    value: smf01_test
 fabMtu: 9000
 system:
    -  name: ssmfov01
