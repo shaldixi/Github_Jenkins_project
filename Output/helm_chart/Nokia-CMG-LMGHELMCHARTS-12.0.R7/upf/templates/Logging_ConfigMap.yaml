@@ -1,0 +1,27 @@
+{{- $loggingDict := (default dict .Values.logging) }}
+{{- if $loggingDict.enable }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logging
+data:
+  logging.sh: |
+    #!/bin/bash
+
+    while [[ 1 ]]
+    do
+        fileName=$(ls -la /mgfsroot/log/ | awk '/8080/ {print $9}')
+        if [[ -n $fileName ]]
+        then
+            fileArray=($fileName)
+            tail -f /mgfsroot/log/${fileArray[-1]}
+        else
+            printf "$(date) : No CNF log file found\n"
+            sleep 1
+        fi
+    done
+
+    exit 1
+
+---
+{{- end }}

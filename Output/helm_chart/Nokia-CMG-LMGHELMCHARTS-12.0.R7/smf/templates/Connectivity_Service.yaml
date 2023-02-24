@@ -1,0 +1,148 @@
+{{- $loamAConsoleNodePort := (.Values.service.loamA.console.nodePort | int) }}
+{{- $loamAConsolePort := (.Values.service.loamA.console.port | int) }}
+{{- $loamAConsoleTargetPort := (.Values.service.loamA.console.targetPort | int) }}
+{{- $svcLoamBDict := (default dict .Values.service.loamB) }}
+{{- $svcLoamBDict := (default dict $svcLoamBDict.console) }}
+{{- $loamBConsoleNodePort := ($svcLoamBDict.nodePort | int) }}
+{{- $loamBConsolePort := ($svcLoamBDict.port | int) }}
+{{- $loamBConsoleTargetPort := ($svcLoamBDict.targetPort | int) }}
+{{- $loamBDict := (default dict .Values.loamB) }}
+{{- $loamBEnable := ($loamBDict.enable | int) }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: loam-connectivity
+spec:
+  type: NodePort
+  ports:
+    - name: loam-telnet
+{{- if .Values.service.loam.telnet.nodePort }}
+      nodePort: {{ .Values.service.loam.telnet.nodePort }}
+{{- end }}
+      port: {{ .Values.service.loam.telnet.port }}
+      targetPort: {{ .Values.service.loam.telnet.targetPort }}
+    - name: loam-ssh
+{{- if .Values.service.loam.ssh.nodePort }}
+      nodePort: {{ .Values.service.loam.ssh.nodePort }}
+{{- end }}
+      port: {{ .Values.service.loam.ssh.port }}
+      targetPort: {{ .Values.service.loam.ssh.targetPort }}
+    - name: snmp1
+{{- if .Values.service.loam.snmp1.nodePort }}
+      nodePort: {{ .Values.service.loam.snmp1.nodePort }}
+{{- end }}
+      port: {{ .Values.service.loam.snmp1.port }}
+      targetPort: {{ .Values.service.loam.snmp1.targetPort }}
+      protocol: UDP
+  selector:
+{{- if eq $loamBEnable 1 }}
+    loamState: active
+{{- else }}
+    name: loam-a
+{{- end }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loam-a-connectivity
+spec:
+  type: NodePort
+  ports:
+    - name: loam-a-console
+{{- if $loamAConsoleNodePort }}
+      nodePort: {{ add $loamAConsoleNodePort 21 }}
+{{- end }}
+      port: {{ add $loamAConsolePort 21 }}
+      targetPort: {{ add $loamAConsoleTargetPort 21 }}
+  selector:
+    name: loam-a
+
+---
+{{- if eq $loamBEnable 1 }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: loam-b-connectivity
+spec:
+  type: NodePort
+  ports:
+    - name: loam-b-console
+{{- if $loamBConsoleNodePort }}
+      nodePort: {{ add $loamBConsoleNodePort 22 }}
+{{- end }}
+      port: {{ add $loamBConsolePort 22 }}
+      targetPort: {{ add $loamBConsoleTargetPort 22 }}
+  selector:
+    name: loam-b
+
+---
+{{- end }}
+{{- $maxReplicas := (.Values.lmgScale.maxReplicas | int) }}
+{{- $lmgConsoleNodePort := (.Values.service.lmg.console.nodePort | int) }}
+{{- $lmgConsolePort := (.Values.service.lmg.console.port | int) }}
+{{- $lmgConsoleTargetPort := (.Values.service.lmg.console.targetPort | int) }}
+{{- $nascDict := (default dict .Values.nasc) }}
+{{- $nasc_enable := ($nascDict.enable | int) }}
+{{- range $i, $end := until $maxReplicas }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: lmg-{{ add1 $i }}-connectivity
+spec:
+  type: NodePort
+  ports:
+    - name: lmg-{{ add1 $i }}-console
+{{- if $lmgConsoleNodePort }}
+      nodePort: {{ add $lmgConsoleNodePort $i 1 }}
+{{- end }}
+      port: {{ add $lmgConsolePort $i 1 }}
+      targetPort: {{ add $lmgConsoleTargetPort $i 1 }}
+  selector:
+    statefulset.kubernetes.io/pod-name: lmg-statefulset-{{ $i }}
+
+---
+{{- if eq $nasc_enable 1 }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: lmg-{{ add1 $i }}-prometheus
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/path: '/metrics'
+    prometheus.io/port: '9103'
+spec:
+  ports:
+    - name: prometh
+      port: 9155
+      protocol: TCP
+      targetPort: 9103
+  selector:
+    statefulset.kubernetes.io/pod-name: lmg-statefulset-{{ $i }}
+
+---
+{{- end }}
+{{- end }}
+{{- $maxReplicas := (.Values.llbScale.maxReplicas | int) }}
+{{- $llbConsoleNodePort := (.Values.service.llb.console.nodePort | int) }}
+{{- $llbConsolePort := (.Values.service.llb.console.port | int) }}
+{{- $llbConsoleTargetPort := (.Values.service.llb.console.targetPort | int) }}
+{{- range $i, $end := until $maxReplicas }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: llb-{{ add1 $i }}-connectivity
+spec:
+  type: NodePort
+  ports:
+    - name: llb-{{ add1 $i }}-console
+{{- if $llbConsoleNodePort }}
+      nodePort: {{ add $llbConsoleNodePort $i 17 }}
+{{- end }}
+      port: {{ add $llbConsolePort $i 17 }}
+      targetPort: {{ add $llbConsoleTargetPort $i 17 }}
+  selector:
+    statefulset.kubernetes.io/pod-name: llb-statefulset-{{ $i }}
+
+---
+{{- end }}
